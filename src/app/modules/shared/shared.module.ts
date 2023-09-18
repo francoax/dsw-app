@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonComponent } from './button/button.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ButtonComponent,
+  ],
   imports: [
     CommonModule
   ], 
-  exports:[] //Acá van todos los componentes para compartirlos a los demás modulos
+  exports:[ ButtonComponent ] //Acá van todos los componentes para compartirlos a los demás modulos
 })
 export class SharedModule { }
