@@ -1,0 +1,11 @@
+<div class="form-control w-full max-w-xs">
+  <label class="label">
+    <span class="label-text">{{name}}</span>
+  </label>
+  <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" [formControl]="imputControl"/>
+  <label class="label">
+    <span class="label-text-alt">{{imputControl.valid}}</span>
+  </label>
+  <h2 *ngIf="!imputControl.value" class="label-text-alt">Este campo es requerido</h2>
+</div>
+
