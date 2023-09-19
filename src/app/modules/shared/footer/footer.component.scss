@@ -1,0 +1,15 @@
+.footerPhs {
+    display: block;
+
+}
+footer {
+    display: flex;
+    flex-direction: column;
+}
+.info-container {
+    display: flex;
+    justify-content: flex-start;
+}
+nav{
+    margin: 3rem;
+}
