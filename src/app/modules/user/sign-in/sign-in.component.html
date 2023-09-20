@@ -1,51 +1,6 @@
 <div class="grid px-4">
   <h1 class="">Registro de usuario</h1>
   <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <app-input
-      [name]="'Nombre'"
-      [maxLength]="50"
-      formControlName="name"
-    ></app-input>
-    <app-input
-      [name]="'Apellido'"
-      [maxLength]="50"
-      formControlName="lastname"
-    ></app-input>
-    <app-input
-      [name]="'Dirección'"
-      [maxLength]="100"
-      formControlName="address"
-    ></app-input>
-    <app-input
-      [name]="'Email'"
-      [maxLength]="50"
-      formControlName="email"
-    ></app-input>
-    <app-input
-      [name]="'Teléfono'"
-      [maxLength]="30"
-      formControlName="tel"
-    ></app-input>
-    <app-input
-      [name]="'Contraseña'"
-      [maxLength]="100"
-      formControlName="password"
-    ></app-input>
-    <app-input
-      [name]="'Confirmar contraseña'"
-      [maxLength]="100"
-      formControlName="passwordConfirm"
-    ></app-input>
-    <!-- <input type="text" class="input input-bordered w-full max-w-xs" /><input
-      type="text"
-      class="input input-bordered w-full max-w-xs"
-    /><input type="text" class="input input-bordered w-full max-w-xs" /><input
-      type="text"
-      class="input input-bordered w-full max-w-xs"
-    /><input type="text" class="input input-bordered w-full max-w-xs" /><input
-      type="text"
-      class="input input-bordered w-full max-w-xs"
-    /><input type="text" class="input input-bordered w-full max-w-xs" /> -->
     <app-button [content]="'Registrar'" [type]="'primary'"></app-button>
   </form>
 </div>

@@ -1,15 +1,20 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="form-control w-full max-w-xs">
   <label class="label">
-    <span class="label-text">{{ name }}</span>
+    <span class="label-text">{{ label }}</span>
   </label>
   <input
-    type="text"
-    placeholder="Type here"
+    [type]="type"
+    [placeholder]="placeholder"
     class="input input-bordered w-full max-w-xs"
     [formControl]="inputControl"
   />
-  <!-- <h2 *ngIf="!inputControl.value" class="label-text-alt">
-    Este campo es requerido
-  </h2> -->
+  <label *ngIf="required" class="label">
+    <span
+      class="label-text-alt"
+      *ngIf="!inputControl.value"
+      class="label-text-alt"
+      >Este campo es requerido</span
+    >
+  </label>
 </div>
