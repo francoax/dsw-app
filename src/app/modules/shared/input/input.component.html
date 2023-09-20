@@ -1,11 +1,10 @@
 <div class="form-control w-full max-w-xs">
   <label class="label">
-    <span class="label-text">{{name}}</span>
+    <span class="label-text">{{label}}</span>
   </label>
-  <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" [formControl]="inputControl"/>
-  <label class="label">
-    <span class="label-text-alt">{{inputControl.valid}}</span>
+  <input [type]="type" [placeholder]="placeholder" class="input input-bordered w-full max-w-xs" [formControl]="inputControl"/>
+  <label *ngIf="required" class="label">
+    <span class="label-text-alt" *ngIf="!inputControl.value" class="label-text-alt">Este campo es requerido</span>
   </label>
-  <h2 *ngIf="!inputControl.value" class="label-text-alt">Este campo es requerido</h2>
 </div>
 

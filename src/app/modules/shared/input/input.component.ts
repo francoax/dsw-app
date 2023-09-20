@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -8,7 +7,9 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent {
-  @Input() maxLength!:number;
-  @Input() name!:String;
-  inputControl = new FormControl('',[Validators.required,Validators.maxLength(10)]);
+  @Input() type = 'text';
+  @Input() label! : string;
+  @Input() placeholder! : string;
+  @Input() required = false;
+  @Input() inputControl! : FormControl;
 }
