@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from "./modules/shared/shared.module";
+import { SuperAdminModule } from "./modules/super-admin/super-admin.module";
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import { SharedModule } from "./modules/shared/shared.module";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        SharedModule
+        SharedModule,
+        SuperAdminModule
     ]
 })
 export class AppModule {}
