@@ -1,0 +1,8 @@
+<!-- eslint-disable max-len -->
+<navbar></navbar>
+<app-sidebar [buttonsList]="[{ name: 'hola', path:'hola'}]">
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+    <app-input [label]="'capacity'" [placeholder]="'capacida'" [required]="true" [inputControl]="propertyType"></app-input>
+  </form>
+</app-sidebar>
+<app-footer></app-footer>
