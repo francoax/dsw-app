@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Montserrat";
+  src: url("../src/assets/fonts/Montserrat-Regular.ttf") format("truetype");
+}
+
 :root {
-  --mainColor : #EB5757;
+  --mainColor: #eb5757;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
 }

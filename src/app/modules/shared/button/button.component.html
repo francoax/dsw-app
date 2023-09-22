@@ -1,5 +1,11 @@
-<button class="btn" 
-[ngClass]="{'btn-primary': type === 'primary', 
-            'btn-cancel': type === 'cancel',
-            'btn-navbar': type === 'navbar'}"
-            >{{ content }}</button>
+<button
+  class="btn"
+  [ngClass]="{
+    'btn-primary': type === 'primary',
+    'btn-cancel': type === 'cancel',
+    'btn-navbar': type === 'navbar'
+  }"
+  [disabled]="disabled"
+>
+  {{ content }}
+</button>

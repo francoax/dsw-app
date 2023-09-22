@@ -1,6 +1,58 @@
-<div class="grid px-4">
-  <h1 class="">Registro de usuario</h1>
-  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <app-button [content]="'Registrar'" [type]="'primary'"></app-button>
+<div class="px-10 py-5">
+  <h2 class="text-lg font-bold">Registro de usuario</h2>
+  <form
+    class="grid grid-cols-2 grid-rows-4 gap-2"
+    [formGroup]="signInForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <app-input
+      [label]="'Nombre'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="name"
+    ></app-input>
+    <app-input
+      [label]="'Apellido'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="lastname"
+    ></app-input>
+    <app-input
+      [label]="'Dirección'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="address"
+    ></app-input>
+    <app-input
+      [label]="'Teléfono'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="tel"
+    ></app-input>
+    <app-input
+      [label]="'Email'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="email"
+    ></app-input>
+    <app-input
+      [label]="'Contraseña'"
+      [placeholder]="''"
+      [required]="true"
+      [type]="'password'"
+      [inputControl]="password"
+    ></app-input>
+    <app-input
+      [label]="'Confirmar contraseña'"
+      [placeholder]="''"
+      [required]="true"
+      [type]="'password'"
+      [inputControl]="passwordConfirm"
+    ></app-input>
+    <app-button
+      class="flex justify-start items-center"
+      [content]="'Registrarse'"
+      [type]="'primary'"
+    ></app-button>
   </form>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,26 +9,45 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
+  name = new FormControl('', Validators.required);
+  lastname = new FormControl('', Validators.required);
+  address = new FormControl('', Validators.required);
+  tel = new FormControl('', [
+    Validators.pattern('[0-9]*'),
+    Validators.required,
+  ]);
+  email = new FormControl('', [Validators.email, Validators.required]);
+  password = new FormControl('', [
+    Validators.minLength(8),
+    Validators.required,
+  ]);
+  passwordConfirm = new FormControl('', [
+    Validators.minLength(8),
+    Validators.required,
+  ]);
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.signInForm = this.initForm();
+    // armo el form group con todos los form controls
+    this.signInForm = new FormGroup({
+      name: this.name,
+      lastname: this.lastname,
+      address: this.address,
+      tel: this.tel,
+      email: this.email,
+      password: this.password,
+      passwordConfirm: this.passwordConfirm,
+    });
   }
 
   onSubmit() {
-    console.warn(this.signInForm.value);
-  }
-
-  initForm(): FormGroup {
-    return this.formBuilder.group({
-      name: ['', Validators.required],
-      lastname: ['', Validators.required],
-      address: ['', Validators.required],
-      tel: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      passwordConfirm: ['', [Validators.required, Validators.minLength(8)]],
-    });
+    if (this.signInForm.valid) {
+      this.userService.saveUser(this.signInForm.value).subscribe((res) => {
+        console.log(res);
+      });
+    } else {
+      alert('Verifique que los datos ingresados sean válidos');
+    }
   }
 }

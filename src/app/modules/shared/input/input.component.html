@@ -9,12 +9,31 @@
     class="input input-bordered w-full max-w-xs"
     [formControl]="inputControl"
   />
-  <label *ngIf="required" class="label">
+  <label class="label">
     <span
       class="label-text-alt"
-      *ngIf="!inputControl.value"
+      *ngIf="inputControl.errors?.['required'] && inputControl.touched"
       class="label-text-alt"
-      >Este campo es requerido</span
+      >Este campo es obligatorio</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['minlength'] && inputControl.touched"
+      class="label-text-alt"
+      >Ingrese al menos
+      {{inputControl.errors?.['minlength']?.requiredLength}} caracteres</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['email'] && inputControl.touched"
+      class="label-text-alt"
+      >Ingrese un email correcto</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['pattern'] && inputControl.touched"
+      class="label-text-alt"
+      >El formato es incorrecto</span
     >
   </label>
 </div>
