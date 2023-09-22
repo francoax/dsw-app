@@ -1,0 +1,34 @@
+<div class="form-container">
+  <p class="title">Login</p>
+  <form class="form" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+    <div class="login-input-group">
+      <app-input
+        [label]="'Email'"
+        [placeholder]="''"
+        [inputControl]="mail"
+      ></app-input>
+    </div>
+    <div class="login-input-group">
+      <app-input
+        [label]="'Contraseña'"
+        [type]="'password'"
+        [placeholder]="''"
+        [inputControl]="password"
+      ></app-input>
+      <div class="forgot">
+        <a rel="noopener noreferrer" href="#">Olvidé mi contraseña</a>
+      </div>
+    </div>
+    <app-button
+      class="block w-full p-3 text-center"
+      [type]="'primary'"
+      [content]="'Log in'"
+    ></app-button>
+  </form>
+  <div class="mt-4">
+    <p class="signup">
+      No tienes una cuenta?
+      <a rel="noopener noreferrer" href="#" class="">Regístrate</a>
+    </p>
+  </div>
+</div>
