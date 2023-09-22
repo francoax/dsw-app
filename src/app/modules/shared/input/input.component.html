@@ -1,10 +1,39 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="form-control w-full max-w-xs">
   <label class="label">
-    <span class="label-text">{{label}}</span>
+    <span class="label-text">{{ label }}</span>
   </label>
-  <input [type]="type" [placeholder]="placeholder" class="input input-bordered w-full max-w-xs" [formControl]="inputControl"/>
-  <label *ngIf="required" class="label">
-    <span class="label-text-alt" *ngIf="!inputControl.value" class="label-text-alt">Este campo es requerido</span>
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    class="input input-bordered w-full max-w-xs"
+    [formControl]="inputControl"
+  />
+  <label class="label">
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['required'] && inputControl.touched"
+      class="label-text-alt"
+      >Este campo es obligatorio</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['minlength'] && inputControl.touched"
+      class="label-text-alt"
+      >Ingrese al menos
+      {{inputControl.errors?.['minlength']?.requiredLength}} caracteres</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['email'] && inputControl.touched"
+      class="label-text-alt"
+      >Ingrese un email correcto</span
+    >
+    <span
+      class="label-text-alt"
+      *ngIf="inputControl.errors?.['pattern'] && inputControl.touched"
+      class="label-text-alt"
+      >El formato es incorrecto</span
+    >
   </label>
 </div>
-
