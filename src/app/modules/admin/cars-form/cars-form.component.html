@@ -1,0 +1,14 @@
+<navbar></navbar>
+<app-sidebar>
+ <form  [formGroup]="carsForm" (ngSubmit)="onSubmit()">
+  <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
+  <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
+  <app-input [label]="'year'" [placeholder]="'year'" [required]="true" [inputControl]="year"></app-input>
+  <app-input [label]="'plate'" [placeholder]="'plate'" [required]="true" [inputControl]="plate"></app-input>
+  <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+  <app-input [label]="'value'" [placeholder]="'value'" [required]="true" [inputControl]="value"></app-input>
+  <app-input [label]="'locality'" [placeholder]="'locality'" [required]="true" [inputControl]="locality"></app-input>
+  <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+</form>
+</app-sidebar>
+<app-footer></app-footer>
