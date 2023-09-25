@@ -1,0 +1,10 @@
+<div class="form-control w-full max-w-xs">
+  <label class="label">
+    <span class="label-text">{{label}}</span>
+  </label>
+  <input [type]="type" [placeholder]="placeholder" class="input input-bordered w-full max-w-xs" [formControl]="inputControl"/>
+  <label *ngIf="required" class="label">
+    <span class="label-text-alt" *ngIf="!inputControl.value" class="label-text-alt">Este campo es requerido</span>
+  </label>
+</div>
+
