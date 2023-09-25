@@ -1,22 +1,9 @@
-<!-- <div class="grid grid-h-screen w-screen cols-1 grid-rows-3 "> -->
   <navbar [showSearch]="true" [user]="'Tomás'"></navbar>
-  <div class="drawer lg:drawer-open">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col items-center justify-center">
-      <!-- Page content here -->
-      <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden btn-openMenu">
-        Open Menu
-      </label>  
-    </div> 
-    <div class="drawer-side">
-      <label for="my-drawer-2" class="drawer-overlay"></label> 
-      <ul class="menu p-4 w-80 min-h-full text-base-content">
-        <!-- Sidebar content here -->
-        <li><app-button [content]="'Propiedades'" [type]="'navbar'"></app-button></li>
-        <li><app-button [content]="'Vehiculos'" [type]="'navbar'"></app-button></li>
-        <li><app-button [content]="'Asistencia médica'" [type]="'navbar'"></app-button></li>
-      </ul>
-    </div>
-  </div>
+  <app-sidebar 
+    [buttonsList]="[{ name: 'Propiedades', path:'#'},
+                    { name: 'Vehiculos', path:'#'},
+                    { name: 'Asistencia Médica', path:'#'}]">
+    <router-outlet></router-outlet>
+  </app-sidebar>
+
   <app-footer></app-footer>
-<!-- </div> -->
