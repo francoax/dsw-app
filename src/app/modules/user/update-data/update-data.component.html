@@ -1,0 +1,51 @@
+<div class="px-10 py-5">
+  <h2 class="text-lg font-bold">Modificación de datos</h2>
+  <form
+    class="grid grid-cols-2 grid-rows-4 gap-2"
+    [formGroup]="updateDataForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <app-input
+      [label]="'Nombre'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="name"
+    ></app-input>
+    <app-input
+      [label]="'Apellido'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="lastname"
+    ></app-input>
+    <app-input
+      [label]="'Dirección'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="address"
+    ></app-input>
+    <app-input
+      [label]="'Teléfono'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="tel"
+    ></app-input>
+    <app-input
+      [label]="'Email'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="email"
+    ></app-input>
+    <app-input
+      [label]="'Contraseña'"
+      [placeholder]="''"
+      [required]="true"
+      [type]="'password'"
+      [inputControl]="password"
+    ></app-input>
+    <app-button
+      class="flex justify-start items-center"
+      [content]="'Modificar datos'"
+      [type]="'primary'"
+    ></app-button>
+  </form>
+</div>

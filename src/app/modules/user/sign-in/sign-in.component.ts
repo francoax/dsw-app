@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -43,7 +44,16 @@ export class SignInComponent implements OnInit {
 
   onSubmit() {
     if (this.signInForm.valid) {
-      this.userService.saveUser(this.signInForm.value).subscribe((res) => {
+      const user: User = {
+        name: this.signInForm.value.name,
+        lastname: this.signInForm.value.lastname,
+        address: this.signInForm.value.address,
+        tel: parseInt(this.signInForm.value.tel),
+        email: this.signInForm.value.email,
+        password: this.signInForm.value.password,
+      };
+
+      this.userService.saveUser(user).subscribe((res) => {
         console.log(res);
       });
     } else {
