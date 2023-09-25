@@ -1,38 +1,49 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <div class="form-control w-full max-w-xs">
   <label class="label">
-    <span class="label-text">{{ label }}</span>
+    <span
+      class="label-text"
+      [ngClass]="{
+        'text-red-500': inputControl.errors !== null && inputControl.touched
+      }"
+      >{{ label }}</span
+    >
   </label>
   <input
     [type]="type"
     [placeholder]="placeholder"
     class="input input-bordered w-full max-w-xs"
+    [ngClass]="{
+      'border-red-500': inputControl.errors !== null && inputControl.touched
+    }"
     [formControl]="inputControl"
   />
   <label class="label">
     <span
-      class="label-text-alt"
+      class="label-text-alt text-red-500"
       *ngIf="inputControl.errors?.['required'] && inputControl.touched"
-      class="label-text-alt"
       >Este campo es obligatorio</span
     >
     <span
-      class="label-text-alt"
+      class="label-text-alt text-red-500"
       *ngIf="inputControl.errors?.['minlength'] && inputControl.touched"
-      class="label-text-alt"
       >Ingrese al menos
       {{inputControl.errors?.['minlength']?.requiredLength}} caracteres</span
     >
     <span
-      class="label-text-alt"
+      class="label-text-alt text-red-500"
+      *ngIf="inputControl.errors?.['maxlength'] && inputControl.touched"
+      >Ingrese menos de
+      {{inputControl.errors?.['maxlength']?.requiredLength}} caracteres</span
+    >
+    <span
+      class="label-text-alt text-red-500"
       *ngIf="inputControl.errors?.['email'] && inputControl.touched"
-      class="label-text-alt"
       >Ingrese un email correcto</span
     >
     <span
-      class="label-text-alt"
+      class="label-text-alt text-red-500"
       *ngIf="inputControl.errors?.['pattern'] && inputControl.touched"
-      class="label-text-alt"
       >El formato es incorrecto</span
     >
   </label>
