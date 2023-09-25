@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from "./modules/shared/shared.module";
 import { AdminModule } from './modules/admin/admin.module';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         AppComponent
@@ -16,7 +16,8 @@ import { AdminModule } from './modules/admin/admin.module';
         BrowserModule,
         AppRoutingModule,
         SharedModule,
-        AdminModule
+        AdminModule,
+        HttpClientModule,
     ]
 })
 export class AppModule {}
