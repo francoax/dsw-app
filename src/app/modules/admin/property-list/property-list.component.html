@@ -1,0 +1,14 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<label class="label">
+  <app-button [content]="'Create Property'" [type]="'primary'"></app-button>
+</label>
+<label class="label">Property List</label>
+    <ul class="list-disc">
+      <li *ngFor="let prop of properties">
+        <label class="label">
+        <span>{{prop | json}}</span>
+        <app-button [content]="'Editar'" [type]="'primary'"></app-button>
+        <app-button [content]="'Eliminar'" [type]="'primary'"></app-button>
+      </label>
+      </li>
+    </ul>

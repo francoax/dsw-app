@@ -6,9 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { Property } from 'src/app/models/property';
+import { PropertyListComponent } from './property-list/property-list.component';
 @NgModule({
   declarations: [
-    CreatePropertyComponent
+    CreatePropertyComponent,
+    PropertyListComponent
   ],
   imports: [
     CommonModule,

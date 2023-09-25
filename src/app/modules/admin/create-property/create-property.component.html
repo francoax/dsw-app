@@ -1,8 +1,13 @@
 <!-- eslint-disable max-len -->
 <navbar></navbar>
-<app-sidebar [buttonsList]="[{ name: 'hola', path:'hola'}]">
+<app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
   <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-    <app-input [label]="'capacity'" [placeholder]="'capacida'" [required]="true" [inputControl]="propertyType"></app-input>
+    <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
+    <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
+    <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
+    <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+    <app-input [label]="'propertyType'" [placeholder]="'propertyType'" [required]="true" [inputControl]="propertyType"> </app-input>
+    <app-button [content]="'Submit'" [type]="'primary'"></app-button>
   </form>
 </app-sidebar>
 <app-footer></app-footer>
