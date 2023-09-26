@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
 export class ButtonComponent {
   @Input() content!: string; //texto que va adentro del botton
   @Input() type!: string; //tipo del boton, puede ser primary, cancel o navbar
-  @Input() disabled = false; //si el boton esta deshabilitado o no
+  @Input() routerlink = '#'; //navega hacia la ruta
 }

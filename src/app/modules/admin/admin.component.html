@@ -1,0 +1,9 @@
+  <navbar [showSearch]="true" [user]="'Tomás'"></navbar>
+  <app-sidebar 
+    [buttonsList]="[{ name: 'Propiedades', path:'#'},
+                    { name: 'Vehiculos', path:'#'},
+                    { name: 'Asistencia Médica', path:'#'}]">
+    <router-outlet></router-outlet>
+  </app-sidebar>
+
+  <app-footer></app-footer>
