@@ -6,6 +6,7 @@ import { InputComponent } from './input/input.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './button/button.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ButtonComponent } from './button/button.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,

@@ -6,13 +6,13 @@ import { SharedModule } from '../shared/shared.module';
 import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { Property } from 'src/app/models/property';
 import { PropertyListComponent } from './property-list/property-list.component';
+import { AdminComponent } from './admin.component';
 @NgModule({
   declarations: [
     CreatePropertyComponent,
-    PropertyListComponent
-  ],
+    PropertyListComponent,
+    AdminComponent ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -21,6 +21,6 @@ import { PropertyListComponent } from './property-list/property-list.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  exports:[CreatePropertyComponent]
+  exports:[CreatePropertyComponent,AdminComponent]
 })
 export class AdminModule { }
