@@ -1,14 +1,38 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
-<label class="label">
-  <app-button [content]="'Create Property'" [type]="'primary'"></app-button>
-</label>
+<!-- 
+<div>
+  <label class="label">
+  <app-button [content]="'Create Property'" [type]="'primary'" [routerlink]="'CreateProperty'"></app-button>
+  </label>
+</div> 
 <label class="label">Property List</label>
     <ul class="list-disc">
       <li *ngFor="let prop of properties">
         <label class="label">
-        <span>{{prop | json}}</span>
-        <app-button [content]="'Editar'" [type]="'primary'"></app-button>
-        <app-button [content]="'Eliminar'" [type]="'primary'"></app-button>
+          {{prop| json }}
       </label>
       </li>
-    </ul>
+    </ul> 
+  -->
+    <div class="overflow-x-auto">
+      <table class="table table-xs">
+        <thead>
+          <tr> 
+            <th>Capacity</th> 
+            <th>Address</th> 
+            <th>Price</th> 
+            <th>Date</th>
+            <th>PropertyType</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <tr *ngFor="let prop of properties">
+            <td>{{prop.capacity}}</td>
+            <td>{{prop.address}}</td>
+            <td>{{prop?.pricePerNight?.price}}</td>
+            <td>{{prop?.pricePerNight?.date}}</td>
+            <td>{{prop.propertyType}}</td>
+          </tr>
+        </tbody> 
+      </table>
+    </div>

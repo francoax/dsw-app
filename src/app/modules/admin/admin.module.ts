@@ -21,6 +21,6 @@ import { AdminComponent } from './admin.component';
     ReactiveFormsModule,
     FormsModule
   ],
-  exports:[CreatePropertyComponent,AdminComponent]
+  exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent]
 })
 export class AdminModule { }

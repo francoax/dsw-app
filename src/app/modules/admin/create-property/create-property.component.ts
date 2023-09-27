@@ -1,14 +1,26 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PropertyServiceService } from 'src/app/services/property-service.service';
 import { Property } from 'src/app/models/property';
+import { OnInit } from '@angular/core';
+import { PropertyType } from 'src/app/models/property-type';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
   styleUrls: ['./create-property.component.scss']
 })
-export class CreatePropertyComponent {
+export class CreatePropertyComponent implements OnInit {
+  propertiesTypes:PropertyType[] =[];  /* crear modelo y pasar a :PropertyType */
+
   constructor(private service:PropertyServiceService){}
+
+  ngOnInit():void {
+    this.service.getPropertiesTypes().subscribe((Response)=>{this.propertiesTypes=Response.data})
+  }
+
+  
   capacity = new FormControl('',[Validators.required,Validators.maxLength(30)]);
   address = new FormControl('',[Validators.maxLength(50),Validators.required]);
   price= new FormControl('',[this.tiene_numeros]);
@@ -53,7 +65,7 @@ export class CreatePropertyComponent {
         propertyType: this.propertyForm.value.propertyType ||'',
       };
       /*console.log(this.propertyForm.valid)*/
-      this.service.createProperty(prop).subscribe(res=> console.log(res));
+      this.service?.createProperty(prop).subscribe(res=> console.log(res));
     }
 }
 
