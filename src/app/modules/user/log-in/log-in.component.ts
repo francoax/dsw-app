@@ -11,6 +11,7 @@ export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
   mail = new FormControl('');
   password = new FormControl('');
+  responseError = '';
 
   constructor(private userService: UserService) {}
 
@@ -22,10 +23,21 @@ export class LogInComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.logInForm.value);
     const { mail, password } = this.logInForm.value;
-    this.userService.getUserByCredentials(mail, password).subscribe((res) => {
-      console.log(res);
+    this.userService.getUserByCredentials(mail, password).subscribe({
+      next: (res) => {
+        console.log(res);
+        window.localStorage.setItem('loggedUser', JSON.stringify(res.data));
+        window.location.reload();
+      },
+      error: (err) => {
+        console.log(err);
+        if (err.status === 0) {
+          this.responseError = 'No se puede conectar con el servidor';
+        } else {
+          this.responseError = err.error.message;
+        }
+      },
     });
   }
 }

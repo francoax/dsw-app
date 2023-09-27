@@ -9,19 +9,19 @@ import { environment } from 'src/environments/environment.development';
   providedIn: 'root',
 })
 export class UserService {
-  private API = environment.apiUrl;
+  private API = environment.apiUrl + '/api/users/';
   constructor(private http: HttpClient) {}
 
-  getUserByCredentials(email: string, password: string): Observable<JSON> {
+  getUserByCredentials(email: string, password: string): Observable<any> {
     const body = { email: email, password: password };
-    return this.http.post<JSON>(this.API + 'login', body);
+    return this.http.post<any>(this.API + 'login', body);
   }
 
-  saveUser(user: User): Observable<JSON> {
+  saveUser(user: User): Observable<any> {
     return this.http.post<JSON>(this.API, user);
   }
 
-  updateUser(user: User): Observable<JSON> {
-    return this.http.put<JSON>(this.API, user);
+  updateUser(user: User): Observable<any> {
+    return this.http.put<any>(this.API, user);
   }
 }

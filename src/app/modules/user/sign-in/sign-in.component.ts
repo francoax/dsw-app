@@ -60,4 +60,16 @@ export class SignInComponent implements OnInit {
       alert('Verifique que los datos ingresados sean válidos');
     }
   }
+
+  checkPasswords() {
+    console.warn(
+      this.signInForm.value.password,
+      this.signInForm.value.passwordConfirm
+    );
+    if (
+      this.signInForm.value.password !== this.signInForm.value.passwordConfirm
+    ) {
+      alert('Las contraseñas no coinciden');
+    }
+  }
 }

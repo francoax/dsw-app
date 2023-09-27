@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input } from '@angular/core';
 
@@ -9,9 +8,23 @@ import { Component, Input } from '@angular/core';
 })
 export class NavbarComponent {
   @Input() showSearch!: boolean;
-  @Input() user!: any; //como recibo el usuario que está logeado??
+  @Input() user!: string;
+  loggedUser = window.localStorage.getItem('loggedUser');
+  userName = '';
 
   constructor() {
-    this.user = 'Pepito';
+    if (this.loggedUser) {
+      const user = JSON.parse(this.loggedUser);
+      this.userName = user.name;
+    }
+  }
+
+  buttonClicked() {
+    if (this.loggedUser) {
+      window.localStorage.removeItem('loggedUser');
+      window.location.reload();
+    } else {
+      //redirigir a pagina de login
+    }
   }
 }

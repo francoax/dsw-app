@@ -41,6 +41,7 @@
       [required]="true"
       [type]="'password'"
       [inputControl]="password"
+      (blur)="checkPasswords()"
     ></app-input>
     <app-input
       [label]="'Confirmar contraseña'"
@@ -48,6 +49,7 @@
       [required]="true"
       [type]="'password'"
       [inputControl]="passwordConfirm"
+      (blur)="checkPasswords()"
     ></app-input>
     <app-button
       class="flex justify-start items-center"

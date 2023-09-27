@@ -52,8 +52,9 @@
         </button>
       </div>
     </div>
-    <button class="btn bg-slate-50 rounded-2xl">
+    <button class="btn bg-slate-50 rounded-2xl" (click)="buttonClicked()">
       <svg
+        *ngIf="userName !== ''"
         width="29"
         height="30"
         viewBox="0 0 29 30"
@@ -70,7 +71,7 @@
         />
       </svg>
 
-      {{ user }}
+      {{ userName ? userName : "LogIn" }}
       <svg
         width="29"
         height="25"
