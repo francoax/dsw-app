@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 type toastBody = {
-  message : string,
+  message? : string,
   status : boolean,
 }
 
@@ -20,7 +20,7 @@ export class ToastService {
     this.showToastSubject.next(true)
     setTimeout(() => {
       this.hide()
-    }, 2500);
+    }, 3000);
   }
 
   hide() : void {

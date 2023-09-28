@@ -26,7 +26,7 @@ import { ToastService } from './toast.service';
 })
 export class ToastComponent implements OnInit {
 
-  message! : string
+  message! : string | undefined
   show!: boolean
   status! : boolean
 
