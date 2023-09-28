@@ -1,0 +1,15 @@
+.toastPhs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 250px;
+}
+
+.response-error {
+  border-color: #eb5757 ;
+}
+
+.response-ok {
+  background-color: #eb5757;
+  color: #ffffff;
+}
