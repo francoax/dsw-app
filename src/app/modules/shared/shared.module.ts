@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ModalComponent } from './modal/modal.component';
     FooterComponent,
     ButtonComponent,
     SidebarComponent,
-    ModalComponent
+    ModalComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { ModalComponent } from './modal/modal.component';
     FooterComponent,
     ButtonComponent,
     SidebarComponent,
-    ModalComponent
+    ModalComponent,
+    ToastComponent,
   ],
 })
 export class SharedModule {}
