@@ -19,4 +19,8 @@ export class SuperAdminsService {
   createAdmin(admin : AdminList) : Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${environment.apiUrl}/api/users`, admin)
   }
+
+  deleteAdmin(id : string) : Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/users/${id}`)
+  }
 }

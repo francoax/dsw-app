@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { AdminList } from 'src/app/models/superAdmin';
 import { SuperAdminsService } from 'src/app/services/super-admins.service';
+import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -11,14 +12,17 @@ import { SuperAdminsService } from 'src/app/services/super-admins.service';
 export class AdminsListComponent implements OnInit {
 
   adminsList : AdminList[] = []
+  idToDelete! : string
 
   @Output() UpdateEvent = new EventEmitter<AdminList>()
   @Output() DeleteEvent = new EventEmitter<string>()
 
-  constructor(private readonly adminsSvs : SuperAdminsService) {}
+  @ViewChild('confirmationModal') confirmationModal! : ModalComponent
+
+  constructor(private readonly adminService : SuperAdminsService) {}
 
   ngOnInit(): void {
-    this.adminsSvs.getAdmins().subscribe((res) => {
+    this.adminService.getAdmins().subscribe((res) => {
       this.adminsList = res.data
     })
   }
@@ -28,7 +32,12 @@ export class AdminsListComponent implements OnInit {
   }
 
   onDelete(id : string) : void {
-    this.DeleteEvent.emit(id)
+    this.idToDelete = id
+    this.confirmationModal.open()
+  }
+
+  onDeleteConfirm() : void {
+    this.adminService.deleteAdmin(this.idToDelete)
   }
 
 }
