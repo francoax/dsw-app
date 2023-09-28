@@ -1,0 +1,18 @@
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle" #dialog>
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">
+      <ng-content select="[modal-title]"></ng-content>
+    </h3>
+    <p class="py-4">
+      <ng-content select="[modal-message]"></ng-content>
+    </p>
+    <div class="modal-action">
+      <form method="dialog">
+        <div class="buttons">
+          <app-button [content]="'Cancelar'" [type]="'cancel'"></app-button>
+          <app-button (click)="onConfirm()" [content]="'Aceptar'" [type]="'primary'"></app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</dialog>
