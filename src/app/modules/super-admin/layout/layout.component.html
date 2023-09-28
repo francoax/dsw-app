@@ -1,2 +1,9 @@
-<navbar></navbar>
-<app-sidebar [buttonsList]="buttonsForSideBar"></app-sidebar>
+<div class="layoutContainer">
+    <navbar></navbar>
+    <app-sidebar [buttonsList]="buttonsForSideBar">
+      <div class="container mx-auto p-2">
+        <router-outlet></router-outlet>
+      </div>
+    </app-sidebar>
+    <app-footer></app-footer>
+</div>

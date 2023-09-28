@@ -1,5 +1,18 @@
-<button [ngClass]="{'btn-primary': type === 'primary', 
-            'btn-cancel': type === 'cancel',
-            'btn-navbar': type === 'navbar'}"
-[routerLink]="routerlink"
-            >{{ content }}</button>
+<ng-container *ngIf="routerlink">
+  <button
+  [ngClass]="{'btn-primary': type === 'primary',
+              'btn-cancel': type === 'cancel',
+              'btn-navbar': type === 'navbar'}"
+  [routerLink]="routerlink"
+  >
+    {{ content }}
+  </button>
+</ng-container>
+<ng-container *ngIf="!routerlink">
+  <button
+  [ngClass]="{'btn-primary': type === 'primary',
+              'btn-cancel': type === 'cancel',
+              'btn-navbar': type === 'navbar'}"
+  >{{ content }}
+  </button>
+</ng-container>

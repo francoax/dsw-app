@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+type Path = {
+  name : string,
+  path : string
+}
 @Component({
   selector: 'app-superadmin-layout',
   templateUrl: './layout.component.html',
@@ -7,9 +11,7 @@ import { Component } from '@angular/core';
 })
 export class LayoutComponent {
 
-  buttonsForSideBar : { name : string, path : string}[] = [
-  { name : 'Administradores', path : ''},
-  { name : 'Lista de Administradores', path : ''}
-]
-
+  buttonsForSideBar : Path[] = [
+    { name : 'Administradores', path : 'management'}
+  ]
 }

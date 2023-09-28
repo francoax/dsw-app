@@ -1,0 +1,46 @@
+<p>{{apiMessage}}</p>
+<div class="collapse bg-base-200">
+  <input type="checkbox" #formCollapse />
+  <div class="collapse-title text-xl font-medium">
+    {{formTitle}}
+  </div>
+  <div class="collapse-content">
+    <div class="border-b border-gray-900/10 pb-12">
+      <p class="mt-1 text-sm leading-6 text-gray-600">Los campos con <span class="text-red-600">*</span> son requeridos.</p>
+      <form class="pr-24" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <div class="flex gap-24 ">
+          <div class="inputs-container">
+          <div class="mt-2">
+            <app-input [inputControl]="name" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
+          </div>
+          <div class="mt-2">
+            <app-input [inputControl]="email" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
+          </div>
+          <div class="mt-2">
+            <app-input [inputControl]="password" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
+          </div>
+                    <div class="mt-2">
+            <app-input [inputControl]="repeatedPassword" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
+          </div>
+          </div>
+          <div class="inputs-container">
+            <div class="mt-2">
+              <app-input [inputControl]="lastname" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="address" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="tel" [label]="'Telefono *'" [placeholder]="'1111111111'"></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="form-buttons mt-2">
+          <app-button (click)="cancelForm()" [content]="'Cancelar'" [type]="'cancel'"></app-button>
+          <app-button [content]="buttonContent" [type]="'primary'"></app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<admins-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></admins-list>

@@ -7,7 +7,7 @@
     <label for="my-drawer-2" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
       <li *ngFor="let route of buttonsToShow">
-        <app-button [content]="route.name" [type]="'navbar'"></app-button>
+        <app-button [content]="route.name" [type]="'navbar'" [routerLink]="route.path"></app-button>
       </li>
     </ul>
   </div>
