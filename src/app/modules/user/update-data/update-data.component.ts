@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
@@ -16,11 +17,11 @@ export class UpdateDataComponent implements OnInit {
   tel = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.minLength(8)]);
+  loggedUser!: any;
 
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // armo el form group con todos los form controls
     this.updateDataForm = new FormGroup({
       name: this.name,
       lastname: this.lastname,
@@ -29,12 +30,19 @@ export class UpdateDataComponent implements OnInit {
       email: this.email,
       password: this.password,
     });
+
+    if (!window.localStorage.getItem('loggedUser')) {
+      this.loggedUser = null;
+      this.updateDataForm.disable();
+    } else {
+      this.loggedUser = window.localStorage.getItem('loggedUser');
+      this.loggedUser = JSON.parse(this.loggedUser);
+    }
   }
 
   onSubmit() {
     if (this.updateDataForm.valid) {
       const user: User = {
-        id: 'id', //obtener el id desde el token jwt
         name: this.updateDataForm.value.name,
         lastname: this.updateDataForm.value.lastname,
         address: this.updateDataForm.value.address,
@@ -43,11 +51,27 @@ export class UpdateDataComponent implements OnInit {
         password: this.updateDataForm.value.password,
       };
 
-      this.userService.updateUser(user).subscribe((res) => {
-        console.log(res);
-      });
+      this.userService
+        .updateUser(user, this.loggedUser.token)
+        .subscribe((res) => {
+          console.log(res);
+        });
     } else {
       alert('Verifique que los datos ingresados sean válidos');
     }
+  }
+
+  deleteUser() {
+    //modal de confirmacion
+    this.userService.deleteUser(this.loggedUser.token).subscribe({
+      next: (res) => {
+        console.log(res);
+        window.localStorage.removeItem('loggedUser');
+        window.location.reload();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

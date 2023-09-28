@@ -48,4 +48,20 @@
       [type]="'primary'"
     ></app-button>
   </form>
+  <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
+    <div class="card-body">
+      <h2 class="card-title">Eliminar cuenta</h2>
+      <p>
+        Desde aquí podrás dar de baja tu cuenta. Si tenés reservas activas no
+        será posible eliminar tu cuenta.
+      </p>
+      <div class="card-actions justify-end">
+        <app-button
+          [content]="'Dar de baja'"
+          [type]="'primary'"
+          (click)="deleteUser()"
+        ></app-button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -30,7 +30,6 @@ export class SignInComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    // armo el form group con todos los form controls
     this.signInForm = new FormGroup({
       name: this.name,
       lastname: this.lastname,
@@ -51,6 +50,7 @@ export class SignInComponent implements OnInit {
         tel: parseInt(this.signInForm.value.tel),
         email: this.signInForm.value.email,
         password: this.signInForm.value.password,
+        role: 'user',
       };
 
       this.userService.saveUser(user).subscribe((res) => {
@@ -62,10 +62,6 @@ export class SignInComponent implements OnInit {
   }
 
   checkPasswords() {
-    console.warn(
-      this.signInForm.value.password,
-      this.signInForm.value.passwordConfirm
-    );
     if (
       this.signInForm.value.password !== this.signInForm.value.passwordConfirm
     ) {

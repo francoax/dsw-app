@@ -21,7 +21,15 @@ export class UserService {
     return this.http.post<JSON>(this.API, user);
   }
 
-  updateUser(user: User): Observable<any> {
-    return this.http.put<any>(this.API, user);
+  updateUser(user: User, token: string): Observable<any> {
+    return this.http.put<any>(this.API, user, {
+      headers: { Authorization: 'Bearer ' + token },
+    });
+  }
+
+  deleteUser(token: string): Observable<any> {
+    return this.http.delete<any>(this.API, {
+      headers: { Authorization: 'Bearer ' + token },
+    });
   }
 }
