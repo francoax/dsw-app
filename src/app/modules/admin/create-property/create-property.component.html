@@ -8,13 +8,13 @@
     <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
     <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
     <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
-      <option *ngFor="let propT of propertiesTypes" value="propT._id">{{propT.description}}</option>
+      <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
     </select>
     <div>
     <app-button [content]="'Submit'" [type]="'primary'"></app-button>
   </div>
   </form>
-
+  <!-- <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list> -->
 <!--
 <label class="label">Property List</label>
 <ul class="list-disc">

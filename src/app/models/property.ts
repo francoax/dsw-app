@@ -1,4 +1,5 @@
 export class Property {
+  _id?:string
   capacity?:      number;
   address?:       string;
   pricePerNight?: PricePerNight;

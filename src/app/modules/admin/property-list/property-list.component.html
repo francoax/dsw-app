@@ -14,10 +14,16 @@
       </li>
     </ul> 
   -->
+  <div>
+    <label class="label">
+    <app-button [content]="'Create Property'" [type]="'primary'"  [routerlink]="'CreateProperty'"></app-button>
+    </label>
+  </div>
     <div class="overflow-x-auto">
       <table class="table table-xs">
         <thead>
           <tr> 
+            <th>Id</th>
             <th>Capacity</th> 
             <th>Address</th> 
             <th>Price</th> 
@@ -27,11 +33,14 @@
         </thead> 
         <tbody>
           <tr *ngFor="let prop of properties">
+            <td>{{prop._id}}</td>
             <td>{{prop.capacity}}</td>
             <td>{{prop.address}}</td>
             <td>{{prop?.pricePerNight?.price}}</td>
             <td>{{prop?.pricePerNight?.date}}</td>
             <td>{{prop.propertyType}}</td>
+            <app-button [content]="'edit'" [type]="'primary'" [routerlink]="'CreateProperty'"></app-button>
+            <app-button [content]="'delete'" [type]="'primary'" [routerlink]="'CreateProperty'"></app-button>
           </tr>
         </tbody> 
       </table>

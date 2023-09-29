@@ -1,5 +1,5 @@
 export interface PropertyType {
-    _id: string
+    _id: string,
     description: string
   }
   /*

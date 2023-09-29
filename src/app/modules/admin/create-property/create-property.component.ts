@@ -55,6 +55,7 @@ export class CreatePropertyComponent implements OnInit {
     
     onSubmit(){
       /* const objeto:Property = this.propertyForm.value;*/
+      if(this.propertyForm.valid){
       const prop: Property = {
         capacity: parseInt(this.propertyForm.value.capacity ||''),
         address: this.propertyForm.value.address ||'',
@@ -66,7 +67,17 @@ export class CreatePropertyComponent implements OnInit {
       };
       /*console.log(this.propertyForm.valid)*/
       this.service?.createProperty(prop).subscribe(res=> console.log(res));
+      } else {
+        alert('Verifique que los datos ingresados sean validos')
+      }
     }
+    onDelete(id:string){
+      console.log('delet =>', id);
+    }
+    onUpdate(prop: Property){
+      console.log(prop);
+    }
+
 }
 
   
