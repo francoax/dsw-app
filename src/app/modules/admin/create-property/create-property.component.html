@@ -1,46 +1,41 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
-<navbar></navbar>
-<app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
-  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-    <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
-    <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
-    <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
-    <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-    <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
-      <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
-    </select>
-    <div>
-    <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+<div class="collapse bg-base-200">
+  <input type="checkbox" #formCollapse /> 
+  <div class="collapse-title text-xl font-medium">
+      {{formTitle}}
   </div>
-  </form>
-  <!-- <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list> -->
-<!--
-<label class="label">Property List</label>
-<ul class="list-disc">
-  <li *ngFor="let propT of propertiesTypes">
-    <label class="label">
-      {{propT| json }}
-  </label>
-  </li>
-</ul> 
-</app-sidebar>
-<app-footer></app-footer>
--->
-<!-- 
+  <div class="collapse-content"> 
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
+        <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
+        <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
+        <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+        <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
+          <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
+        </select>
+        <div>
+        <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+        </div>
+      </form>
+    </div>
+</div>
 
-<navbar></navbar>
-<app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
-  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-    <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
-    <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
-    <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
-    <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-    <app-input [label]="'propertyType'" [placeholder]="'propertyType'" [required]="true" [inputControl]="propertyType"> </app-input>
-    <app-button [content]="'Submit'" [type]="'primary'"></app-button>
-  </form>
-</app-sidebar>
-<app-footer></app-footer>
+  <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
 
 
--->
+  <!-- 
+    <app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+        <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
+        <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
+        <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
+        <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+        <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
+          <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
+        </select>
+        <div>
+        <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+        </div>
+      </form>
+  -->

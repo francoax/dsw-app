@@ -4,7 +4,7 @@ import { PropertyServiceService } from 'src/app/services/property-service.servic
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
-import { Router, RouterModule } from '@angular/router';
+import { Router} from '@angular/router';
 @Component({
   selector: 'app-property-list',
   templateUrl: './property-list.component.html',

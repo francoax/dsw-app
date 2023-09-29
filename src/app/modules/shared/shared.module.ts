@@ -7,6 +7,8 @@ import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
+import { ModalComponent } from './modal/modal.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { RouterModule } from '@angular/router';
     InputComponent,
     FooterComponent,
     ButtonComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { RouterModule } from '@angular/router';
     InputComponent,
     FooterComponent,
     ButtonComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalComponent,
+    ToastComponent,
   ],
 })
 export class SharedModule {}

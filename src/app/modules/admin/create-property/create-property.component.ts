@@ -1,9 +1,9 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PropertyServiceService } from 'src/app/services/property-service.service';
-import { Property } from 'src/app/models/property';
+import { PricePerNight, Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 @Component({
@@ -13,6 +13,10 @@ import { PropertyType } from 'src/app/models/property-type';
 })
 export class CreatePropertyComponent implements OnInit {
   propertiesTypes:PropertyType[] =[];  /* crear modelo y pasar a :PropertyType */
+  formTitle= 'Registrar nueva Propiedad';
+  buttonContent = 'Aceptar';
+  @ViewChild('formCollapse') formCollapse! : ElementRef
+
 
   constructor(private service:PropertyServiceService){}
 
@@ -74,10 +78,24 @@ export class CreatePropertyComponent implements OnInit {
     onDelete(id:string){
       console.log('delet =>', id);
     }
-    onUpdate(prop: Property){
-      console.log(prop);
+    onUpdate(prop: Property) {
+      this.formCollapse.nativeElement.checked = true;
+      this.formTitle = `Editar Propiedad`;
+      this.propertyForm.setValue({
+        capacity: prop.capacity ? prop.capacity.toString() : null,
+        address: prop.address ? prop.address.toString() : null,
+        pricePerNight:{
+          price: prop.pricePerNight?.price? prop.pricePerNight.price.toString() : null,
+          date: prop.pricePerNight?.date? prop.pricePerNight.date.toString() : null
+        },
+        propertyType: prop.propertyType
+      })
     }
 
 }
 
   
+function ViewChild(arg0: string): (target: CreatePropertyComponent, propertyKey: "formCollapse") => void {
+  throw new Error('Function not implemented.');
+}
+
