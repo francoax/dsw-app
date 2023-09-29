@@ -1,6 +1,7 @@
+<!-- eslint-disable max-len -->
 <div class="mt-6">
   <h2 class="text-base font-semibold leading-7 text-gray-900">Lista de administradores.</h2>
-<p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
+<p class="mt-1 text-sm leading-6 text-gray-600">Administradores vigentes de PHS.</p>
 </div>
 <table class="table">
   <thead>
@@ -14,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let admin of adminsList">
+    <tr *ngFor="let admin of List">
       <td>{{admin._id}}</td>
       <td>{{admin.name}}</td>
       <td>{{admin.lastname}}</td>
@@ -33,4 +34,7 @@
     </tr>
   </tbody>
 </table>
-<confirmation-modal #confirmationModal (confirmationEvent)="onDeleteConfirm()"></confirmation-modal>
+<confirmation-modal #confirmationModal (confirmationEvent)="onDeleteConfirm()">
+  <ng-container modal-title>Eliminar administrador</ng-container>
+  <ng-container modal-message>Estas seguro que queres eliminar este administrador?</ng-container>
+</confirmation-modal>

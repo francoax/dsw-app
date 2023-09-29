@@ -1,4 +1,4 @@
-export interface AdminList {
+export interface Admin {
   _id : string,
   name: string,
   lastname: string,

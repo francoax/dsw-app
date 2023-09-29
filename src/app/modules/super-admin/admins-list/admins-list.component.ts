@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AdminList } from 'src/app/models/superAdmin';
-import { SuperAdminsService } from 'src/app/services/super-admins.service';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Admin } from 'src/app/models/superAdmin';
 import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
@@ -9,25 +8,17 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './admins-list.component.html',
   styleUrls: ['./admins-list.component.scss']
 })
-export class AdminsListComponent implements OnInit {
+export class AdminsListComponent {
 
-  adminsList : AdminList[] = []
   idToDelete! : string
 
-  @Output() UpdateEvent = new EventEmitter<AdminList>()
+  @Input() List : Admin[] = []
+  @Output() UpdateEvent = new EventEmitter<Admin>()
   @Output() DeleteEvent = new EventEmitter<string>()
 
   @ViewChild('confirmationModal') confirmationModal! : ModalComponent
 
-  constructor(private readonly adminService : SuperAdminsService) {}
-
-  ngOnInit(): void {
-    this.adminService.getAdmins().subscribe((res) => {
-      this.adminsList = res.data
-    })
-  }
-
-  onUpdate(admin : AdminList) : void {
+  onUpdate(admin : Admin) : void {
     this.UpdateEvent.emit(admin)
   }
 
@@ -37,7 +28,7 @@ export class AdminsListComponent implements OnInit {
   }
 
   onDeleteConfirm() : void {
-    this.adminService.deleteAdmin(this.idToDelete)
+    this.DeleteEvent.emit(this.idToDelete)
   }
 
 }

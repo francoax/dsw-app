@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
 
-  @Input() content !: string; //texto que va adentro del botton
-  @Input() type !: string; //tipo del boton, puede ser primary, cancel o navbar
+  @Input() classType !: string; //tipo del boton, puede ser primary, cancel o navbar
+  @Input() type! : string
   @Input() routerlink!: string; //navega hacia la ruta
 }

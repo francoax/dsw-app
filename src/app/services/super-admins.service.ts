@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../models/common';
-import { AdminList } from '../models/superAdmin';
+import { Admin } from '../models/superAdmin';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,12 @@ export class SuperAdminsService {
     return this.http.get<ApiResponse>(`${environment.apiUrl}/api/users`);
   }
 
-  createAdmin(admin : AdminList) : Observable<ApiResponse> {
+  createAdmin(admin : Admin) : Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${environment.apiUrl}/api/users`, admin)
+  }
+
+  updateAdmin(admin : Admin, id : string) : Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${environment.apiUrl}/api/users/${id}`, admin)
   }
 
   deleteAdmin(id : string) : Observable<ApiResponse> {

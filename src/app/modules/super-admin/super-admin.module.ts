@@ -7,7 +7,8 @@ import { SharedModule } from "../shared/shared.module";
 import { AdminsListComponent } from './admins-list/admins-list.component';
 import { AdminManagementComponent } from './admin-management/admin-management.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 
 
 @NgModule({
@@ -23,5 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
         ReactiveFormsModule,
         HttpClientModule
     ],
+    providers : [
+      { provide : HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi: true }
+    ]
 })
 export class SuperAdminModule { }

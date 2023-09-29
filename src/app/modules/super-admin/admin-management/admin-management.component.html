@@ -1,5 +1,4 @@
 <!-- eslint-disable max-len -->
-<p>{{apiMessage}}</p>
 <div class="collapse bg-base-200">
   <input type="checkbox" #formCollapse />
   <div class="collapse-title text-xl font-medium">
@@ -20,8 +19,8 @@
           <div class="mt-2">
             <app-input [inputControl]="password" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
           </div>
-                    <div class="mt-2">
-            <app-input [inputControl]="repeatedPassword" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
+          <div class="mt-2">
+            <!-- <app-input [inputControl]="repeatedPassword" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input> -->
           </div>
           </div>
           <div class="inputs-container">
@@ -37,11 +36,15 @@
           </div>
         </div>
         <div class="form-buttons mt-2">
-          <app-button (click)="cancelForm()" [content]="'Cancelar'" [type]="'cancel'"></app-button>
-          <app-button [content]="buttonContent" [type]="'primary'"></app-button>
+          <app-button (click)="cancelForm()" [type]="'button'" [classType]="'cancel'">
+            Cancelar
+          </app-button>
+          <app-button [type]="'primary'" [type]="'submit'" [classType]="'primary'">
+            {{buttonContent}}
+          </app-button>
         </div>
       </form>
     </div>
   </div>
 </div>
-<admins-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></admins-list>
+<admins-list [List]="adminList" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></admins-list>
