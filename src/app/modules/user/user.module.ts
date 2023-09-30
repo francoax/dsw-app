@@ -6,10 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LogInComponent } from './log-in/log-in.component';
 import { UpdateDataComponent } from './update-data/update-data.component';
 import { UserRoutingModule } from './user-routing.module';
+import { ToastInterceptor } from '../shared/toast/toast.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [SignInComponent, LogInComponent, UpdateDataComponent],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, UserRoutingModule],
   exports: [SignInComponent, LogInComponent, UpdateDataComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi: true },
+  ],
 })
 export class UserModule {}

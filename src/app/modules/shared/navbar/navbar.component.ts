@@ -1,5 +1,6 @@
 /* eslint-disable @angular-eslint/component-selector */
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'navbar',
@@ -12,19 +13,19 @@ export class NavbarComponent {
   loggedUser = window.localStorage.getItem('loggedUser');
   userName = '';
 
-  constructor() {
+  constructor(private router: Router) {
     if (this.loggedUser) {
       const user = JSON.parse(this.loggedUser);
       this.userName = user.name;
     }
   }
 
+  logout() {
+    window.localStorage.removeItem('loggedUser');
+    this.router.navigate(['user/login']);
+  }
+
   buttonClicked() {
-    if (this.loggedUser) {
-      window.localStorage.removeItem('loggedUser');
-      window.location.reload();
-    } else {
-      //redirigir a pagina de login
-    }
+    this.router.navigate(['user/login']);
   }
 }

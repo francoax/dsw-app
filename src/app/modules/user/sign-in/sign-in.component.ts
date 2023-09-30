@@ -1,7 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormControl,
+  AbstractControl,
+  ValidatorFn,
+  ValidationErrors,
+} from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+
+export const checkPasswords: ValidatorFn = (
+  control: AbstractControl
+): ValidationErrors | null => {
+  const password = control.get('password');
+  const passwordConfirm = control.get('passwordConfirm');
+  return password?.value === passwordConfirm?.value
+    ? null
+    : { passwordsNotMatching: true };
+};
 
 @Component({
   selector: 'app-sign-in',
@@ -30,15 +47,18 @@ export class SignInComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.signInForm = new FormGroup({
-      name: this.name,
-      lastname: this.lastname,
-      address: this.address,
-      tel: this.tel,
-      email: this.email,
-      password: this.password,
-      passwordConfirm: this.passwordConfirm,
-    });
+    this.signInForm = new FormGroup(
+      {
+        name: this.name,
+        lastname: this.lastname,
+        address: this.address,
+        tel: this.tel,
+        email: this.email,
+        password: this.password,
+        passwordConfirm: this.passwordConfirm,
+      },
+      { validators: checkPasswords }
+    );
   }
 
   onSubmit() {
@@ -53,19 +73,11 @@ export class SignInComponent implements OnInit {
         role: 'user',
       };
 
-      this.userService.saveUser(user).subscribe((res) => {
-        console.log(res);
+      this.userService.saveUser(user).subscribe(() => {
+        this.signInForm.reset();
       });
     } else {
       alert('Verifique que los datos ingresados sean válidos');
-    }
-  }
-
-  checkPasswords() {
-    if (
-      this.signInForm.value.password !== this.signInForm.value.passwordConfirm
-    ) {
-      alert('Las contraseñas no coinciden');
     }
   }
 }

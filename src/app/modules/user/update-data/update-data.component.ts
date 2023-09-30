@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { ModalComponent } from '../../shared/modal/modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-update-data',
@@ -19,7 +21,9 @@ export class UpdateDataComponent implements OnInit {
   password = new FormControl('', [Validators.minLength(8)]);
   loggedUser!: any;
 
-  constructor(private userService: UserService) {}
+  @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
+
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.updateDataForm = new FormGroup({
@@ -37,6 +41,22 @@ export class UpdateDataComponent implements OnInit {
     } else {
       this.loggedUser = window.localStorage.getItem('loggedUser');
       this.loggedUser = JSON.parse(this.loggedUser);
+      this.userService.getUser(this.loggedUser.token).subscribe({
+        next: (res) => {
+          const { data } = res;
+          this.updateDataForm.setValue({
+            name: data.name,
+            lastname: data.lastname,
+            address: data.address,
+            tel: data.tel,
+            email: data.email,
+            password: data.password,
+          });
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     }
   }
 
@@ -62,16 +82,16 @@ export class UpdateDataComponent implements OnInit {
   }
 
   deleteUser() {
-    //modal de confirmacion
     this.userService.deleteUser(this.loggedUser.token).subscribe({
       next: (res) => {
         console.log(res);
         window.localStorage.removeItem('loggedUser');
-        window.location.reload();
-      },
-      error: (err) => {
-        console.log(err);
+        this.router.navigate(['/user']);
       },
     });
+  }
+
+  showModal(): void {
+    this.modalComponent.open();
   }
 }

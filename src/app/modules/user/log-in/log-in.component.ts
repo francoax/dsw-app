@@ -26,14 +26,12 @@ export class LogInComponent implements OnInit {
     const { mail, password } = this.logInForm.value;
     this.userService.getUserByCredentials(mail, password).subscribe({
       next: (res) => {
-        console.log(res);
         window.localStorage.setItem('loggedUser', JSON.stringify(res.data));
         window.location.reload();
       },
       error: (err) => {
-        console.log(err);
         if (err.status === 0) {
-          this.responseError = 'No se puede conectar con el servidor';
+          this.responseError = 'Unable to connect to server';
         } else {
           this.responseError = err.error.message;
         }
