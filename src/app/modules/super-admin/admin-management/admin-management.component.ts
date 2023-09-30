@@ -140,15 +140,11 @@ export class AdminManagementComponent implements OnInit {
     this.idToUpdate = admin._id
   }
 
-  cancelForm() : void {
-    this.closeForm()
+  closeForm() : void {
+    this.formCollapse.nativeElement.checked = false;
     this.formTitle = 'Registar nuevo administrador'
     this.buttonContent = 'Aceptar'
     this.form.reset()
-  }
-
-  closeForm() : void {
-    this.formCollapse.nativeElement.checked = false;
   }
 
 }
