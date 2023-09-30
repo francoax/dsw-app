@@ -1,0 +1,10 @@
+<div class="layoutContainer">
+    <navbar></navbar>
+    <app-sidebar [buttonsList]="buttonsForSideBar">
+      <div class="container mx-auto p-2">
+        <router-outlet></router-outlet>
+      </div>
+    </app-sidebar>
+    <app-footer></app-footer>
+    <snackbar></snackbar>
+</div>
