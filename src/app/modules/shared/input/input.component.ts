@@ -11,5 +11,6 @@ export class InputComponent {
   @Input() label!: string;
   @Input() placeholder!: string;
   @Input() required = false;
+  @Input() readonly = false;
   @Input() inputControl!: FormControl;
 }

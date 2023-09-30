@@ -12,6 +12,7 @@
   <input
     [type]="type"
     [placeholder]="placeholder"
+    [readOnly]="readonly"
     class="input input-bordered w-full max-w-xs"
     [ngClass]="{
       'border-red-500': inputControl.errors !== null && inputControl.touched
