@@ -10,28 +10,31 @@
       <form class="pr-24" [formGroup]="form" (ngSubmit)="onSubmit(form)">
         <div class="flex gap-24 ">
           <div class="inputs-container">
-          <div class="mt-2">
-            <app-input [inputControl]="name" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
-          </div>
-          <div class="mt-2">
-            <app-input [inputControl]="email" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
-          </div>
-          <div class="mt-2">
-            <app-input [inputControl]="password" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
-          </div>
-          <div class="mt-2">
-            <!-- <app-input [inputControl]="repeatedPassword" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input> -->
-          </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('name'))" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('email'))" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('password'))" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('repeatedPassword'))" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
+            </div>
+            <span *ngIf="form.errors?.['passwordsNotMatching'] && $any(form.get('password')?.touched) && $any(form.get('repeatedPassword')?.touched)" class="label-text-alt text-red-500">
+              Las contraseñas no coinciden.
+            </span>
           </div>
           <div class="inputs-container">
             <div class="mt-2">
-              <app-input [inputControl]="lastname" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
+              <app-input [inputControl]="$any(form.get('lastname'))" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
             </div>
             <div class="mt-2">
-              <app-input [inputControl]="address" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
+              <app-input [inputControl]="$any(form.get('address'))" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
             </div>
             <div class="mt-2">
-              <app-input [inputControl]="tel" [label]="'Telefono *'" [placeholder]="'1111111111'"></app-input>
+              <app-input [inputControl]="$any(form.get('tel'))" [label]="'Telefono *'" [placeholder]="'1111111111'"></app-input>
             </div>
           </div>
         </div>

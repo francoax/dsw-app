@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Admin } from 'src/app/models/superAdmin';
 import { SuperAdminsService } from 'src/app/services/super-admins.service';
 import { ToastService } from '../../shared/toast/toast.service';
+import { checkPasswords } from './form.validators';
 
 @Component({
   selector: 'app-admin-management',
@@ -21,24 +22,6 @@ export class AdminManagementComponent implements OnInit {
 
   form!: FormGroup
 
-  name = new FormControl<string>('', [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(20)
-  ])
-  lastname = new FormControl<string>('', [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(20)
-  ])
-  address = new FormControl<string>('', [Validators.required])
-  email = new FormControl<string>('', [
-    Validators.required,
-    Validators.email
-  ])
-  password = new FormControl<string>('', [Validators.required])
-  tel = new FormControl<string>('', [Validators.required])
-
   constructor(
     private readonly fb : FormBuilder,
     private readonly dataService : SuperAdminsService,
@@ -46,17 +29,61 @@ export class AdminManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.initForm()
+    this.form.addValidators(checkPasswords)
     this.loadList()
   }
 
   initForm() : FormGroup {
     return this.fb.group({
-      name : this.name,
-      lastname : this.lastname,
-      address : this.address,
-      email : this.email,
-      password : this.password,
-      tel : this.tel,
+      name : [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ]
+      ],
+      lastname : [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(20)
+        ]
+      ],
+      address : [
+        '',
+        [
+          Validators.required,
+        ]
+      ],
+      email : [
+        '',
+        [
+          Validators.required,
+          Validators.email
+        ]
+      ],
+      password : [
+        '',
+        [
+          Validators.required,
+        ]
+      ],
+      repeatedPassword : [
+        '',
+        [
+          Validators.required,
+        ]
+      ],
+      tel : [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(11),
+          Validators.maxLength(11)
+        ]
+      ],
     })
   }
 
@@ -68,23 +95,25 @@ export class AdminManagementComponent implements OnInit {
 
   onSubmit(form : FormGroup) : void {
     if(!this.form.valid) {
+      this.form.markAllAsTouched()
       this.toastService.setup({ message : 'Error, revise los campos del formulario.', status : false})
       this.toastService.show()
+    } else {
+      this.formScope === 'create'
+      ? this.dataService.createAdmin(form.value).subscribe((res) => {
+        if(!res.error) {
+          this.closeForm()
+          this.adminList.push(res.data)
+        }
+      })
+      : this.dataService.updateAdmin(form.value, this.idToUpdate).subscribe((res) => {
+        if(!res.error) {
+          this.closeForm()
+          const index = this.adminList.map(a => a._id).indexOf(res.data._id)
+          this.adminList[index] = res.data
+        }
+      })
     }
-    this.formScope === 'create'
-    ? this.dataService.createAdmin(form.value).subscribe((res) => {
-      if(!res.error) {
-        this.closeForm()
-        this.adminList.push(res.data)
-      }
-    })
-    : this.dataService.updateAdmin(form.value, this.idToUpdate).subscribe((res) => {
-      if(!res.error) {
-        this.closeForm()
-        const index = this.adminList.map(a => a._id).indexOf(res.data._id)
-        this.adminList[index] = res.data
-      }
-    })
   }
 
   onDelete(id : string) : void {
