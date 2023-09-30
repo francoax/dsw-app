@@ -14,7 +14,7 @@ export class PropertyListComponent implements OnInit {
   constructor(private service:PropertyServiceService, private router:Router){}
   properties:Property[] =[];
   propertiesTypes:PropertyType[]=[];
-  
+
   @Output() UpdateEvent = new EventEmitter<Property>();
   @Output() DeleteEvent = new EventEmitter<string>();
 
@@ -34,13 +34,5 @@ export class PropertyListComponent implements OnInit {
 
   nav(){
     this.router.navigate(['CreateProperty']);
-    
   }
-
-
-
-
-
-
-  
 }

@@ -25,7 +25,7 @@ export class CreatePropertyComponent implements OnInit {
   }
 
 
-  capacity = new FormControl('',[Validators.required,Validators.maxLength(30)]);
+  capacity = new FormControl<number>(0,[Validators.required,Validators.maxLength(30)]);
   address = new FormControl('',[Validators.maxLength(50),Validators.required]);
   price= new FormControl('',[this.tiene_numeros]);
   date= new FormControl('',[Validators.required]);
@@ -46,50 +46,41 @@ export class CreatePropertyComponent implements OnInit {
     const texto:string = control.value;
     let i=0;
     let count=0;
-   for(i=0; i<texto.length; i++){
+    for(i=0; i<texto.length; i++){
       if (numeros.indexOf(texto.charAt(i),0)!=-1){
          count= count +1;
       }
-   }
-   if(texto.length != count){
-    return {ValidMayus:true}
-   }
+    }
+    if(texto.length != count){
+      return {ValidMayus:true}
+    }
    return null;
-}
+  }
 
-    onSubmit(form : FormGroup){
-      /* const objeto:Property = this.propertyForm.value;*/
-      if(this.propertyForm.valid){
-      // const prop: Property = {
-      //   capacity: parseInt(this.propertyForm.value.capacity ||''),
-      //   address: this.propertyForm.value.address ||'',
-      //   pricePerNight:{
-      //     price: parseInt(this.propertyForm.value.pricePerNight?.price ||''),
-      //     date:this.propertyForm.value.pricePerNight?.date ||'',
-      //   },
-      //   propertyType: this.propertyForm.value.propertyType ||'',
-      // };
-      /*console.log(this.propertyForm.valid)*/
-      this.service?.createProperty(form.value).subscribe(res=> console.log(res));
-      } else {
-        alert('Verifique que los datos ingresados sean validos')
-      }
+  onSubmit(form : FormGroup){
+    if(this.propertyForm.valid){
+      this.service.createProperty(form.value).subscribe(res=> console.log(res));
+    } else {
+      alert('Verifique que los datos ingresados sean validos')
     }
-    onDelete(id:string){
-      console.log('delet =>', id);
-    }
-    onUpdate(prop: Property) {
-      this.formCollapse.nativeElement.checked = true;
-      this.formTitle = `Editar Propiedad`;
-      this.propertyForm.setValue({
-        capacity: prop.capacity ? prop.capacity.toString() : null,
-        address: prop.address ? prop.address.toString() : null,
-        pricePerNight:{
-          price: prop.pricePerNight.price.toString(),
-          date: prop.pricePerNight.date
-        },
-        propertyType: prop.propertyType
-      })
-    }
+  }
+
+  onDelete(id:string){
+    console.log('delet =>', id);
+  }
+
+  onUpdate(prop: Property) {
+    this.formCollapse.nativeElement.checked = true;
+    this.formTitle = `Editar Propiedad`;
+    this.propertyForm.patchValue({
+      capacity: prop.capacity,
+      address: prop.address,
+      pricePerNight: {
+        price: prop.pricePerNight.price.toString(),
+        date: prop.pricePerNight.date
+      },
+      propertyType: prop.propertyType
+    })
+  }
 
 }

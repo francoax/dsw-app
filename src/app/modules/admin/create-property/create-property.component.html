@@ -1,11 +1,11 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
 <div class="collapse bg-base-200">
-  <input type="checkbox" #formCollapse /> 
+  <input type="checkbox" #formCollapse />
   <div class="collapse-title text-xl font-medium">
       {{formTitle}}
   </div>
-  <div class="collapse-content"> 
+  <div class="collapse-content">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
         <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
         <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
@@ -15,13 +15,14 @@
           <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
         </select>
         <div>
-        <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+        <app-button [type]="'submit'" [classType]="'primary'" >
+          {{buttonContent}}
+        </app-button>
         </div>
       </form>
     </div>
 </div>
-
-  <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
+<app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
 
 
   <!-- 
