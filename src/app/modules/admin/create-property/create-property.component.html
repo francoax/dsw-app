@@ -6,7 +6,7 @@
       {{formTitle}}
   </div>
   <div class="collapse-content"> 
-      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
         <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
         <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
         <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
