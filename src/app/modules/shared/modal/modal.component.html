@@ -9,8 +9,12 @@
     <div class="modal-action">
       <form method="dialog">
         <div class="buttons">
-          <app-button [content]="'Cancelar'" [type]="'cancel'"></app-button>
-          <app-button (click)="onConfirm()" [content]="'Aceptar'" [type]="'primary'"></app-button>
+          <app-button [classType]="'cancel'">
+            Cancelar
+          </app-button>
+          <app-button (click)="onConfirm()" [classType]="'primary'">
+            Aceptar
+          </app-button>
         </div>
       </form>
     </div>
