@@ -37,10 +37,5 @@ export class PropertyListComponent implements OnInit {
     
   }
 
-
-
-
-
-
   
 }
