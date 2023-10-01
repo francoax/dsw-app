@@ -1,5 +1,6 @@
-<navbar></navbar>
-<app-sidebar>
+<div class="mt-6">
+  <h2 class="text-base font-semibold leading-7 text-gray-900 title">{{formTitle}}</h2>
+</div>
  <form  [formGroup]="carsForm" (ngSubmit)="onSubmit()">
   <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
   <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
@@ -10,5 +11,3 @@
   <app-input [label]="'locality'" [placeholder]="'locality'" [required]="true" [inputControl]="locality"></app-input>
   <app-button [content]="'Submit'" [type]="'primary'"></app-button>
 </form>
-</app-sidebar>
-<app-footer></app-footer>

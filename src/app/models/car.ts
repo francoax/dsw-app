@@ -8,6 +8,6 @@ export interface Car {
 }
 export interface Price {
   date: string
-  value: string
+  value: number
 }
 

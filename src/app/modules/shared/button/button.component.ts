@@ -9,5 +9,5 @@ export class ButtonComponent {
 
   @Input() content !: string; //texto que va adentro del botton
   @Input() type !: string; //tipo del boton, puede ser primary, cancel o navbar
-
+  @Input() routerlink : string = '#'; //navega hacia la ruta
 }

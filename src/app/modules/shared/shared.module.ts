@@ -6,6 +6,9 @@ import { InputComponent } from './input/input.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from './button/button.component';
+import { RouterModule } from '@angular/router';
+import { ModalComponent } from './modal/modal.component';
+import { ToastComponent } from './toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -13,18 +16,23 @@ import { ButtonComponent } from './button/button.component';
     InputComponent,
     FooterComponent,
     ButtonComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalComponent,
+    ToastComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
     InputComponent,
     FooterComponent,
     ButtonComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModalComponent,
+    ToastComponent,
   ],
 })
 export class SharedModule {}

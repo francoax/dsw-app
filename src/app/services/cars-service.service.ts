@@ -1,29 +1,32 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Car } from '../models/car';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
+import { ApiResponse } from '../models/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarsServiceService {
-  readonly baseUrl = "http://localhost:4200/api/Property/";
+
   constructor(private http:HttpClient) { }
 
-  createCar(prop:Car) {
-    const url = this.baseUrl;
-    this.http.post(url,prop).subscribe((Res) => console.log(Res));
+  createCar(car:Car):Observable<Car>{
+    const url = environment.apiUrl+"/api/cars";
+    return this.http.post<Car>(url,car);
   }
   getCars(){
-    const url = this.baseUrl;
+    const url = environment.apiUrl+"/api/cars/";
     return this.http.get(url);
   }
 
   deleteCar(){
-    const url = this.baseUrl + ':id';
+    const url = environment.apiUrl+"/api/cars/:id";
     return this.http.delete(url);
     }
   UpdateCar(prop:Car){
-    const url = this.baseUrl + ':id';
+    const url = environment.apiUrl+"/api/cars/:id";
     return this.http.put(url,prop);
     }
 
