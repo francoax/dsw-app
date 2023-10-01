@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from "./modules/shared/shared.module";
 import { AdminModule } from './modules/admin/admin.module';
 import { HttpClientModule } from '@angular/common/http';
-
+import { SuperAdminModule } from './modules/super-admin/super-admin.module';
 @NgModule({
     declarations: [
         AppComponent,
@@ -17,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
         AppRoutingModule,
         SharedModule,
         AdminModule,
-        HttpClientModule
+        HttpClientModule,
+        SuperAdminModule
     ]
-})
+  })
 export class AppModule {}
