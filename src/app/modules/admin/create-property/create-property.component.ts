@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ElementRef } from '@angular/core';
@@ -15,7 +16,7 @@ export class CreatePropertyComponent implements OnInit {
   propertiesTypes:PropertyType[] =[];  /* crear modelo y pasar a :PropertyType */
   formTitle= 'Registrar nueva Propiedad';
   buttonContent = 'Aceptar';
-  @ViewChild('formCollapse') formCollapse! : ElementRef
+  /* @ViewChild('formCollapse') formCollapse! : ElementRef*/
 
 
   constructor(private service:PropertyServiceService){}
@@ -78,6 +79,7 @@ export class CreatePropertyComponent implements OnInit {
     onDelete(id:string){
       console.log('delet =>', id);
     }
+   /* 
     onUpdate(prop: Property) {
       this.formCollapse.nativeElement.checked = true;
       this.formTitle = `Editar Propiedad`;
@@ -90,12 +92,10 @@ export class CreatePropertyComponent implements OnInit {
         },
         propertyType: prop.propertyType
       })
-    }
+    } */
 
 }
 
   
-function ViewChild(arg0: string): (target: CreatePropertyComponent, propertyKey: "formCollapse") => void {
-  throw new Error('Function not implemented.');
-}
+
 

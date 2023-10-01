@@ -4,14 +4,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from "./modules/shared/shared.module";
 import { AdminModule } from './modules/admin/admin.module';
-import { HttpClientModule } from '@angular/common/http';
 import { SuperAdminModule } from './modules/super-admin/super-admin.module';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
     declarations: [
         AppComponent,
     ],
-    providers: [],
-    bootstrap: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -19,6 +18,8 @@ import { SuperAdminModule } from './modules/super-admin/super-admin.module';
         AdminModule,
         HttpClientModule,
         SuperAdminModule
-    ]
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
   })
 export class AppModule {}

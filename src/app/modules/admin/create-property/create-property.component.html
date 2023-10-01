@@ -15,13 +15,15 @@
           <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
         </select>
         <div>
-        <app-button [content]="'Submit'" [type]="'primary'"></app-button>
+          <app-button [type]="'primary'" [type]="'submit'" [classType]="'primary'">
+            aceptar
+          </app-button>
         </div>
       </form>
     </div>
 </div>
 
-  <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
+<!-- <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>-->
 
 
   <!-- 

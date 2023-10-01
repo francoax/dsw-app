@@ -16,7 +16,9 @@
   -->
   <div>
     <label class="label">
-    <app-button [content]="'Create Property'" [type]="'primary'"  [routerlink]="'CreateProperty'"></app-button>
+      <app-button [type]="'primary'" [type]="'submit'" [classType]="'primary'">
+        RegistrarPropiedad
+      </app-button>
     </label>
   </div>
     <div class="overflow-x-auto">
@@ -39,8 +41,6 @@
             <td>{{prop?.pricePerNight?.price}}</td>
             <td>{{prop?.pricePerNight?.date}}</td>
             <td>{{prop.propertyType}}</td>
-            <app-button [content]="'edit'" [type]="'primary'" [routerlink]="'CreateProperty'"></app-button>
-            <app-button [content]="'delete'" [type]="'primary'" [routerlink]="'CreateProperty'"></app-button>
           </tr>
         </tbody> 
       </table>
