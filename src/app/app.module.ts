@@ -6,6 +6,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { UserModule } from './modules/user/user.module';
 import { HttpClientModule } from '@angular/common/http';
+import { SuperAdminModule } from './modules/super-admin/super-admin.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
     UserModule,
     HttpClientModule,
     AdminModule,
+    SuperAdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
