@@ -1,31 +1,39 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
+
 <div class="collapse bg-base-200">
-  <input type="checkbox" #formCollapse /> 
+  <input type="checkbox" #formCollapse />
   <div class="collapse-title text-xl font-medium">
       {{formTitle}}
   </div>
-  <div class="collapse-content"> 
-      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
+  <div class="collapse-content">
+      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
         <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
         <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
         <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
         <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+        <div>
+          <div>
+          <label>Propiedades</label>
+          </div>
         <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
           <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
         </select>
+        </div>
         <div>
-          <app-button [type]="'primary'" [type]="'submit'" [classType]="'primary'">
-            aceptar
-          </app-button>
+        <app-button [type]="'submit'" [classType]="'primary'" >
+          {{buttonContent}}
+        </app-button>
+        <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
+          Cancelar
+        </app-button>
         </div>
       </form>
     </div>
 </div>
+<app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
 
-<!-- <app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>-->
-
-
+s
   <!-- 
     <app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">

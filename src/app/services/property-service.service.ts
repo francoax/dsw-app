@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Property } from '../models/property';
@@ -21,9 +22,8 @@ export class PropertyServiceService {
     return this.http.get<ApiResponse>(this.baseUrl);
   }
 
-  deleteProperty(){
-    const url = this.baseUrl + ':id';
-    return this.http.delete<Property>(url);
+  deleteProperty(id:string):Observable<ApiResponse>{
+    return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/users/${id}`)
     }
   UpdateProperty(prop: Property){
     const url = this.baseUrl + ':id';
