@@ -5,13 +5,15 @@ import { CarsFormComponent } from './cars-form/cars-form.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
+import { CarsListComponent } from './cars-list/cars-list.component';
 
 
 
 @NgModule({
   declarations: [
     CarsFormComponent,
-    AdminComponent
+    AdminComponent,
+    CarsListComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,6 @@ import { AdminComponent } from './admin.component';
     SharedModule,
     ReactiveFormsModule
   ],
-  exports:[CarsFormComponent,AdminComponent]
+  exports:[CarsFormComponent,AdminComponent,CarsListComponent]
 })
 export class AdminModule { }

@@ -1,0 +1,35 @@
+  <div class="overflow-x-auto">
+    <table class="table table-xs">
+      <thead>
+        <tr> 
+          <th>Id</th>
+          <th>Brand</th> 
+          <th>model</th> 
+          <th>Year</th> 
+          <th>Plate</th>
+          <th>Date</th>
+          <th>Value</th>
+          <th>Locality</th>
+        </tr>
+      </thead> 
+      <tbody>
+        <tr *ngFor="let car of cars">
+          <td>{{car._id}}</td>
+          <td>{{car.brand}}</td>
+          <td>{{car.model}}</td>
+          <td>{{car.year}}</td>
+          <td>{{car.plate}}</td>
+          <td>{{car.price.date}}</td>
+          <td>{{car.price.value}}</td>
+          <td>{{car.locality}}</td>
+          <app-button [type]="'button'" [classType]="'primary'">
+            Editar
+          </app-button>
+          <app-button [type]="'button'" [classType]="'primary'">
+            Borrar
+          </app-button>
+        </tr>
+      </tbody> 
+    </table>
+  </div>
+ 

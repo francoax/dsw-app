@@ -16,9 +16,9 @@ export class CarsServiceService {
     const url = environment.apiUrl+"/api/cars";
     return this.http.post<Car>(url,car);
   }
-  getCars(){
+  getCars():Observable<ApiResponse>{
     const url = environment.apiUrl+"/api/cars/";
-    return this.http.get(url);
+    return this.http.get<ApiResponse>(url);
   }
 
   deleteCar(){

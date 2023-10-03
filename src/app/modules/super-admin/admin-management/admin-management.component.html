@@ -1,0 +1,53 @@
+<!-- eslint-disable max-len -->
+<div class="collapse bg-base-200">
+  <input type="checkbox" #formCollapse />
+  <div class="collapse-title text-xl font-medium">
+    {{formTitle}}
+  </div>
+  <div class="collapse-content">
+    <div class="border-b border-gray-900/10 pb-12">
+      <p class="mt-1 text-sm leading-6 text-gray-600">Los campos con <span class="text-red-600">*</span> son requeridos.</p>
+      <form class="pr-24" [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <div class="flex gap-24 ">
+          <div class="inputs-container">
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('name'))" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('email'))" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('password'))" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('repeatedPassword'))" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
+            </div>
+            <span *ngIf="form.errors?.['passwordsNotMatching'] && $any(form.get('password')?.touched) && $any(form.get('repeatedPassword')?.touched)" class="label-text-alt text-red-500">
+              Las contraseñas no coinciden.
+            </span>
+          </div>
+          <div class="inputs-container">
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('lastname'))" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('address'))" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
+            </div>
+            <div class="mt-2">
+              <app-input [inputControl]="$any(form.get('tel'))" [label]="'Telefono *'" [placeholder]="'1111111111'"></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="form-buttons mt-2">
+          <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
+            Cancelar
+          </app-button>
+          <app-button [type]="'primary'" [type]="'submit'" [classType]="'primary'">
+            {{buttonContent}}
+          </app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<admins-list [List]="adminList" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></admins-list>
