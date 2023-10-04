@@ -3,11 +3,26 @@ import { RouterModule, Routes } from '@angular/router';
 import { LogInComponent } from './log-in/log-in.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { UpdateDataComponent } from './update-data/update-data.component';
+import { LayoutComponent } from './layout/layout.component';
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LogInComponent },
-  { path: 'signin', component: SignInComponent },
-  { path: 'update', component: UpdateDataComponent },
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      {
+        path: 'login',
+        component: LogInComponent,
+      },
+      {
+        path: 'signin',
+        component: SignInComponent,
+      },
+      {
+        path: 'update',
+        component: UpdateDataComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

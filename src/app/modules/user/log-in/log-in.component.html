@@ -1,4 +1,4 @@
-<div class="flex justify-center m-4">
+<div class="flex justify-center p-4">
   <div class="form-container">
     <p class="title">Login</p>
     <form class="form" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
@@ -38,9 +38,10 @@
       </div>
       <app-button
         class="block w-full p-3 text-center"
-        [type]="'primary'"
-        [content]="'Log in'"
-      ></app-button>
+        [classType]="'primary'"
+        [type]="'submit'"
+        >Log in</app-button
+      >
     </form>
     <div class="mt-4">
       <p class="signup">

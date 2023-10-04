@@ -8,9 +8,15 @@ import { UpdateDataComponent } from './update-data/update-data.component';
 import { UserRoutingModule } from './user-routing.module';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
-  declarations: [SignInComponent, LogInComponent, UpdateDataComponent],
+  declarations: [
+    SignInComponent,
+    LogInComponent,
+    UpdateDataComponent,
+    LayoutComponent,
+  ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, UserRoutingModule],
   exports: [SignInComponent, LogInComponent, UpdateDataComponent],
   providers: [

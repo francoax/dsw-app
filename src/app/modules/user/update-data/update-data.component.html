@@ -44,9 +44,10 @@
     ></app-input>
     <app-button
       class="flex justify-start items-center"
-      [content]="'Modificar datos'"
-      [type]="'primary'"
-    ></app-button>
+      [classType]="'primary'"
+      [type]="'submit'"
+      >Modificar datos</app-button
+    >
   </form>
   <snackbar></snackbar>
   <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
@@ -58,10 +59,11 @@
       </p>
       <div class="card-actions justify-end">
         <app-button
-          [content]="'Dar de baja'"
-          [type]="'primary'"
+          [classType]="'primary'"
+          [type]="'submit'"
           (click)="showModal()"
-        ></app-button>
+          >Dar de baja</app-button
+        >
       </div>
     </div>
   </div>
