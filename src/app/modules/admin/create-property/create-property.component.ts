@@ -87,7 +87,10 @@ export class CreatePropertyComponent implements OnInit {
   }
 
   onDelete(id:string):void{
-    this.service.deleteProperty(id).subscribe((res)=> alert(res.message));
+    this.service.deleteProperty(id).subscribe((res)=> {
+      this.toastService.setup({message:'Propiedad eliminada',status:true});
+      this.toastService.show();
+    })
   }
 
   onUpdate(prop: Property) {
