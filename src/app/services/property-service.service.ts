@@ -13,9 +13,9 @@ export class PropertyServiceService {
   readonly baseUrl = environment.apiUrl +"/api/property/";
   constructor(private http:HttpClient) { }
   
-  createProperty(prop: Property):Observable<Property> {
+  createProperty(prop: Property):Observable<ApiResponse> {
     const url = this.baseUrl;
-    return this.http.post<Property>(url,prop);
+    return this.http.post<ApiResponse>(url,prop);
   }
 
   getProperties():Observable<ApiResponse>{
@@ -23,11 +23,10 @@ export class PropertyServiceService {
   }
 
   deleteProperty(id:string):Observable<ApiResponse>{
-    return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/users/${id}`)
+    return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/property/${id}`)
     }
-  UpdateProperty(prop: Property){
-    const url = this.baseUrl + ':id';
-    return this.http.put<Property>(url,prop);
+  UpdateProperty(prop: Property,id:string):Observable<ApiResponse>{
+    return this.http.put<ApiResponse>(`${environment.apiUrl}/api/property/${id}`,prop);
     }
     getPropertiesTypes():Observable<ApiResponse>{
       return this.http.get<ApiResponse>(environment.apiUrl+"/api/propertie-types");

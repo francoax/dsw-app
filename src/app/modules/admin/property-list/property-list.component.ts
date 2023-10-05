@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { PropertyServiceService } from 'src/app/services/property-service.service';
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';

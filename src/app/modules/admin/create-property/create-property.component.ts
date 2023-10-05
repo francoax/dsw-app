@@ -7,6 +7,7 @@ import { PropertyServiceService } from 'src/app/services/property-service.servic
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
+import { ToastService } from '../../shared/toast/toast.service';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -17,16 +18,20 @@ export class CreatePropertyComponent implements OnInit {
   propertiesTypes:PropertyType[] =[];  /* crear modelo y pasar a :PropertyType */
   formTitle= 'Registrar nueva Propiedad';
   buttonContent = 'Aceptar';
+  idPropToEdit!:string;
+  formScope = "create";
   @ViewChild('formCollapse') formCollapse! : ElementRef
 
 
-  constructor(private service:PropertyServiceService){}
+  constructor(
+    private service:PropertyServiceService,
+    private readonly toastService: ToastService){}
 
   ngOnInit():void {
     this.service.getPropertiesTypes().subscribe((Response)=>{this.propertiesTypes=Response.data})
   }
 
-
+  properties:Property[] =[];
   capacity = new FormControl<number>(0,[Validators.required,Validators.maxLength(30)]);
   address = new FormControl('',[Validators.maxLength(50),Validators.required]);
   price= new FormControl('',[this.tiene_numeros]);
@@ -61,14 +66,28 @@ export class CreatePropertyComponent implements OnInit {
 
   onSubmit(form : FormGroup){
     if(this.propertyForm.valid){
-      this.service.createProperty(form.value).subscribe(res=> console.log(res));
+      if(this.formScope==='create'){
+        this.service.createProperty(form.value).subscribe((res)=>{
+          this.toastService.setup({message:'Propiedad Creada',status:true})
+          this.toastService.show();
+          this.closeForm();
+        })
+        
+      } else if(this.formScope==='editar'){
+        this.service.UpdateProperty(form.value,this.idPropToEdit).subscribe((res)=>{
+        this.toastService.setup({message:'Propiedad Actualizada',status:true})
+        this.toastService.show();
+        this.closeForm();
+      })
+      }
     } else {
-      alert('Verifique que los datos ingresados sean validos')
+      this.toastService.setup({message:'Verifique que los datos ingresados sean validos',status:false})
+      this.toastService.show();
     }
   }
 
-  onDelete(id:string){
-    this.service.deleteProperty(id).subscribe((res)=> alert(res.message))
+  onDelete(id:string):void{
+    this.service.deleteProperty(id).subscribe((res)=> alert(res.message));
   }
 
   onUpdate(prop: Property) {
@@ -83,6 +102,8 @@ export class CreatePropertyComponent implements OnInit {
       },
       propertyType: prop.propertyType
     })
+    this.formScope="editar";
+    this.idPropToEdit = prop._id;
   }
   closeForm() : void {
     this.formCollapse.nativeElement.checked = false;
