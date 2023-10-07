@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import { MedicalAssistance } from '../models/medical-assistance';
+import { MedicalAssistanceRequest } from '../models/medical-assistance-request';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../models/api-response';
+import { MedicalAssistance } from '../models/medical-assistance';
 
 const httpOption = {
   headers: new HttpHeaders({
-    'Contend-Type': 'application/json'
+    'Content-Type': 'application/json'
   })
 };
 
@@ -20,7 +21,7 @@ export class MedicalAssistanceService {
 
   constructor(private http: HttpClient) { }
 
-  add(medicalAsist: MedicalAssistance):Observable<ApiResponse>{
+  add(medicalAsist: MedicalAssistanceRequest):Observable<ApiResponse>{
     return this.http.post<ApiResponse>(this.url + '/api/medicalAssistance', medicalAsist, httpOption);
   }
 

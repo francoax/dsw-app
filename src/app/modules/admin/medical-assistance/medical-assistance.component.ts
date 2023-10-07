@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MedicalAssistance } from 'src/app/models/medical-assistance';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MedicalAssistanceRequest } from 'src/app/models/medical-assistance-request';
+import { MedicalAssistance } from 'src/app/models/medical-assistance'
 import { MedicalAssistanceService } from 'src/app/services/medical-assistance.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 
@@ -43,12 +44,11 @@ export class MedicalAssistanceComponent implements OnInit{
     })
   }
 
-  add(){
-
-    const medAsist : MedicalAssistance = {
-      _id: '',
-      description : this.medicalAssistForm.value.description || '',
-      coverageType : this.medicalAssistForm.value.coverageType || ''
+  add(form : FormGroup){
+    this.mod='add';
+    const medAsist : MedicalAssistanceRequest = {
+      description : form.value.description || '',
+      coverageType : form.value.coverageType || ''
     }
     this.medAsistService.add(medAsist).subscribe(res => {
       if(res.error !== true){
@@ -58,6 +58,11 @@ export class MedicalAssistanceComponent implements OnInit{
         this.getAll();
       }
     });
+  }
+
+  cancel(){
+    this.medicalAssistForm.reset();
+    this.mod = 'add';
   }
 
   onDelete(registro : MedicalAssistance){
@@ -103,6 +108,7 @@ export class MedicalAssistanceComponent implements OnInit{
         dialogElement.close();
         this.medicalAssistForm.reset();
         this.getAll();
+        this.mod='add'
       }
     });
   }
