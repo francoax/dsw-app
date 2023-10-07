@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SignInComponent } from './sign-in/sign-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LogInComponent } from './log-in/log-in.component';
@@ -12,13 +12,13 @@ import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
-    SignInComponent,
+    SignUpComponent,
     LogInComponent,
     UpdateDataComponent,
     LayoutComponent,
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, UserRoutingModule],
-  exports: [SignInComponent, LogInComponent, UpdateDataComponent],
+  exports: [SignUpComponent, LogInComponent, UpdateDataComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi: true },
   ],
