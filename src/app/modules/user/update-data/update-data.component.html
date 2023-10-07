@@ -1,0 +1,74 @@
+<div class="px-10 py-5">
+  <h2 class="text-lg font-bold">Modificación de datos</h2>
+  <form
+    class="grid grid-cols-2 grid-rows-4 gap-2"
+    [formGroup]="updateDataForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <app-input
+      [label]="'Nombre'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="name"
+    ></app-input>
+    <app-input
+      [label]="'Apellido'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="lastname"
+    ></app-input>
+    <app-input
+      [label]="'Dirección'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="address"
+    ></app-input>
+    <app-input
+      [label]="'Teléfono'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="tel"
+    ></app-input>
+    <app-input
+      [label]="'Email'"
+      [placeholder]="''"
+      [required]="true"
+      [inputControl]="email"
+    ></app-input>
+    <app-input
+      [label]="'Contraseña'"
+      [placeholder]="''"
+      [required]="true"
+      [type]="'password'"
+      [inputControl]="password"
+    ></app-input>
+    <app-button
+      class="flex justify-start items-center"
+      [classType]="'primary'"
+      [type]="'submit'"
+      >Modificar datos</app-button
+    >
+  </form>
+  <snackbar></snackbar>
+  <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
+    <div class="card-body">
+      <h2 class="card-title">Eliminar cuenta</h2>
+      <p>
+        Desde aquí podrás dar de baja tu cuenta. Si tenés reservas activas no
+        será posible eliminar tu cuenta.
+      </p>
+      <div class="card-actions justify-end">
+        <app-button
+          [classType]="'primary'"
+          [type]="'submit'"
+          (click)="showModal()"
+          >Dar de baja</app-button
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<confirmation-modal #confirmationModal (confirmationEvent)="deleteUser()">
+  <div modal-title>Eliminar usuario</div>
+  <div modal-message>Está seguro que desea darse de baja?</div>
+</confirmation-modal>

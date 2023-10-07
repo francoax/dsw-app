@@ -47,5 +47,10 @@
       *ngIf="inputControl.errors?.['pattern'] && inputControl.touched"
       >El formato es incorrecto</span
     >
+    <span
+      class="label-text-alt text-red-500"
+      *ngIf="inputControl.errors?.['passwordNotMatch'] && inputControl.touched"
+      >Las contraseñas no coinciden</span
+    >
   </label>
 </div>

@@ -24,4 +24,4 @@ import { ToastInterceptor } from '../shared/toast/toast.interceptor';
   providers: [{ provide:HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi:true }],
   exports:[AdminComponent]
 })
-export class AdminModule { }
+export class AdminModule {}
