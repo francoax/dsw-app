@@ -31,7 +31,7 @@
       </form>
     </div>
 </div>
-<app-property-list (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
+<app-property-list [properties]="properties" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
 
 s
   <!-- 

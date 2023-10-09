@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { PropertyServiceService } from 'src/app/services/property-service.service';
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
@@ -11,20 +11,32 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss']
 })
-export class PropertyListComponent implements OnInit {
+export class PropertyListComponent implements OnInit, OnChanges{
   constructor(private service:PropertyServiceService, private router:Router){}
-  properties:Property[] =[];
+  
   propertiesTypes:PropertyType[]=[];
   idPropDelete!:string;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
-  
+  @Input() properties:Property[] =[];
   @Output() UpdateEvent = new EventEmitter<Property>();
   @Output() DeleteEvent = new EventEmitter<string>();
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['properties'] && !changes['properties'].firstChange) {
+      // Angular se encargará automáticamente de actualizar el ngFor
+      console.log('Lista actualizada en tiempo real:', this.properties);
+    }
+  }
+
 
   ngOnInit():void {
+    /*
     this.service.getProperties().subscribe((response) => {this.properties = response.data
     });
+    
+    this.service.propertyList.subscribe(properties => {
+      this.properties = properties
+    }) */
   }
 
   onUpdate(prop : Property) : void {

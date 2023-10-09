@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Property } from '../models/property';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../models/api-response';
 @Injectable({
@@ -11,7 +11,22 @@ import { ApiResponse } from '../models/api-response';
 export class PropertyServiceService {
 
   readonly baseUrl = environment.apiUrl +"/api/property/";
+  private propertyListSubject = new Subject<Property[]>();
+  properties:Property[] =[];
+  
+  
   constructor(private http:HttpClient) { }
+
+  get propertyList(){
+    return this.propertyListSubject.asObservable();
+
+  }
+  actualizarLista(){
+    this.getProperties().subscribe((response) => {this.properties = response.data;
+    });
+    this.propertyListSubject.next(this.properties);
+
+  }
   
   createProperty(prop: Property):Observable<ApiResponse> {
     const url = this.baseUrl;

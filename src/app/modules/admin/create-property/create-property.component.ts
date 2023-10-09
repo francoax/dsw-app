@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PropertyServiceService } from 'src/app/services/property-service.service';
 import { Property } from 'src/app/models/property';
@@ -20,7 +20,10 @@ export class CreatePropertyComponent implements OnInit {
   buttonContent = 'Aceptar';
   idPropToEdit!:string;
   formScope = "create";
+  properties:Property[] =[];
   @ViewChild('formCollapse') formCollapse! : ElementRef
+
+  @Output() eventoListado = new EventEmitter<Property[]>;
 
 
   constructor(
@@ -29,9 +32,10 @@ export class CreatePropertyComponent implements OnInit {
 
   ngOnInit():void {
     this.service.getPropertiesTypes().subscribe((Response)=>{this.propertiesTypes=Response.data})
+    this.service.getProperties().subscribe((response) => {this.properties = response.data
+    });
   }
 
-  properties:Property[] =[];
   capacity = new FormControl<number>(0,[Validators.required,Validators.maxLength(30)]);
   address = new FormControl('',[Validators.maxLength(50),Validators.required]);
   price= new FormControl('',[this.tiene_numeros]);
@@ -72,13 +76,15 @@ export class CreatePropertyComponent implements OnInit {
           this.toastService.show();
           this.closeForm();
         })
-        
+        this.properties.push(form.value);
       } else if(this.formScope==='editar'){
         this.service.UpdateProperty(form.value,this.idPropToEdit).subscribe((res)=>{
         this.toastService.setup({message:'Propiedad Actualizada',status:true})
         this.toastService.show();
         this.closeForm();
       })
+      const index = this.properties.map(a => a._id).indexOf(this.idPropToEdit)
+      this.properties[index] = form.value;
       }
     } else {
       this.toastService.setup({message:'Verifique que los datos ingresados sean validos',status:false})
@@ -90,6 +96,7 @@ export class CreatePropertyComponent implements OnInit {
     this.service.deleteProperty(id).subscribe((res)=> {
       this.toastService.setup({message:'Propiedad eliminada',status:true});
       this.toastService.show();
+        this.properties = this.properties.filter(a => a._id !== id)
     })
   }
 
