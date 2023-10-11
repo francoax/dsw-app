@@ -41,12 +41,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let prop of properties">
-            <td>{{prop._id}}</td>
-            <td>{{prop.capacity}}</td>
-            <td>{{prop.address}}</td>
+            <td>{{prop?._id}}</td>
+            <td>{{prop?.capacity}}</td>
+            <td>{{prop?.address}}</td>
             <td>{{prop?.pricePerNight?.price}}</td>
             <td>{{prop?.pricePerNight?.date}}</td>
-            <td>{{prop.propertyType}}</td>
+            <td>{{prop?.propertyType}}</td>
             <th>
               <div class="table-icons">
                 <svg (click)="onUpdate(prop)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

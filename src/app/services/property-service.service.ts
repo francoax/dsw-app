@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { Property } from '../models/property';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { ApiResponse } from '../models/api-response';
+import { ApiResponse } from '../models/common';
+
 @Injectable({
   providedIn: 'root'
 })

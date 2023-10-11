@@ -38,7 +38,7 @@ export class CreatePropertyComponent implements OnInit {
 
   capacity = new FormControl<number>(0,[Validators.required,Validators.maxLength(30)]);
   address = new FormControl('',[Validators.maxLength(50),Validators.required]);
-  price= new FormControl('',[this.tiene_numeros]);
+  price= new FormControl('',[]);
   date= new FormControl('',[Validators.required]);
   propertyType = new FormControl('',[Validators.maxLength(30),Validators.required]);
 
@@ -51,7 +51,7 @@ export class CreatePropertyComponent implements OnInit {
     propertyType: this.propertyType,
   });
 
-
+  /*
   tiene_numeros(control: AbstractControl){
     const numeros="0123456789";
     const texto:string = control.value;
@@ -67,24 +67,25 @@ export class CreatePropertyComponent implements OnInit {
     }
    return null;
   }
-
+  */
   onSubmit(form : FormGroup){
     if(this.propertyForm.valid){
       if(this.formScope==='create'){
         this.service.createProperty(form.value).subscribe((res)=>{
           this.toastService.setup({message:'Propiedad Creada',status:true})
           this.toastService.show();
+          this.properties.push(res.data);
           this.closeForm();
         })
-        this.properties.push(form.value);
       } else if(this.formScope==='editar'){
         this.service.UpdateProperty(form.value,this.idPropToEdit).subscribe((res)=>{
         this.toastService.setup({message:'Propiedad Actualizada',status:true})
         this.toastService.show();
+        const index = this.properties.map(a => a._id).indexOf(res.data._id)
+        this.properties[index] = res.data;
         this.closeForm();
       })
-      const index = this.properties.map(a => a._id).indexOf(this.idPropToEdit)
-      this.properties[index] = form.value;
+      
       }
     } else {
       this.toastService.setup({message:'Verifique que los datos ingresados sean validos',status:false})
