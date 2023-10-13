@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MedicalAssistanceRequest } from 'src/app/models/medical-assistance-request';
 import { MedicalAssistance } from 'src/app/models/medical-assistance'
-import { MedicalAssistanceService } from 'src/app/services/medical-assistance.service';
+import { MedicalAssistanceService } from 'src/app/services/medical-assitance/medical-assistance.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
