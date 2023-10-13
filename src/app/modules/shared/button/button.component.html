@@ -1,14 +1,12 @@
 <ng-container *ngIf="routerlink">
   <button
-  [type]="type"
-  [ngClass]="
-    {
+    [type]="type"
+    [ngClass]="{
       'btn-primary': classType === 'primary',
       'btn-cancel': classType === 'cancel',
       'btn-navbar': classType === 'navbar'
-    }
-  "
-  [routerLink]="routerlink"
+    }"
+    [routerLink]="routerlink"
   >
     <ng-content></ng-content>
   </button>
@@ -16,14 +14,12 @@
 
 <ng-container *ngIf="!routerlink">
   <button
-  [type]="type"
-  [ngClass]="
-    {
+    [type]="type"
+    [ngClass]="{
       'btn-primary': classType === 'primary',
       'btn-cancel': classType === 'cancel',
       'btn-navbar': classType === 'navbar'
-    }
-  "
+    }"
   >
     <ng-content></ng-content>
   </button>

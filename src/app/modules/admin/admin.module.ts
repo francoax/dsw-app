@@ -3,16 +3,21 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CreatePropertyComponent } from './create-property/create-property.component';
 import { SharedModule } from '../shared/shared.module';
-import {HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { PropertyListComponent } from './property-list/property-list.component';
 import { AdminComponent } from './admin.component';
+import { MedicalAssistanceComponent } from './medical-assistance/medical-assistance.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ToastInterceptor } from '../shared/toast/toast.interceptor';
+
 @NgModule({
   declarations: [
+    AdminComponent,
     CreatePropertyComponent,
     PropertyListComponent,
-    AdminComponent ],
+    MedicalAssistanceComponent
+    ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -21,6 +26,7 @@ import { AdminComponent } from './admin.component';
     ReactiveFormsModule,
     FormsModule
   ],
+  providers: [{ provide:HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi:true }],
   exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent]
 })
-export class AdminModule { }
+export class AdminModule {}
