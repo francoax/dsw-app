@@ -1,15 +1,30 @@
-<div class="mt-6">
-  <h2 class="text-base font-semibold leading-7 text-gray-900 title">{{formTitle}}</h2>
+<!-- eslint-disable max-len -->
+<div class="collapse bg-base-200">
+  <input type="checkbox" #formCollapse /> 
+  <div class="collapse-title text-xl font-medium">
+    {{formTitle}}
+  </div>
+  <div class="collapse-content"> 
+    <div class="mt-6">
+      <h2 class="text-base font-semibold leading-7 text-gray-900 title">{{formTitle}}</h2>
+    </div>
+     <form  [formGroup]="carsForm" (ngSubmit)="onSubmit()">
+      <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
+      <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
+      <app-input [label]="'year'" [placeholder]="'year'" [required]="true" [inputControl]="year"></app-input>
+      <app-input [label]="'plate'" [placeholder]="'plate'" [required]="true" [inputControl]="plate"></app-input>
+      <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+      <app-input [label]="'value'" [placeholder]="'value'" [required]="true" [inputControl]="value"></app-input>
+      <app-input [label]="'locality'" [placeholder]="'locality'" [required]="true" [inputControl]="locality"></app-input>
+      <app-button [type]="'submit'" [classType]="'primary'">
+        {{buttonContent}}
+      </app-button>
+      <app-button [type]="'button'" [classType]="'cancel'">
+        Cancelar
+      </app-button>
+    </form>
+  </div>
 </div>
- <form  [formGroup]="carsForm" (ngSubmit)="onSubmit()">
-  <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
-  <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
-  <app-input [label]="'year'" [placeholder]="'year'" [required]="true" [inputControl]="year"></app-input>
-  <app-input [label]="'plate'" [placeholder]="'plate'" [required]="true" [inputControl]="plate"></app-input>
-  <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-  <app-input [label]="'value'" [placeholder]="'value'" [required]="true" [inputControl]="value"></app-input>
-  <app-input [label]="'locality'" [placeholder]="'locality'" [required]="true" [inputControl]="locality"></app-input>
-  <app-button [type]="'submit'" [classType]="'primary'">
-    Registrar
-  </app-button>
-</form>
+<app-cars-list [cars]="cars" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-cars-list>
+
+<!-- (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event) -->

@@ -1,9 +1,10 @@
-  <navbar [showSearch]="true" [user]="'Tomás'"></navbar>
-  <app-sidebar 
-    [buttonsList]="[{ name: 'Propiedades', path:'#'},
-                    { name: 'Vehiculos', path:'/cars'},
-                    { name: 'Asistencia Médica', path:'#'}]">
-    <router-outlet></router-outlet>
-  </app-sidebar>
+<navbar [showSearch]="true" [user]="'Tomás'"></navbar>
+<app-sidebar 
+  [buttonsList]="[{ name: 'Propiedades', path:'#'},
+                  { name: 'Vehiculos', path:'/admin/cars'},
+                  { name: 'Asistencia Médica', path:'/admin/medicalAssistance'}]">
+  <router-outlet></router-outlet>
+</app-sidebar>
+<app-footer></app-footer>
+<snackbar></snackbar>
 
-  <app-footer></app-footer>

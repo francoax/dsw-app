@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Car } from 'src/app/models/car';
 import { CarsServiceService } from 'src/app/services/cars-service.service';
@@ -10,7 +11,16 @@ import { CarsServiceService } from 'src/app/services/cars-service.service';
   styleUrls: ['./cars-form.component.scss']
 })
 export class CarsFormComponent implements OnInit{
-  formTitle = 'Register New Car';
+  
+formTitle = 'Registrar un Nuevo Auto';
+buttonContent = 'Aceptar';
+idCarToEdit!:string;
+cars:Car[]=[];
+formScope= 'create';
+
+@ViewChild('formCollapse') formCollase! : ElementRef
+
+
 constructor(private service:CarsServiceService){}
 carsForm!:FormGroup;
 brand = new FormControl('',[Validators.maxLength(30),Validators.required]);
@@ -33,6 +43,8 @@ ngOnInit(): void {
       value: this.value}),
     locality: this.locality,
   });
+
+  this.service.getCars().subscribe((res)=> console.log(this.cars= res.data));
   
 }
 
@@ -58,6 +70,39 @@ if(this.carsForm.valid) {
   }
 
 }
+onDelete(id:string):void{
+  this.service.deleteCar(id).subscribe((res)=>{
+    this.cars = this.cars.filter(a => a._id !== id);
+  })
+}
+
+onUpdate(car: Car){
+  this.formCollase.nativeElement.checked = true;
+  this.formTitle = 'Editar Auto';
+  this.carsForm.patchValue({
+    brand : car.brand,
+    model : car.model,
+    year : car.year,
+    plate : car.plate,
+    price: {
+      date: car.price.date,
+      value: car.price.value
+    },
+    locality : car.locality
+  })
+  this.formScope = 'editar';
+  this.idCarToEdit = car._id;
+
+}
+
+closeForm():void{
+  this.formCollase.nativeElement.checked = false;
+  this.formTitle = 'Registrar un Nuevo Auto';
+  this.buttonContent = 'Aceptar';
+  this.carsForm.reset();
+
+}
+
 
 
 }

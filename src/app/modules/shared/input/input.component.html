@@ -12,6 +12,7 @@
   <input
     [type]="type"
     [placeholder]="placeholder"
+    [readOnly]="readonly"
     class="input input-bordered w-full max-w-xs"
     [ngClass]="{
       'border-red-500': inputControl.errors !== null && inputControl.touched
@@ -45,6 +46,11 @@
       class="label-text-alt text-red-500"
       *ngIf="inputControl.errors?.['pattern'] && inputControl.touched"
       >El formato es incorrecto</span
+    >
+    <span
+      class="label-text-alt text-red-500"
+      *ngIf="inputControl.errors?.['passwordNotMatch'] && inputControl.touched"
+      >Las contraseñas no coinciden</span
     >
   </label>
 </div>

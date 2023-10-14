@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../models/common';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,9 +22,8 @@ export class CarsServiceService {
     return this.http.get<ApiResponse>(url);
   }
 
-  deleteCar(){
-    const url = environment.apiUrl+"/api/cars/:id";
-    return this.http.delete(url);
+  deleteCar(id:string):Observable<ApiResponse>{
+    return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/cars/${id}`)
     }
   UpdateCar(prop:Car){
     const url = environment.apiUrl+"/api/cars/:id";
