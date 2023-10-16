@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment.development';
-import { MedicalAssistanceRequest } from '../models/medical-assistance-request';
+import { MedicalAssistanceRequest } from '../../models/medical-assistance-request';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../models/api-response';
-import { MedicalAssistance } from '../models/medical-assistance';
+import { ApiResponse } from '../../models/api-response';
+import { MedicalAssistance } from '../../models/medical-assistance';
+import { AppConfigService } from '../app/app.service';
 
 const httpOption = {
   headers: new HttpHeaders({
@@ -17,9 +17,11 @@ const httpOption = {
 })
 export class MedicalAssistanceService {
 
-  url : string = environment.apiUrl;
+  private readonly url : string = this.appService.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private readonly appService : AppConfigService) { }
 
   add(medicalAsist: MedicalAssistanceRequest):Observable<ApiResponse>{
     return this.http.post<ApiResponse>(this.url + '/api/medicalAssistance', medicalAsist, httpOption);

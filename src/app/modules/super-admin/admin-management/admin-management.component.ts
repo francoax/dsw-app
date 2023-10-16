@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Admin } from 'src/app/models/superAdmin';
-import { SuperAdminsService } from 'src/app/services/super-admins.service';
+import { SuperAdminsService } from 'src/app/services/superadmin/super-admins.service';
 import { ToastService } from '../../shared/toast/toast.service';
 import { checkPasswords } from './form.validators';
 
