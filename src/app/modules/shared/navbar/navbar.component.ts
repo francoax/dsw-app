@@ -1,4 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
