@@ -1,40 +1,29 @@
 <navbar></navbar>
-<div class="carousel w-full">
-  <div id="slide1" class="carousel-item relative w-full">
-    <div>
-    
+<div class="carousel-paquetes">
+  <div class="slide w-full">
+    <div class="carousel-property">
+      <img src="https://365enfoques.com/wp-content/uploads/2016/05/consejos-de-fotografia-panorama.jpg" class="w-full" /> 
     </div>
-    <div>
-    
-    </div>
-    <div>
-    
-    </div>
-    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide4" class="btn btn-circle">❮</a> 
-      <a href="#slide2" class="btn btn-circle">❯</a>
-    </div>
+    <div class="carousel-car"></div>
+    <div class="carousel-medicalassist"></div>
   </div> 
-  <div id="slide2" class="carousel-item relative w-full">
-    <img src="/images/stock/photo-1609621838510-5ad474b7d25d.jpg" class="w-full" />
-    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide1" class="btn btn-circle">❮</a> 
-      <a href="#slide3" class="btn btn-circle">❯</a>
+  <div class="slide w-full">
+    <div class="carousel-property">
+      <img src="https://365enfoques.com/wp-content/uploads/2016/05/punto-nodal-que-es.jpg" class="w-full" /> 
     </div>
+    <div class="carousel-car"></div>
+    <div class="carousel-medicalassist"></div>
   </div> 
-  <div id="slide3" class="carousel-item relative w-full">
-    <img src="/images/stock/photo-1414694762283-acccc27bca85.jpg" class="w-full" />
-    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide2" class="btn btn-circle">❮</a> 
-      <a href="#slide4" class="btn btn-circle">❯</a>
+  <div class="slide w-full">
+    <div class="carousel-property">
+      <img src="https://previews.123rf.com/images/yommy8008/yommy80081705/yommy8008170500051/77734373-foto-panor%C3%A1mica-de-la-fauna-horizontal-de-la-liebre-salvaje-que-mira-a-la-c%C3%A1mara-el-animal-tiene.jpg" class="w-full" /> 
     </div>
+    <div class="carousel-car"></div>
+    <div class="carousel-medicalassist"></div>
   </div> 
-  <div id="slide4" class="carousel-item relative w-full">
-    <img src="/images/stock/photo-1665553365602-b2fb8e5d1707.jpg" class="w-full" />
-    <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-      <a href="#slide3" class="btn btn-circle">❮</a> 
-      <a href="#slide1" class="btn btn-circle">❯</a>
-    </div>
-  </div>
+</div>
+<div class="carousel-buttons">
+  <button id="prev" (click)="prevSlide()" ngClass="slide_translate">Anterior</button>
+  <button id="next" (click)="nextSlide()">Siguiente</button>
 </div>
 <app-footer></app-footer>

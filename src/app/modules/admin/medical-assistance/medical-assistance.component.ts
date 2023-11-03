@@ -39,7 +39,6 @@ export class MedicalAssistanceComponent implements OnInit{
 
   getAll(){
     this.medAsistService.getAll().subscribe(res =>{
-      console.log(res.data)
       this.registros = res.data;
     })
   }

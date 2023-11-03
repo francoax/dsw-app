@@ -12,13 +12,16 @@
         <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
         <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
         <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
+        
         <div>
           <div>
           <label>Propiedades</label>
           </div>
-        <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
-          <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
-        </select>
+          <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
+            <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
+          </select>
+          <app-input [label]="'image'" [placeholder]="'image'" [required]="true" [inputControl]="image" [type]="'file'"></app-input>
+
         </div>
         <div>
         <app-button [type]="'submit'" [classType]="'primary'" >

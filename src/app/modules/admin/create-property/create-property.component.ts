@@ -41,6 +41,8 @@ export class CreatePropertyComponent implements OnInit {
   price= new FormControl('',[]);
   date= new FormControl('',[Validators.required]);
   propertyType = new FormControl('',[Validators.maxLength(30),Validators.required]);
+  image = new FormControl('');
+  
 
   propertyForm = new FormGroup ({
     capacity : this.capacity,
@@ -49,6 +51,7 @@ export class CreatePropertyComponent implements OnInit {
       price: this.price,
       date: this.date}),
     propertyType: this.propertyType,
+    image: this.image
   });
 
   /*
