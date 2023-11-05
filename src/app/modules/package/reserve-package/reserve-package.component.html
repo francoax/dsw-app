@@ -14,48 +14,56 @@
       />
     </div>
     <div class="flex flex-row justify-around py-4">
-      <section>
-        descripcion del paquete, info, etc.
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-          consectetur iusto adipisci facilis cupiditate totam. Tempore
-          distinctio, aut iure illum repudiandae debitis nihil voluptatem
-          commodi blanditiis dignissimos ad alias consectetur.
-        </p>
+      <section class="flex flex-col">
+        <span class="text-lg underline">Detalles del paquete</span>
+        <span> Dirección de la propiedad: {{ property.address }} </span>
+        <span> Capacidad: {{ property.capacity }} personas </span>
+        <span class="underline"> Vehículo:</span>
+        <ul>
+          <li>Marca: {{ car.brand }}</li>
+          <li>Modelo: {{ car.model }}</li>
+          <li>Año: {{ car.year }}</li>
+        </ul>
       </section>
-      <div class="flex flex-col items-center h-screen dark">
+      <aside class="flex flex-col items-center h-screen dark">
         <div class="w-96 max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-          <form class="flex flex-col">
+          <form
+            class="flex flex-col"
+            [formGroup]="reserveForm"
+            (ngSubmit)="onSubmit()"
+          >
             <label>Check-in</label>
-            <input
-              placeholder="Check in"
-              class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              type="date"
-            />
+            <app-input
+              [placeholder]="'Check in'"
+              [type]="'date'"
+              [inputControl]="dateStart"
+            ></app-input>
             <label>Check-out</label>
-            <input
-              placeholder="Check out"
-              class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              type="date"
+            <app-input
+              [placeholder]="'Check out'"
+              [type]="'date'"
+              [inputControl]="dateEnd"
             />
             <label>Huéspedes</label>
-            <input
-              placeholder="Cantidad"
-              class="bg-gray-700 text-gray-200 border-0 rounded-md p-2 mb-4 focus:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-              type="number"
+            <app-input
+              [placeholder]="'Cantidad'"
+              [type]="'number'"
+              [inputControl]="hosts"
             />
-
-            <button
-              class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md my-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
-              type="submit"
-            >
+            <app-button class="py-4" [type]="'submit'" [classType]="'primary'">
               Reservar
-            </button>
+            </app-button>
           </form>
-          Costo total:
-          <span class="text-xl font-bold text-gray-200">$1000</span> por noche
+          <div>
+            Costo total:
+            <span class="text-xl font-bold text-gray-200"
+              >$ {{ property.pricePerNight.price + car.price.value }}</span
+            >
+            por noche
+            <span class="text-sm block">*No incluye impuestos</span>
+          </div>
         </div>
-      </div>
+      </aside>
     </div>
   </main>
 </div>

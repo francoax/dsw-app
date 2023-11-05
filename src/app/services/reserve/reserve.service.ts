@@ -16,7 +16,7 @@ export class ReserveService {
   ) {}
 
   createReserve(reserve: Reserve, token: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.API + 'reserve', reserve, {
+    return this.http.post<ApiResponse>(this.API, reserve, {
       headers: { Authorization: 'Bearer ' + token },
     });
   }
