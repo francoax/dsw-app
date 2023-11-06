@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
@@ -10,7 +10,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './cars-list.component.html',
   styleUrls: ['./cars-list.component.scss']
 })
-export class CarsListComponent implements OnInit{
+export class CarsListComponent implements OnChanges{
  constructor(private service:CarsServiceService){}
 
  idCarDelete!:string;
@@ -19,8 +19,12 @@ export class CarsListComponent implements OnInit{
  @Output() UpdateEvent = new EventEmitter<Car>();
  @Output() DeleteEvent = new EventEmitter<string>();
  
- ngOnInit(): void {
- }
+ ngOnChanges(changes: SimpleChanges) {
+  if (changes['cars'] && !changes['cars'].firstChange) {
+    // Angular se encargará automáticamente de actualizar el ngFor
+    console.log('Lista actualizada en tiempo real:', this.cars);
+  }
+}
 
  onUpdate(car : Car):void{
   this.UpdateEvent.emit(car);

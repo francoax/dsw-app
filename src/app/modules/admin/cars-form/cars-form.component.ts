@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Car } from 'src/app/models/car';
 import { CarsServiceService } from 'src/app/services/cars-service.service';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-cars-form',
@@ -21,7 +22,7 @@ formScope= 'create';
 @ViewChild('formCollapse') formCollase! : ElementRef
 
 
-constructor(private service:CarsServiceService){}
+constructor(private service:CarsServiceService, private readonly toastService: ToastService){}
 carsForm!:FormGroup;
 brand = new FormControl('',[Validators.maxLength(30),Validators.required]);
 model = new FormControl('',[Validators.maxLength(30),Validators.required]);
@@ -57,11 +58,15 @@ if(this.carsForm.valid) {
   if(this.formScope==='create'){
   this.service.createCar(form.value).subscribe((res)=>{
     this.cars.push(form.value);
+    this.toastService.setup({message:'Auto Creado',status:true})
+    this.toastService.show();
     this.closeForm();
   })
   } else if(this.formScope ==='editar'){
     this.service.UpdateCar(form.value,this.idCarToEdit).subscribe((res)=>{
-      const index = this.cars.map(a => a._id).indexOf(res.data._id);
+      this.toastService.setup({message:'Auto Actualizado',status:true})
+      this.toastService.show();
+      const index = this.cars.map(a => a.id).indexOf(res.data._id);
       this.cars[index]= res.data;
       this.closeForm();
     })
@@ -74,7 +79,7 @@ if(this.carsForm.valid) {
 }
 onDelete(id:string):void{
   this.service.deleteCar(id).subscribe((res)=>{
-    this.cars = this.cars.filter(a => a._id !== id);
+    this.cars = this.cars.filter(a => a.id !== id);
   })
 }
 
@@ -93,7 +98,7 @@ onUpdate(car: Car){
     locality : car.locality
   })
   this.formScope = 'editar';
-  this.idCarToEdit = car._id;
+  this.idCarToEdit = car.id;
   console.log(this.idCarToEdit)
 
 }
