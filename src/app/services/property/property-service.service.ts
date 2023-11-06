@@ -3,18 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Property } from '../../models/property';
 import { Observable, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../../models/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertyServiceService {
-  readonly baseUrl = environment.apiUrl + '/api/property/';
+  private readonly baseUrl = appService.apiUrl + '/api/property/';
   private propertyListSubject = new Subject<Property[]>();
   properties: Property[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private appService: AppConfigService, private http: HttpClient) {}
 
   get propertyList() {
     return this.propertyListSubject.asObservable();
