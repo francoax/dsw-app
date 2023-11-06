@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
-import { CreatePropertyComponent } from './create-property/create-property.component';
+import { CarsFormComponent } from './cars-form/cars-form.component';
 import { SharedModule } from '../shared/shared.module';
+import { CarsListComponent } from './cars-list/cars-list.component';
+import { CreatePropertyComponent } from './create-property/create-property.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { PropertyListComponent } from './property-list/property-list.component';
@@ -11,9 +13,14 @@ import { MedicalAssistanceComponent } from './medical-assistance/medical-assista
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 
+
+
+
 @NgModule({
   declarations: [
     AdminComponent,
+    CarsFormComponent,
+    CarsListComponent,
     CreatePropertyComponent,
     PropertyListComponent,
     MedicalAssistanceComponent
@@ -27,6 +34,6 @@ import { ToastInterceptor } from '../shared/toast/toast.interceptor';
     FormsModule
   ],
   providers: [{ provide:HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi:true }],
-  exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent]
+  exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent,CarsFormComponent,CarsListComponent]
 })
 export class AdminModule {}

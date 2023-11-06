@@ -1,55 +1,58 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { PackageService } from '../services/package/package.service';
-import { Package } from '../models/package';
+import Package from '../models/package';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
+  constructor(
+    private packageService: PackageService,
+    private elementRef: ElementRef
+  ) {}
 
-  constructor(private packageService: PackageService,
-    private elementRef: ElementRef){
-  }
+  listaPaquetes: Package[] = [];
 
-  listaPaquetes : Package[] = [];
-  
   carousel = this.elementRef.nativeElement.querySelector('.carousel');
   slides = this.elementRef.nativeElement.querySelectorAll('.carousel');
   prevButton = document.getElementById('prev');
   nextButton = document.getElementById('next');
-  slide_translate : boolean= false;
+  slide_translate = false;
 
-  currentIndex : number = 0;
+  currentIndex = 0;
 
   ngOnInit(): void {
-    this.packageService.getAll().subscribe(res =>{
+    this.packageService.getAll().subscribe((res) => {
       this.listaPaquetes = res.data;
-      console.log(res.data)
+      console.log(res.data);
     });
     this.showSlide(this.currentIndex);
-  }  
+  }
 
-  showSlide(index : number) {
+  showSlide(index: number) {
     if (index < 0) {
       this.currentIndex = this.slides.length - 1;
     } else if (index >= this.slides.length) {
       this.currentIndex = 0;
-    }    
+    }
   }
 
-  prevSlide(){
+  prevSlide() {
     this.currentIndex--;
     this.showSlide(this.currentIndex);
   }
 
-  nextSlide(){
+  nextSlide() {
     this.currentIndex++;
     this.showSlide(this.currentIndex);
   }
+<<<<<<< HEAD
 
   goToReserve(){
     window.location.href = "/packages";
   }
+=======
+>>>>>>> 78547a4735f5c5be19938ff3231af290efa6d3e9
 }

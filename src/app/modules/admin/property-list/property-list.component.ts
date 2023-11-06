@@ -1,23 +1,34 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { PropertyServiceService } from 'src/app/services/property-service.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { ModalComponent } from '../../shared/modal/modal.component';
 @Component({
   selector: 'app-property-list',
   templateUrl: './property-list.component.html',
-  styleUrls: ['./property-list.component.scss']
+  styleUrls: ['./property-list.component.scss'],
 })
-export class PropertyListComponent implements OnInit, OnChanges{
-  constructor(private service:PropertyServiceService, private router:Router){}
-  
-  propertiesTypes:PropertyType[]=[];
-  idPropDelete!:string;
+export class PropertyListComponent implements OnInit, OnChanges {
+  constructor(
+    private service: PropertyServiceService,
+    private router: Router
+  ) {}
+
+  propertiesTypes: PropertyType[] = [];
+  idPropDelete!: string;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
-  @Input() properties:Property[] =[];
+  @Input() properties: Property[] = [];
   @Output() UpdateEvent = new EventEmitter<Property>();
   @Output() DeleteEvent = new EventEmitter<string>();
 
@@ -28,8 +39,7 @@ export class PropertyListComponent implements OnInit, OnChanges{
     }
   }
 
-
-  ngOnInit():void {
+  ngOnInit(): void {
     /*
     this.service.getProperties().subscribe((response) => {this.properties = response.data
     });
@@ -39,21 +49,19 @@ export class PropertyListComponent implements OnInit, OnChanges{
     }) */
   }
 
-  onUpdate(prop : Property) : void {
+  onUpdate(prop: Property): void {
     this.UpdateEvent.emit(prop);
   }
 
-  onDeleteConfirm() : void {
+  onDeleteConfirm(): void {
     this.DeleteEvent.emit(this.idPropDelete);
   }
-  onDelete(id:string):void{
-    this.idPropDelete= id;
+  onDelete(id: string): void {
+    this.idPropDelete = id;
     this.confirmationModal.open();
   }
 
-  nav(){
+  nav() {
     this.router.navigate(['CreateProperty']);
   }
-
-  
 }

@@ -23,6 +23,13 @@ const routes: Routes = [
         (m) => m.SuperAdminModule
       ),
   },
+  {
+    path: 'packages',
+    loadChildren: () =>
+      import('./modules/package/package.module').then(
+        (mod) => mod.PackageModule
+      ),
+  },
 ];
 
 @NgModule({
