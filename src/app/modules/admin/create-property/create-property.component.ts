@@ -65,6 +65,8 @@ export class CreatePropertyComponent implements OnInit {
     Validators.maxLength(30),
     Validators.required,
   ]);
+  image = new FormControl('');
+  selectedFile: any;
 
   propertyForm = new FormGroup({
     capacity: this.capacity,
@@ -74,6 +76,7 @@ export class CreatePropertyComponent implements OnInit {
       date: this.date,
     }),
     propertyType: this.propertyType,
+    image: this.image,
   });
 
   /*
@@ -93,10 +96,26 @@ export class CreatePropertyComponent implements OnInit {
    return null;
   }
   */
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    if (this.selectedFile) {
+      // Aquí puedes trabajar con el archivo seleccionado, por ejemplo, cargarlo o mostrar información sobre él.
+      console.log('Archivo seleccionado:', this.selectedFile);
+    }
+  }
+
   onSubmit(form: FormGroup) {
     if (this.propertyForm.valid) {
+      const formData = new FormData();
+      formData.append('capacity', form.value.capacity);
+      formData.append('address', form.value.address);
+      formData.append('price', form.value.pricePerNight.price);
+      formData.append('date', form.value.pricePerNight.date);
+      formData.append('propertyType', form.value.propertyType);
+      formData.append('image', this.selectedFile);
+
       if (this.formScope === 'create') {
-        this.service.createProperty(form.value).subscribe((res) => {
+        this.service.createProperty(formData).subscribe((res) => {
           this.toastService.setup({
             message: 'Propiedad Creada',
             status: true,

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app/app.service';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/models/common';
 
@@ -8,13 +8,14 @@ import { ApiResponse } from 'src/app/models/common';
   providedIn: 'root',
 })
 export class PackageService {
-  private API = this.appService.apiUrl + '/api/packages/';
   constructor(
-    private http: HttpClient,
-    private readonly appService: AppConfigService
+    private appService: AppConfigService,
+    private _http: HttpClient
   ) {}
 
-  getPackage(packageId: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.API + packageId);
+  private readonly url: string = this.appService.apiUrl;
+
+  getAll(): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(this.url + '/api/packages');
   }
 }
