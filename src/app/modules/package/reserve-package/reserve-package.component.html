@@ -1,0 +1,78 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
+<!-- eslint-disable max-len -->
+<confirmation-modal #confirmationModal (confirmationEvent)="onSubmit()">
+  <div modal-title>Confirmar reserva</div>
+  <div modal-message>
+    Al aceptar se creará una reserva y se cobrará el importe informado
+  </div>
+</confirmation-modal>
+
+<navbar [showSearch]="true"></navbar>
+<div class="mx-12">
+  <header class="py-4">
+    <h3 class="font-bold text-2xl">Nombre del paquete</h3>
+  </header>
+  <main>
+    <div class="flex flex-row">
+      <img
+        src="../../../../assets/img/depto.jpg"
+        alt="Foto alojamiento"
+        class="rounded-lg max-w-screen-sm h-auto"
+      />
+    </div>
+    <div class="flex flex-row justify-around py-4">
+      <section class="flex flex-col">
+        <span class="text-lg underline">Detalles del paquete</span>
+        <span> Dirección de la propiedad: {{ property.address }} </span>
+        <span> Capacidad: {{ property.capacity }} personas </span>
+        <span class="underline"> Vehículo:</span>
+        <ul>
+          <li>Marca: {{ car.brand }}</li>
+          <li>Modelo: {{ car.model }}</li>
+          <li>Año: {{ car.year }}</li>
+        </ul>
+      </section>
+      <aside class="flex flex-col items-center h-screen dark">
+        <div class="w-96 max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+          <form class="flex flex-col" [formGroup]="reserveForm">
+            <label>Check-in</label>
+            <app-input
+              [placeholder]="'Check in'"
+              [type]="'date'"
+              [inputControl]="dateStart"
+            ></app-input>
+            <label>Check-out</label>
+            <app-input
+              [placeholder]="'Check out'"
+              [type]="'date'"
+              [inputControl]="dateEnd"
+            />
+            <label>Huéspedes</label>
+            <app-input
+              [placeholder]="'Cantidad'"
+              [type]="'number'"
+              [inputControl]="hosts"
+            />
+            <app-button
+              class="py-4"
+              [type]="'submit'"
+              [classType]="'primary'"
+              (click)="openModal()"
+            >
+              Reservar
+            </app-button>
+          </form>
+          <div>
+            Costo total:
+            <span class="text-xl font-bold text-gray-200"
+              >$ {{ property.pricePerNight.price + car.price.value }}</span
+            >
+            por noche
+            <span class="text-sm block">*No incluye impuestos</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+<app-footer></app-footer>

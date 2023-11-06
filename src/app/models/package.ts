@@ -1,7 +1,9 @@
-export interface Package {
-    type: string,
-    property: string;
-    car: string;
-    reserve: string;
-    medicalAssistance: string;
+interface Package {
+  id: string;
+  type: string;
+  property: string;
+  car: string;
+  medicalAssistance: string;
 }
+
+export default Package;

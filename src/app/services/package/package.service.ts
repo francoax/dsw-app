@@ -5,16 +5,21 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/models/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PackageService {
+  constructor(
+    private appService: AppConfigService,
+    private _http: HttpClient
+  ) {}
 
-  constructor(private appService: AppConfigService,
-    private _http: HttpClient) { }
+  private readonly url: string = this.appService.apiUrl;
 
-    private readonly url : string = this.appService.apiUrl;
-
-  getAll(): Observable<ApiResponse>{
+  getAll(): Observable<ApiResponse> {
     return this._http.get<ApiResponse>(this.url + '/api/packages');
+  }
+
+  getPackage(packageId: string): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(this.url + '/' + packageId);
   }
 }
