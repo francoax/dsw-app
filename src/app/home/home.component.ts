@@ -49,4 +49,7 @@ export class HomeComponent implements OnInit{
     this.showSlide(this.currentIndex);
   }
 
+  goToReserve(){
+    window.location.href = "/packages";
+  }
 }
