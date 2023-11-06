@@ -27,8 +27,7 @@ export class PropertyServiceService {
   }
 
   createProperty(formData: FormData): Observable<ApiResponse> {
-    const url = this.baseUrl;
-    return this.http.post<ApiResponse>(url, formData);
+    return this.http.post<ApiResponse>(this.baseUrl, formData);
   }
 
   getProperties(): Observable<ApiResponse> {
@@ -37,24 +36,24 @@ export class PropertyServiceService {
 
   getProperty(id: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`
+      `${this.baseUrl}/api/property/${id}`
     );
   }
 
   deleteProperty(id: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`
+      `${this.baseUrl}/api/property/${id}`
     );
   }
   UpdateProperty(prop: Property, id: string): Observable<ApiResponse> {
     return this.http.put<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`,
+      `${this.baseUrl}/api/property/${id}`,
       prop
     );
   }
   getPropertiesTypes(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
-      environment.apiUrl + '/api/propertie-types'
+      this.baseUrl + '/api/propertie-types'
     );
   }
 }
