@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import Car from 'src/app/models/car';
@@ -11,6 +11,7 @@ import { CarService } from 'src/app/services/car/car.service';
 import { PackageService } from 'src/app/services/package/package.service';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
+import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
   selector: 'app-reserve-package',
@@ -29,6 +30,8 @@ export class ReservePackageComponent implements OnInit {
   dateEnd = new FormControl('', Validators.required);
   hosts = new FormControl('', Validators.required);
 
+  @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
+
   constructor(
     private reserveService: ReserveService,
     private packageService: PackageService,
@@ -37,6 +40,17 @@ export class ReservePackageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
+  esFechaMayor(fecha1: string, fecha2: string): boolean {
+    const fechaInicial = new Date(fecha1);
+    const fechaFinal = new Date(fecha2);
+
+    if (fechaInicial > fechaFinal) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
@@ -64,20 +78,27 @@ export class ReservePackageComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.reserveForm.valid) {
+    if (
+      this.reserveForm.valid &&
+      this.esFechaMayor(
+        this.reserveForm.value.dateEnd,
+        this.reserveForm.value.dateStart
+      )
+    ) {
       const reserve: Reserve = {
         date_start: this.reserveForm.value.dateStart,
         date_end: this.reserveForm.value.dateEnd,
         packageReserved: this.packageId,
       };
-      this.reserveService
-        .createReserve(reserve, this.token)
-        .subscribe((res) => {
-          this.router.navigate(['/']);
-          console.log(res);
-        });
+      this.reserveService.createReserve(reserve, this.token).subscribe(() => {
+        this.router.navigate(['/']);
+      });
     } else {
       alert('Verifique que los campos sean correctos');
     }
+  }
+
+  openModal(): void {
+    this.modalComponent.open();
   }
 }
