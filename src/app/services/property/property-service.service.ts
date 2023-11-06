@@ -26,9 +26,9 @@ export class PropertyServiceService {
     this.propertyListSubject.next(this.properties);
   }
 
-  createProperty(prop: Property): Observable<ApiResponse> {
+  createProperty(formData: FormData): Observable<ApiResponse> {
     const url = this.baseUrl;
-    return this.http.post<ApiResponse>(url, prop);
+    return this.http.post<ApiResponse>(url, formData);
   }
 
   getProperties(): Observable<ApiResponse> {
