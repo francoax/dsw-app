@@ -29,4 +29,8 @@ export class NavbarComponent {
   buttonClicked() {
     this.router.navigate(['user/login']);
   }
+
+  goHomePage(){
+    this.router.navigate(['/home']);
+  }
 }

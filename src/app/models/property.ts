@@ -4,6 +4,7 @@ export interface Property {
   address:       string;
   pricePerNight: PricePerNight;
   propertyType:  string;
+  image: File;
 }
 export interface PricePerNight {
   price: number;
