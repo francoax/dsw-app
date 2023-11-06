@@ -10,7 +10,7 @@ import { AppConfigService } from '../app/app.service';
   providedIn: 'root',
 })
 export class PropertyServiceService {
-  private readonly baseUrl = appService.apiUrl + '/api/property/';
+  private readonly baseUrl = this.appService.apiUrl + '/api/property/';
   private propertyListSubject = new Subject<Property[]>();
   properties: Property[] = [];
 
