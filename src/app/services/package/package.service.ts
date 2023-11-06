@@ -20,6 +20,6 @@ export class PackageService {
   }
 
   getPackage(packageId: string): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(this.url + '/' + packageId);
+    return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
   }
 }
