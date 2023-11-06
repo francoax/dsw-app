@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import Car from 'src/app/models/car';
+import {Car} from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import Package from 'src/app/models/package';
 import { Property } from 'src/app/models/property';

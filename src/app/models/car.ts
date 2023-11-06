@@ -1,11 +1,14 @@
-interface Car {
-  id?: string;
-  brand: string;
-  model: string;
-  year: number;
-  plate: string;
-  price: { date: string; value: number };
-  locality: string;
+export interface Car {
+  id: string,
+  brand: string,
+  model: string,
+  year: string,
+  plate: string,
+  price: Price,
+  locality: string,
+}
+export interface Price {
+  date: string,
+  value: number
 }
 
-export default Car;
