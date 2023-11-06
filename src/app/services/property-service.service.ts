@@ -20,7 +20,6 @@ export class PropertyServiceService {
 
   get propertyList(){
     return this.propertyListSubject.asObservable();
-
   }
   actualizarLista(){
     this.getProperties().subscribe((response) => {this.properties = response.data;
@@ -29,9 +28,9 @@ export class PropertyServiceService {
 
   }
   
-  createProperty(prop: Property):Observable<ApiResponse> {
+  createProperty(formData : FormData):Observable<ApiResponse> {
     const url = this.baseUrl;
-    return this.http.post<ApiResponse>(url,prop);
+    return this.http.post<ApiResponse>(url,formData);
   }
 
   getProperties():Observable<ApiResponse>{

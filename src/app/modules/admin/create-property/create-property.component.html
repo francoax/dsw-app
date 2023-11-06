@@ -19,10 +19,11 @@
           </div>
           <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
             <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
-          </select>
-          <app-input [label]="'image'" [placeholder]="'image'" [required]="true" [inputControl]="image" [type]="'file'"></app-input>
-
+          </select> 
         </div>
+
+        <input class="input input-bordered w-full max-w-xs" type="file" (change)="onFileSelected($event)">  
+
         <div>
         <app-button [type]="'submit'" [classType]="'primary'" >
           {{buttonContent}}
@@ -36,7 +37,7 @@
 </div>
 <app-property-list [properties]="properties" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
 
-s
+
   <!-- 
     <app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
