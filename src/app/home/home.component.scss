@@ -1,0 +1,25 @@
+.carousel-paquetes {
+  display: flex;
+  overflow: hidden;
+  max-width: 700px; /* Ajusta el ancho según tus necesidades */
+  margin: 0 auto;
+}
+
+.slide {
+  flex: 0 0 100%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+.carousel-buttons{
+  display: flex;
+  justify-content: center;
+
+  button {
+    display: inline-block;
+    margin: 10px 50px;
+  }
+}
+
