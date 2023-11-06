@@ -44,26 +44,28 @@ ngOnInit(): void {
     locality: this.locality,
   });
 
-  this.service.getCars().subscribe((res)=> console.log(this.cars= res.data));
+  this.service.getCars().subscribe((res)=>{this.cars = res.data
+  console.log(res.data)});
+
   
 }
 
-onSubmit(){
+onSubmit(form : FormGroup){
+  console.log(form.value);
 
 if(this.carsForm.valid) {
-  const car:Car={
-    _id: '',
-    brand: this.carsForm.value.brand,
-    model: this.carsForm.value.model,
-    year: this.carsForm.value.year,
-    plate: this.carsForm.value.plate,
-    price:{
-      date: this.carsForm.value.price.date,
-      value: parseInt(this.carsForm.value.price.value|| ''),
-    },
-    locality:this.carsForm.value.locality,
+  if(this.formScope==='create'){
+  this.service.createCar(form.value).subscribe((res)=>{
+    this.cars.push(form.value);
+    this.closeForm();
+  })
+  } else if(this.formScope ==='editar'){
+    this.service.UpdateCar(form.value,this.idCarToEdit).subscribe((res)=>{
+      const index = this.cars.map(a => a._id).indexOf(res.data._id);
+      this.cars[index]= res.data;
+      this.closeForm();
+    })
   }
-  this.service.createCar(car).subscribe(res => console.log(res))
 
   } else{
     alert('Verifique que los datos ingresados sean validos');
@@ -92,6 +94,7 @@ onUpdate(car: Car){
   })
   this.formScope = 'editar';
   this.idCarToEdit = car._id;
+  console.log(this.idCarToEdit)
 
 }
 

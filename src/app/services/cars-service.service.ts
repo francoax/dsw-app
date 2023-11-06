@@ -25,9 +25,9 @@ export class CarsServiceService {
   deleteCar(id:string):Observable<ApiResponse>{
     return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/cars/${id}`)
     }
-  UpdateCar(prop:Car){
-    const url = environment.apiUrl+"/api/cars/:id";
-    return this.http.put(url,prop);
+  UpdateCar(car:Car, id:string):Observable<ApiResponse>{
+    console.log(id);
+    return this.http.put<ApiResponse>(`${environment.apiUrl}/api/cars/${id}`,car);
     }
 
 

@@ -17,7 +17,6 @@ import { SuperAdminModule } from './modules/super-admin/super-admin.module';
     UserModule,
     HttpClientModule,
     AdminModule,
-    HttpClientModule,
     SuperAdminModule
   ],
   providers: [],

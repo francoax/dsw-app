@@ -8,7 +8,7 @@
     <div class="mt-6">
       <h2 class="text-base font-semibold leading-7 text-gray-900 title">{{formTitle}}</h2>
     </div>
-     <form  [formGroup]="carsForm" (ngSubmit)="onSubmit()">
+     <form  [formGroup]="carsForm" (ngSubmit)="onSubmit(carsForm)">
       <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
       <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
       <app-input [label]="'year'" [placeholder]="'year'" [required]="true" [inputControl]="year"></app-input>
@@ -19,7 +19,7 @@
       <app-button [type]="'submit'" [classType]="'primary'">
         {{buttonContent}}
       </app-button>
-      <app-button [type]="'button'" [classType]="'cancel'">
+      <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
         Cancelar
       </app-button>
     </form>
