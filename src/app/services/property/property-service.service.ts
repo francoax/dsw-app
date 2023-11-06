@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Property } from '../../models/property';
 import { Observable, Subject } from 'rxjs';
 import { ApiResponse } from '../../models/common';
+import { AppConfigService } from '../app/app.service';
 
 @Injectable({
   providedIn: 'root',
