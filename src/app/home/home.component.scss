@@ -13,6 +13,7 @@ img {
   width: 100%;
   height: auto;
 }
+
 .carousel-buttons{
   display: flex;
   justify-content: center;
@@ -23,6 +24,30 @@ img {
   }
 }
 
+.carousel-property{
+  position: relative;
+}
+.btn-carousel{
+  background-color: white;
+  color: black;
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  transform: translate(10%, 10%);
+  // padding: 10px;
+  border-radius: 5px;
+}
+.card-carousel{
+  background-color: black;
+  color: white;
+  position: absolute;
+  top: 5%;
+  left: 40%;
+  transform: translate(10%, 10%);
+  // padding: 10px;
+  border-radius: 10px;
+}
+
 .properties-list {
   display: flex;
   flex-wrap: wrap;
@@ -30,4 +55,3 @@ img {
   gap: 20px;
   padding: 20px;
 }
-

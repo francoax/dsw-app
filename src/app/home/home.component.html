@@ -1,8 +1,18 @@
 <navbar></navbar>
-<div class="carousel-paquetes">
+<div class="carousel-paquetes w-full">
   <div class="slide w-full">
     <div class="carousel-property">
-      <img src="https://365enfoques.com/wp-content/uploads/2016/05/consejos-de-fotografia-panorama.jpg" class="w-full" /> 
+      <img src="../assets/maxresdefault.jpg" class="w-full" /> 
+      <button class="btn btn-carousel" (click)="goToReserve()">Reservar Paquete</button>
+      <div class="card card-carousel">
+        <div class="card-body">
+          <ul class="list-disc">
+            <li>Departamento con tres habitaciones</li>
+            <li>Toyota Hilux</li>
+            <li>Asistencia Médica Galeno de tipo B</li>
+          </ul>
+        </div>          
+      </div>
     </div>
     <div class="carousel-car"></div>
     <div class="carousel-medicalassist"></div>

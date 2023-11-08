@@ -27,7 +27,7 @@ export class LogInComponent implements OnInit {
     this.userService.getUserByCredentials(mail, password).subscribe({
       next: (res) => {
         window.localStorage.setItem('loggedUser', JSON.stringify(res.data));
-        window.location.reload();
+        window.location.href = '/home';
       },
       error: (err) => {
         if (err.status === 0) {

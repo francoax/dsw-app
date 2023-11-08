@@ -48,4 +48,8 @@ export class HomeComponent implements OnInit {
     this.currentIndex++;
     this.showSlide(this.currentIndex);
   }
+
+  goToReserve(){
+    window.location.href = `/packages?packageId=652dd48c82681f59fdc830a3`;
+  }
 }
