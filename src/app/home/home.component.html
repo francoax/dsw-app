@@ -26,4 +26,7 @@
   <button id="prev" (click)="prevSlide()" ngClass="slide_translate">Anterior</button>
   <button id="next" (click)="nextSlide()">Siguiente</button>
 </div>
+<section class="properties-list">
+    <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
+</section>
 <app-footer></app-footer>

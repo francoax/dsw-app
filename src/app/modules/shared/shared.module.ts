@@ -9,6 +9,7 @@ import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ToastComponent } from './toast/toast.component';
     ButtonComponent,
     SidebarComponent,
     ModalComponent,
-    ToastComponent
+    ToastComponent,
+    CardComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { ToastComponent } from './toast/toast.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
+    CardComponent
   ],
 })
 export class SharedModule {}
