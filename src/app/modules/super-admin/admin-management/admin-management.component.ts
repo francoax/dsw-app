@@ -16,7 +16,6 @@ export class AdminManagementComponent implements OnInit {
   formTitle = 'Registar nuevo administrador'
   buttonContent = 'Aceptar'
   formScope = 'create'
-  idToUpdate! : string
 
   adminList : Admin[] = []
 
@@ -106,7 +105,7 @@ export class AdminManagementComponent implements OnInit {
           this.adminList.push(res.data)
         }
       })
-      : this.dataService.updateAdmin(form.value, this.idToUpdate).subscribe((res) => {
+      : this.dataService.updateAdmin(form.value).subscribe((res) => {
         if(!res.error) {
           this.closeForm()
           const index = this.adminList.map(a => a._id).indexOf(res.data._id)
@@ -137,7 +136,6 @@ export class AdminManagementComponent implements OnInit {
     })
     this.buttonContent = 'Actualizar'
     this.formScope = 'update'
-    this.idToUpdate = admin._id
   }
 
   closeForm() : void {

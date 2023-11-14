@@ -24,8 +24,8 @@ export class SuperAdminsService {
     return this.http.post<ApiResponse>(`${this.api}/api/users`, admin)
   }
 
-  updateAdmin(admin : Admin, id : string) : Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.api}/api/users/${id}`, admin)
+  updateAdmin(admin : Admin) : Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.api}/api/users`, admin)
   }
 
   deleteAdmin(id : string) : Observable<ApiResponse> {

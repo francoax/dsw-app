@@ -1,8 +1,8 @@
-<navbar></navbar>
+<navbar [showSearch]="true"></navbar>
 <div class="carousel-paquetes w-full">
   <div class="slide w-full">
     <div class="carousel-property">
-      <img src="../assets/maxresdefault.jpg" class="w-full" /> 
+      <img src="../assets/maxresdefault.jpg" class="w-full" />
       <button class="btn btn-carousel" (click)="goToReserve()">Reservar Paquete</button>
       <div class="card card-carousel">
         <div class="card-body">
@@ -11,7 +11,7 @@
             <li>Toyota Hilux</li>
             <li>Asistencia Médica Galeno de tipo B</li>
           </ul>
-        </div>          
+        </div>
       </div>
     </div>
     <div class="carousel-car"></div>
@@ -19,7 +19,7 @@
   </div> 
   <div class="slide w-full">
     <div class="carousel-property">
-      <img src="https://365enfoques.com/wp-content/uploads/2016/05/punto-nodal-que-es.jpg" class="w-full" /> 
+      <img src="https://365enfoques.com/wp-content/uploads/2016/05/punto-nodal-que-es.jpg" class="w-full" />
     </div>
     <div class="carousel-car"></div>
     <div class="carousel-medicalassist"></div>
@@ -37,6 +37,6 @@
   <button id="next" (click)="nextSlide()">Siguiente</button>
 </div>
 <section class="properties-list">
-    <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
+    <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
 </section>
 <app-footer></app-footer>
