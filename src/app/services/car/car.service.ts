@@ -17,4 +17,8 @@ export class CarService {
   getCar(carId: string): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.API + carId);
   }
+
+  getCars(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API);
+  }
 }

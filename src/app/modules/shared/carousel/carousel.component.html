@@ -1,0 +1,33 @@
+<div class="carousel-container">
+  <igx-carousel #carousel>
+      <igx-slide *ngFor="let package of packageList;">
+        <img src="../assets/img/maxresdefault.jpg" alt="carlos paz combo" class="w-full" />
+        <button class="btn btn-carousel" onclick="modal_register.showModal()" *ngIf="!userLogged()">
+          Reservar Paquete
+        </button>
+        <button class="btn btn-carousel" (click)="goToReserve(package.id)" *ngIf="userLogged()">
+          Reservar Paquete</button>
+        <div class="card card-carousel">
+          <div class="card-body">
+            <ul class="list-disc">
+              <li>Dirección : {{this.getPropertyAddress(package.property)}}</li>
+              <li>{{this.getCar(package.car)}}</li>
+              <li>Asistencia Médica : {{this.getAssistMed(package.medicalAssistance)}}</li>
+            </ul>
+          </div>          
+        </div>
+      </igx-slide>
+  </igx-carousel>
+</div>
+<dialog id="modal_register" class="modal d-none">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">¡Hola!</h3>
+    <p class="py-4">Debe iniciar sesión si quiere reservar</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Cerrar</button>
+      </form>
+    </div>
+  </div>
+</dialog>

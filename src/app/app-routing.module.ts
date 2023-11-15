@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { PropertyResolverService } from './resolvers/property.resolver.service';
+import { PackageResolverService } from './resolvers/package.resolver.service';
+import { CarResolverService } from './resolvers/car.resolver.service';
+import { MedicalAssistanceResolverService } from './resolvers/MedicalAssist.resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', 
+    component: HomeComponent,
+    resolve:{propertyList:PropertyResolverService,  packages:PackageResolverService,
+      cars: CarResolverService,
+      medAssists: MedicalAssistanceResolverService
+           }
+  },
   {
     path: 'user',
     loadChildren: () =>

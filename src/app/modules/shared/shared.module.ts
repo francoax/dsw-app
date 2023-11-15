@@ -9,6 +9,11 @@ import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { 
+	IgxCarouselModule,
+	IgxSliderModule
+ } from "igniteui-angular";
 
 @NgModule({
   declarations: [
@@ -18,12 +23,15 @@ import { ToastComponent } from './toast/toast.component';
     ButtonComponent,
     SidebarComponent,
     ModalComponent,
-    ToastComponent
+    ToastComponent,
+    CarouselComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    IgxCarouselModule,
+	IgxSliderModule
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
@@ -33,6 +41,7 @@ import { ToastComponent } from './toast/toast.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
+    CarouselComponent
   ],
 })
 export class SharedModule {}
