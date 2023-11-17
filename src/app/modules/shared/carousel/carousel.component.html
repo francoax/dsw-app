@@ -1,4 +1,63 @@
-<div class="carousel-container">
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+<div class="container-carousel">
+  <div class="navigation-wrapper">
+    <div class="keen-slider keen-slider--vertical" #sliderRef style="height:300px">
+      <div *ngFor="let package of packageList; let i=index " class="keen-slider__slide number-slide{{i+1}}">
+        <img src="../../../../assets/img/{{package.nameImage}}" alt="">
+        <button class="btn btn-carousel" onclick="modal_register.showModal()" *ngIf="!userLogged()">
+          Reservar Paquete
+        </button>
+        <button class="btn btn-carousel" (click)="goToReserve(package.id)" *ngIf="userLogged()">
+          Reservar Paquete</button>
+        <div class="card card-carousel">
+          <div class="card-body">
+            <ul class="list-disc">
+              <li>Dirección : {{this.getPropertyAddress(package.property)}}</li>
+              <li>{{this.getCar(package.car)}}</li>
+              <li>Asistencia Médica : {{this.getAssistMed(package.medicalAssistance)}}</li>
+            </ul>
+          </div>          
+        </div>
+      </div>
+      
+    </div>
+    <svg [ngClass]="'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')"
+      (click)="slider?.prev()"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
+      />
+    </svg>
+    <svg
+      *ngIf="slider"
+      [ngClass]="
+        'arrow arrow--right ' +
+        (slider.track.details.slides.length - 1 === currentSlide
+          ? 'arrow--disabled'
+          : '')
+      "
+      (click)="slider?.next()"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
+    </svg>
+  </div>
+  <div class="dots">
+    <button
+      (click)="slider?.moveToIdx(i)"
+      *ngFor="let slide of dotHelper; let i = index"
+      [class]="'dot ' + (i === currentSlide ? 'active' : '')"
+    ></button>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="carousel-container">
   <igx-carousel #carousel>
       <igx-slide *ngFor="let package of packageList;">
         <img src="../assets/img/maxresdefault.jpg" alt="carlos paz combo" class="w-full" />
@@ -18,7 +77,7 @@
         </div>
       </igx-slide>
   </igx-carousel>
-</div>
+</div> -->
 <dialog id="modal_register" class="modal d-none">
   <div class="modal-box">
     <h3 class="font-bold text-lg">¡Hola!</h3>

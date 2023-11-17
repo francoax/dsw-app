@@ -10,10 +10,6 @@ import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { 
-	IgxCarouselModule,
-	IgxSliderModule
- } from "igniteui-angular";
 
 @NgModule({
   declarations: [
@@ -30,8 +26,6 @@ import {
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    IgxCarouselModule,
-	IgxSliderModule
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,

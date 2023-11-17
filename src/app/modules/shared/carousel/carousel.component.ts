@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import Package from 'src/app/models/package';
 import { Property } from 'src/app/models/property';
+import KeenSlider, { KeenSliderInstance } from "keen-slider"
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
-  styleUrls: ['./carousel.component.scss']
+  styleUrls: ['./carousel.component.scss','../../../../../node_modules/keen-slider/keen-slider.min.css']
 })
-export class CarouselComponent implements OnInit{
+export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy{
  
   @Input() packageList: Package[] | undefined;
   @Input() propertyList: Property[] | undefined;
@@ -54,5 +55,32 @@ export class CarouselComponent implements OnInit{
     }else{
       return false
     }
+  }
+
+  @ViewChild("sliderRef") sliderRef!: ElementRef<HTMLElement>
+
+  currentSlide = 1;
+  dotHelper: Array<number> = [];
+  slider: KeenSliderInstance | null = null;
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
+        initial: this.currentSlide,
+        slideChanged: (s) => {
+          this.currentSlide = s.track.details.rel
+        },
+      })
+      this.dotHelper = [
+        ...Array(this.slider.track.details.slides.length).keys(),
+      ]
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.slider) {
+      this.slider.destroy();
+    }
+    if (this.slider) this.slider.destroy()
   }
 }

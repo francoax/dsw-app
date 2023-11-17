@@ -4,6 +4,7 @@ interface Package {
   property: string;
   car: string;
   medicalAssistance: string;
+  nameImage:string;
 }
 
 export default Package;
