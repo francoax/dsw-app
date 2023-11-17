@@ -20,4 +20,10 @@ export class ReserveService {
       headers: { Authorization: 'Bearer ' + token },
     });
   }
+
+  getReserves(token: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API + 'user', {
+      headers: { Authorization: 'Bearer ' + token },
+    });
+  }
 }
