@@ -13,7 +13,8 @@ import { AppConfigService } from '../app/app.service';
 export class PropertyServiceService {
   private propertyListSubject = new Subject<Property[]>();
   properties: Property[] = [];
-  private readonly baseUrl = this.appService.apiUrl + '/api/property/';
+  private readonly baseUrl : string = this.appService.apiUrl + '/api/property/';
+  private readonly baseUrl2 : string = this.appService.apiUrl + '/api/propertie-types/';
 
   constructor(private http: HttpClient,
     private readonly appService: AppConfigService) {}
@@ -29,8 +30,7 @@ export class PropertyServiceService {
   }
 
   createProperty(formData: FormData): Observable<ApiResponse> {
-    const url = this.baseUrl;
-    return this.http.post<ApiResponse>(url, formData);
+    return this.http.post<ApiResponse>(this.baseUrl, formData);
   }
 
   getProperties(): Observable<ApiResponse> {
@@ -38,25 +38,20 @@ export class PropertyServiceService {
   }
 
   getProperty(id: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`
-    );
+    return this.http.get<ApiResponse>(`${this.baseUrl}${id}`);
   }
 
   deleteProperty(id: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`
+    return this.http.delete<ApiResponse>(`${this.baseUrl}${id}`
     );
   }
   UpdateProperty(prop: Property, id: string): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(
-      `${environment.apiUrl}/api/property/${id}`,
+    return this.http.put<ApiResponse>(`${this.baseUrl}${id}`,
       prop
     );
   }
+  
   getPropertiesTypes(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
-      environment.apiUrl + '/api/propertie-types'
-    );
+    return this.http.get<ApiResponse>(this.baseUrl2);
   }
 }
