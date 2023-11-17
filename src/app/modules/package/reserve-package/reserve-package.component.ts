@@ -25,7 +25,6 @@ export class ReservePackageComponent implements OnInit {
   property!: Property;
   car!: Car;
   medicalAssist!: MedicalAssistance;
-  token!: any;
   reserveForm!: FormGroup;
   dateStart = new FormControl('', Validators.required);
   dateEnd = new FormControl('', Validators.required);
@@ -57,8 +56,6 @@ export class ReservePackageComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       this.packageId = params['packageId'];
     });
-    this.token = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.token = this.token.token;
     this.packageService.getPackage(this.packageId).subscribe((res) => {
       this.package = res.data;
       this.propertyService
@@ -90,12 +87,13 @@ export class ReservePackageComponent implements OnInit {
         this.reserveForm.value.dateStart
       )
     ) {
+      const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
       const reserve: Reserve = {
         date_start: this.reserveForm.value.dateStart,
         date_end: this.reserveForm.value.dateEnd,
         packageReserved: this.packageId,
       };
-      this.reserveService.createReserve(reserve, this.token).subscribe(() => {
+      this.reserveService.createReserve(reserve, token).subscribe(() => {
         this.router.navigate(['/']);
       });
     } else {
