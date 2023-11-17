@@ -5,16 +5,18 @@ import { Property } from '../../models/property';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../../models/common';
+import { AppConfigService } from '../app/app.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PropertyServiceService {
-  readonly baseUrl = environment.apiUrl + '/api/property/';
   private propertyListSubject = new Subject<Property[]>();
   properties: Property[] = [];
+  private readonly baseUrl = this.appService.apiUrl + '/api/property/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private readonly appService: AppConfigService) {}
 
   get propertyList() {
     return this.propertyListSubject.asObservable();
