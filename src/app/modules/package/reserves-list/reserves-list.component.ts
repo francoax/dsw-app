@@ -1,14 +1,16 @@
 /* eslint-disable prefer-const */
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Reserve from 'src/app/models/reserve';
 import { CarService } from 'src/app/services/car/car.service';
+import { LocationService } from 'src/app/services/location/location.service';
 import { MedicalAssistanceService } from 'src/app/services/medical-assitance/medical-assistance.service';
 import { PackageService } from 'src/app/services/package/package.service';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 
 interface ReserveDetails {
-  location?: string;
+  location: string;
   propertyAddress: string;
   propertyType: string;
   car: string;
@@ -24,13 +26,19 @@ interface ReserveDetails {
 })
 export class ReservesListComponent implements OnInit {
   reserves: ReserveDetails[] = [];
+  dateFilterForm = new FormGroup({
+    radioOption: new FormControl(''),
+    dateFilter: new FormControl('', Validators.required),
+  });
+  error = false;
 
   constructor(
     private reserveService: ReserveService,
     private packageService: PackageService,
     private propertyService: PropertyServiceService,
     private carService: CarService,
-    private medicalAssistance: MedicalAssistanceService
+    private medicalAssistance: MedicalAssistanceService,
+    private locationService: LocationService
   ) {}
 
   ngOnInit() {
@@ -44,6 +52,7 @@ export class ReservesListComponent implements OnInit {
 
   getReserveDetails(reserve: Reserve): ReserveDetails {
     let reserveDetails: ReserveDetails = {
+      location: '',
       propertyAddress: '',
       propertyType: '',
       car: '',
@@ -63,7 +72,13 @@ export class ReservesListComponent implements OnInit {
         });
         this.carService.getCar(carId).subscribe((car) => {
           reserveDetails.car = `${car.data.brand} ${car.data.model}`;
+          this.locationService
+            .getLocation(car.data.locality)
+            .subscribe((location) => {
+              reserveDetails.location = location.data.name;
+            });
         });
+
         this.medicalAssistance
           .getOne(medicalAssistanceId)
           .subscribe((medicalAssistance) => {
@@ -77,5 +92,9 @@ export class ReservesListComponent implements OnInit {
       });
 
     return reserveDetails;
+  }
+
+  filterReserves() {
+    console.log(this.dateFilterForm.value);
   }
 }
