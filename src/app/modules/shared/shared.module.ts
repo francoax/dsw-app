@@ -9,6 +9,7 @@ import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,13 @@ import { ToastComponent } from './toast/toast.component';
     ButtonComponent,
     SidebarComponent,
     ModalComponent,
-    ToastComponent
+    ToastComponent,
+    CarouselComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
@@ -33,6 +35,7 @@ import { ToastComponent } from './toast/toast.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
+    CarouselComponent
   ],
 })
 export class SharedModule {}

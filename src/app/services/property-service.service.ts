@@ -47,5 +47,8 @@ export class PropertyServiceService {
       return this.http.get<ApiResponse>(environment.apiUrl+"/api/propertie-types");
     }
 
+    getOne(id: string):Observable<ApiResponse>{
+      return this.http.get<ApiResponse>(`${environment.apiUrl}/api/property/${id}`);
+    }
 }
 
