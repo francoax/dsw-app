@@ -42,13 +42,10 @@ export class PropertyServiceService {
   }
 
   deleteProperty(id: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${this.baseUrl}${id}`
-    );
+    return this.http.delete<ApiResponse>(`${this.baseUrl}${id}`);
   }
   UpdateProperty(prop: Property, id: string): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.baseUrl}${id}`,
-      prop
-    );
+    return this.http.put<ApiResponse>(`${this.baseUrl}${id}`, prop);
   }
   
   getPropertiesTypes(): Observable<ApiResponse> {
