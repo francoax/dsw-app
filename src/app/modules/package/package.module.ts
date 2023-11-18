@@ -5,9 +5,10 @@ import { PackageRoutingModule } from './package-routing.module';
 import { ReservePackageComponent } from './reserve-package/reserve-package.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReservesListComponent } from './reserves-list/reserves-list.component';
 
 @NgModule({
-  declarations: [ReservePackageComponent],
+  declarations: [ReservePackageComponent, ReservesListComponent],
   imports: [
     CommonModule,
     PackageRoutingModule,

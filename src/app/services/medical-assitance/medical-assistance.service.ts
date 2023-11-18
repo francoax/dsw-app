@@ -8,34 +8,50 @@ import { AppConfigService } from '../app/app.service';
 
 const httpOption = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
+    'Content-Type': 'application/json',
+  }),
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MedicalAssistanceService {
-
-  private readonly url : string = this.appService.apiUrl;
+  private readonly url: string = this.appService.apiUrl;
 
   constructor(
     private http: HttpClient,
-    private readonly appService : AppConfigService) { }
+    private readonly appService: AppConfigService
+  ) {}
 
-  add(medicalAsist: MedicalAssistanceRequest):Observable<ApiResponse>{
-    return this.http.post<ApiResponse>(this.url + '/api/medicalAssistance', medicalAsist, httpOption);
+  add(medicalAsist: MedicalAssistanceRequest): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      this.url + '/api/medicalAssistance',
+      medicalAsist,
+      httpOption
+    );
   }
 
-  getAll(){
+  getAll() {
     return this.http.get<ApiResponse>(this.url + '/api/medicalAssistance');
   }
 
-  edit(medAsist : MedicalAssistance){
-    return this.http.put<ApiResponse>(this.url + '/api/medicalAssistance/' + medAsist._id, medAsist, httpOption)
+  getOne(id: string) {
+    return this.http.get<ApiResponse>(
+      this.url + '/api/medicalAssistance/' + id
+    );
   }
 
-  delete(medAsist : MedicalAssistance){
-    return this.http.delete<ApiResponse>(this.url + '/api/medicalAssistance/' + medAsist._id)
+  edit(medAsist: MedicalAssistance) {
+    return this.http.put<ApiResponse>(
+      this.url + '/api/medicalAssistance/' + medAsist._id,
+      medAsist,
+      httpOption
+    );
+  }
+
+  delete(medAsist: MedicalAssistance) {
+    return this.http.delete<ApiResponse>(
+      this.url + '/api/medicalAssistance/' + medAsist._id
+    );
   }
 }

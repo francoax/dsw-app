@@ -30,7 +30,7 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
-  goHomePage(){
+  goHomePage(){    
     this.router.navigate(['/home']);
   }
 }
