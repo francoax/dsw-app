@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
 import { CardComponent } from './card/card.component';
+import { CardsListComponent } from './card/cards-list/cards-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CardComponent } from './card/card.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CardComponent
+    CardComponent,
+    CardsListComponent
   ],
   imports: [
     CommonModule,
