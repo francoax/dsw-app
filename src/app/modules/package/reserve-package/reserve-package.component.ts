@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {Car} from 'src/app/models/car';
+import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import Package from 'src/app/models/package';
 import { Property } from 'src/app/models/property';
@@ -12,6 +12,7 @@ import { PackageService } from 'src/app/services/package/package.service';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { MedicalAssistanceService } from 'src/app/services/medical-assitance/medical-assistance.service';
 
 @Component({
   selector: 'app-reserve-package',
@@ -28,7 +29,6 @@ export class ReservePackageComponent implements OnInit {
   reserveForm!: FormGroup;
   dateStart = new FormControl('', Validators.required);
   dateEnd = new FormControl('', Validators.required);
-  hosts = new FormControl('', Validators.required);
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -37,6 +37,7 @@ export class ReservePackageComponent implements OnInit {
     private packageService: PackageService,
     private propertyService: PropertyServiceService,
     private carService: CarService,
+    private medicalAssistanceService: MedicalAssistanceService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -68,12 +69,16 @@ export class ReservePackageComponent implements OnInit {
       this.carService.getCar(this.package.car).subscribe((res) => {
         this.car = res.data;
       });
+      this.medicalAssistanceService
+        .getOne(this.package.medicalAssistance)
+        .subscribe((res) => {
+          this.medicalAssist = res.data;
+        });
     });
 
     this.reserveForm = new FormGroup({
       dateStart: this.dateStart,
       dateEnd: this.dateEnd,
-      hosts: this.hosts,
     });
   }
 

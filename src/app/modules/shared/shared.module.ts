@@ -10,6 +10,7 @@ import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
 import { CardComponent } from './card/card.component';
+import { CarouselComponent } from './carousel/carousel.component';
 import { CardsListComponent } from './card/cards-list/cards-list.component';
 
 @NgModule({
@@ -22,12 +23,13 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     ModalComponent,
     ToastComponent,
     CardComponent,
+    CarouselComponent,
     CardsListComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
@@ -37,7 +39,8 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CardComponent
+    CardComponent,
+    CarouselComponent
   ],
 })
 export class SharedModule {}

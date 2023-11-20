@@ -8,19 +8,22 @@ import { UserModule } from './modules/user/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SuperAdminModule } from './modules/super-admin/super-admin.module';
 import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        SharedModule,
-        UserModule,
-        HttpClientModule,
-        AdminModule,
-        SuperAdminModule
-    ],
-    providers: [],
-    bootstrap: [AppComponent],
-  })
-export class AppModule {}
+  declarations: [AppComponent, HomeComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    SharedModule,
+    UserModule,
+    HttpClientModule,
+    AdminModule,
+    SuperAdminModule,
+    BrowserAnimationsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {
+}

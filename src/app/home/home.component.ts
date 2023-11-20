@@ -1,6 +1,9 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { PackageService } from '../services/package/package.service';
+import { Component, OnInit } from '@angular/core';
 import Package from '../models/package';
+import { Property } from '../models/property';
+import { Car } from '../models/car';
+import { MedicalAssistance } from '../models/medical-assistance';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,48 +11,21 @@ import Package from '../models/package';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  packageList: Package[] = [];
+  propertyList: Property[] = [];
+  carList: Car[] = [];
+  asistMedList: MedicalAssistance[] = [];
+
   constructor(
-    private packageService: PackageService,
-    private elementRef: ElementRef
+    private readonly route : ActivatedRoute,
   ) {}
-
-  listaPaquetes: Package[] = [];
-
-  carousel = this.elementRef.nativeElement.querySelector('.carousel');
-  slides = this.elementRef.nativeElement.querySelectorAll('.carousel');
-  prevButton = document.getElementById('prev');
-  nextButton = document.getElementById('next');
-  slide_translate = false;
-
-  currentIndex = 0;
-
+  
   ngOnInit(): void {
-    this.packageService.getAll().subscribe((res) => {
-      this.listaPaquetes = res.data;
-      console.log(res.data);
-    });
-    this.showSlide(this.currentIndex);
-  }
-
-  showSlide(index: number) {
-    if (index < 0) {
-      this.currentIndex = this.slides.length - 1;
-    } else if (index >= this.slides.length) {
-      this.currentIndex = 0;
-    }
-  }
-
-  prevSlide() {
-    this.currentIndex--;
-    this.showSlide(this.currentIndex);
-  }
-
-  nextSlide() {
-    this.currentIndex++;
-    this.showSlide(this.currentIndex);
-  }
-
-  goToReserve(){
-    window.location.href = `/packages?packageId=652dd48c82681f59fdc830a3`;
+    this.route.data.subscribe(({ propertyList, packages, cars, medAssists }) => {
+      this.propertyList = propertyList;
+      this.packageList = packages;
+      this.carList = cars;
+      this.asistMedList = medAssists;
+    })
   }
 }

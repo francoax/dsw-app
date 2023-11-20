@@ -1,42 +1,13 @@
-<navbar [showSearch]="true"></navbar>
-<div class="carousel-paquetes w-full">
-  <div class="slide w-full">
-    <div class="carousel-property">
-      <img src="../assets/maxresdefault.jpg" class="w-full" />
-      <button class="btn btn-carousel" (click)="goToReserve()">Reservar Paquete</button>
-      <div class="card card-carousel">
-        <div class="card-body">
-          <ul class="list-disc">
-            <li>Departamento con tres habitaciones</li>
-            <li>Toyota Hilux</li>
-            <li>Asistencia Médica Galeno de tipo B</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="carousel-car"></div>
-    <div class="carousel-medicalassist"></div>
-  </div> 
-  <div class="slide w-full">
-    <div class="carousel-property">
-      <img src="https://365enfoques.com/wp-content/uploads/2016/05/punto-nodal-que-es.jpg" class="w-full" />
-    </div>
-    <div class="carousel-car"></div>
-    <div class="carousel-medicalassist"></div>
-  </div> 
-  <div class="slide w-full">
-    <div class="carousel-property">
-      <img src="https://previews.123rf.com/images/yommy8008/yommy80081705/yommy8008170500051/77734373-foto-panor%C3%A1mica-de-la-fauna-horizontal-de-la-liebre-salvaje-que-mira-a-la-c%C3%A1mara-el-animal-tiene.jpg" class="w-full" /> 
-    </div>
-    <div class="carousel-car"></div>
-    <div class="carousel-medicalassist"></div>
-  </div> 
-</div>
-<div class="carousel-buttons">
-  <button id="prev" (click)="prevSlide()" ngClass="slide_translate">Anterior</button>
-  <button id="next" (click)="nextSlide()">Siguiente</button>
-</div>
+<!-- eslint-disable max-len -->
+<navbar></navbar>
+
+<app-carousel [asistMedList]="this.asistMedList"
+              [packageList]="this.packageList"
+              [carList]="this.carList"
+              [propertyList]="this.propertyList">
+</app-carousel>
 <section class="properties-list">
-    <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
+  <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
 </section>
+
 <app-footer></app-footer>
