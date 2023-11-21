@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Property } from 'src/app/models/property';
 
 @Component({
   selector: 'app-card',
@@ -6,6 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent {
-
-  @Input() imgSrc! : string;
+  @Input() propertyInfo! : Property
 }

@@ -1,4 +1,18 @@
 .card:hover{
   box-shadow:5px 5px 20px rgba(0,0,0,0.5);
+}
 
+.card {
+  margin-bottom: 40px;
+}
+
+.card-price {
+  align-self: flex-end;
+  color: rgb(28, 197, 28);
+  font-weight: 700;
+
+  span {
+    font-weight: lighter;
+    font-size: small;
+  }
 }

@@ -40,7 +40,8 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     ModalComponent,
     ToastComponent,
     CardComponent,
-    CarouselComponent
+    CarouselComponent,
+    CardsListComponent
   ],
 })
 export class SharedModule {}

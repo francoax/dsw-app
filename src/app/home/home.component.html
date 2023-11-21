@@ -6,8 +6,6 @@
               [carList]="this.carList"
               [propertyList]="this.propertyList">
 </app-carousel>
-<section class="properties-list">
-  <app-card *ngFor="let prop of [1,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]"></app-card>
-</section>
+<app-cards-list [propertiesList]="propertyList"></app-cards-list>
 
 <app-footer></app-footer>

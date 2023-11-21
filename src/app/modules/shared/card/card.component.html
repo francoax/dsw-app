@@ -1,8 +1,13 @@
 <div class="card card-compact w-96 bg-base-100 shadow-xl">
   <figure><img src="/assets/img/prop2.jpg" alt="property" /></figure>
   <div class="card-body">
-    <h2 class="card-title">Bariloche, Argentina</h2>
-    <p>U$S99.99 /noche</p>
+    <h2 class="card-title">{{propertyInfo.location.name}}, <span>{{propertyInfo.address}}</span></h2>
+    <p>
+      Capacidad para {{propertyInfo.capacity}} personas
+    </p>
+    <p class="card-price">
+      {{propertyInfo.pricePerNight.price | currency:'USD':'code'}}<span>/por noche</span>
+    </p>
     <div class="card-actions justify-end">
       <app-button [classType]="'primary'">
         Reservar
