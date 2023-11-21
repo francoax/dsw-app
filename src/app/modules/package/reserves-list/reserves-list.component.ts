@@ -108,8 +108,7 @@ export class ReservesListComponent implements OnInit {
   }
 
   filterReserves() {
-    console.log(this.dateFilterForm.value);
-    this.reserves = this.reservesFull;
+    this.resetFilter();
 
     if (this.dateFilterForm.value.radioOption === 'option1') {
       this.reserves = this.reserves.filter(
@@ -126,5 +125,9 @@ export class ReservesListComponent implements OnInit {
           new Date(this.dateFilterForm.value.dateFilter as string)
       );
     }
+  }
+
+  resetFilter() {
+    this.reserves = this.reservesFull;
   }
 }
