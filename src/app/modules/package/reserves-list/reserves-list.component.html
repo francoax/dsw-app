@@ -1,6 +1,91 @@
+<!-- eslint-disable max-len -->
 <navbar [showSearch]="true"></navbar>
 <div class="mx-12">
   <h1 class="text-3xl py-4">Listado de reservas</h1>
+  <form
+    class="flex flex-row items-center gap-4"
+    [formGroup]="dateFilterForm"
+    (ngSubmit)="filterReserves()"
+  >
+    <span class="text-xl">Filtrar por fecha </span>
+    <div>
+      <label class="label cursor-pointer">
+        <span class="label-text">Fecha inicio</span>
+        <input
+          type="radio"
+          class="radio checked:bg-blue-500"
+          checked
+          value="option1"
+          formControlName="radioOption"
+        />
+      </label>
+    </div>
+    <div>
+      <label class="label cursor-pointer">
+        <span class="label-text">Fecha fin</span>
+        <input
+          type="radio"
+          class="radio checked:bg-blue-500"
+          checked
+          value="option2"
+          formControlName="radioOption"
+        />
+      </label>
+    </div>
+    <input
+      type="date"
+      class="input input-bordered w-full max-w-[12rem]"
+      formControlName="dateFilter"
+    />
+    <button class="btn btn-neutral" type="submit">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z"
+        />
+      </svg>
+    </button>
+    <button class="btn btn-neutral" type="button" (click)="resetFilter()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"
+        />
+      </svg>
+    </button>
+  </form>
+  <div class="alert alert-error" *ngIf="error">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="stroke-current shrink-0 h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      />
+    </svg>
+    <span>Ha ocurrido un error</span>
+  </div>
   <div class="overflow-x-auto">
     <table class="table">
       <!-- head -->
@@ -16,11 +101,7 @@
       <tbody>
         <!-- row 1 -->
         <tr *ngFor="let reserve of reserves">
-          <th>
-            <label>
-              <input type="checkbox" class="checkbox" />
-            </label>
-          </th>
+          <th></th>
           <td>
             <div class="flex items-center gap-3">
               <div class="avatar">

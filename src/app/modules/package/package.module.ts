@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PackageRoutingModule } from './package-routing.module';
 import { ReservePackageComponent } from './reserve-package/reserve-package.component';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
 
 @NgModule({
@@ -14,6 +14,7 @@ import { ReservesListComponent } from './reserves-list/reserves-list.component';
     PackageRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
 })
 export class PackageModule {}
