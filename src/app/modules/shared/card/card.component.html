@@ -9,7 +9,7 @@
       {{propertyInfo.pricePerNight.price | currency:'USD':'code'}}<span>/por noche</span>
     </p>
     <div class="card-actions justify-end">
-      <app-button [classType]="'primary'">
+      <app-button [classType]="'primary'" (click)="reserve(propertyInfo._id)">
         Reservar
       </app-button>
     </div>
