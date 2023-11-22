@@ -68,6 +68,7 @@ export class AdminManagementComponent implements OnInit {
         '',
         [
           Validators.required,
+          Validators.minLength(5),
         ]
       ],
       repeatedPassword : [
@@ -100,7 +101,7 @@ export class AdminManagementComponent implements OnInit {
       this.toastService.show()
     } else {
       this.formScope === 'create'
-      ? this.dataService.createAdmin(form.value).subscribe((res) => {
+      ? this.dataService.createAdmin({...form.value, role: 'admin'}).subscribe((res) => {
         if(!res.error) {
           this.closeForm()
           this.adminList.push(res.data)
@@ -145,6 +146,7 @@ export class AdminManagementComponent implements OnInit {
     this.formTitle = 'Registar nuevo administrador'
     this.buttonContent = 'Aceptar'
     this.form.reset()
+    this.idToUpdate = ''
   }
 
 }
