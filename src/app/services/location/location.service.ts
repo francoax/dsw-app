@@ -16,10 +16,10 @@ export class LocationService {
   private readonly url: string = this.appService.apiUrl;
 
   getAll(): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(this.url + '/api/localities');
+    return this._http.get<ApiResponse>(this.url + '/api/locations');
   }
 
   getLocation(id: string): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(this.url + '/api/localities/' + id);
+    return this._http.get<ApiResponse>(this.url + '/api/locations/' + id);
   }
 }
