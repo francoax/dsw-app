@@ -18,7 +18,7 @@ import { PropertyServiceService } from 'src/app/services/property/property-servi
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
-import { locality } from 'src/app/models/locality';
+import { Locality } from 'src/app/models/locality';
 import { ToastService } from '../../shared/toast/toast.service';
 import { LocalityServiceService } from 'src/app/services/locality-service.service';
 @Component({
@@ -35,7 +35,7 @@ export class CreatePropertyComponent implements OnInit {
   idPropToEdit!: string;
   formScope = 'create';
   properties: Property[] = [];
-  localities: locality[] = [];
+  localities: Locality[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
   @Output() eventoListado = new EventEmitter<Property[]>();
@@ -55,7 +55,6 @@ export class CreatePropertyComponent implements OnInit {
     });
     this.locaServ.getLocalities().subscribe((Response)=>{
       this.localities = Response.data;
-      console.log(Response.data);
     });
 
   }
@@ -90,23 +89,6 @@ export class CreatePropertyComponent implements OnInit {
     image: this.image,
   });
 
-  /*
-  tiene_numeros(control: AbstractControl){
-    const numeros="0123456789";
-    const texto:string = control.value;
-    let i=0;
-    let count=0;
-    for(i=0; i<texto.length; i++){
-      if (numeros.indexOf(texto.charAt(i),0)!=-1){
-         count= count +1;
-      }
-    }
-    if(texto.length != count){
-      return {ValidMayus:true}
-    }
-   return null;
-  }
-  */
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
