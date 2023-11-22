@@ -28,6 +28,7 @@ export class ReservePackageComponent implements OnInit {
   reserveForm!: FormGroup;
   dateStart = new FormControl('', Validators.required);
   dateEnd = new FormControl('', Validators.required);
+  error = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -58,18 +59,25 @@ export class ReservePackageComponent implements OnInit {
     });
     this.packageService.getPackage(this.packageId).subscribe((res) => {
       this.package = res.data;
-      this.propertyService
-        .getProperty(this.package.property)
-        .subscribe((res) => {
+      this.propertyService.getProperty(this.package.property).subscribe({
+        next: (res) => {
           this.property = res.data;
-        });
-      this.carService.getCar(this.package.car).subscribe((res) => {
-        this.car = res.data;
+        },
+        error: () => (this.error = true),
+      });
+      this.carService.getCar(this.package.car).subscribe({
+        next: (res) => {
+          this.car = res.data;
+        },
+        error: () => (this.error = true),
       });
       this.medicalAssistanceService
         .getOne(this.package.medicalAssistance)
-        .subscribe((res) => {
-          this.medicalAssist = res.data;
+        .subscribe({
+          next: (res) => {
+            this.medicalAssist = res.data;
+          },
+          error: () => (this.error = true),
         });
     });
 
