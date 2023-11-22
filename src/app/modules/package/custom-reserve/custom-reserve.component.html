@@ -1,94 +1,102 @@
+<!-- eslint-disable max-len -->
 <div class="container-reserve">
   <navbar></navbar>
-  <section class="reserve-entry">
-    <h2 class="title">
-      Se ha seleccionado para reserva la propiedad perteneciente a
-      <span>{{property.location.name}}</span>
-    </h2>
-    <div class="data-entry" [formGroup]="form">
-      <div class="collapse collapse-plus bg-base-200">
-        <input type="checkbox" name="my-accordion-3" />
-        <div class="collapse-title text-l font-medium">
-          Desea agregar un auto?
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+    <section class="reserve-entry">
+      <h2 class="title">
+        Se ha seleccionado para reserva la propiedad perteneciente a
+        <span>{{property.location.name}}</span>
+      </h2>
+        <div class="data-entry">
+          <div class="collapse collapse-plus bg-base-200">
+            <input type="checkbox" name="my-accordion-3" #carSelect (click)="cleanCar()" />
+            <div class="collapse-title text-l font-medium">
+              Desea agregar un auto?
+            </div>
+            <div class="collapse-content">
+              <select class="select w-full max-w-xs" [formControlName]="'car'">
+                <option disabled selected>Seleccione un auto</option>
+                <option [value]="car.id" *ngFor="let car of cars">
+                  {{car.model}} {{car.price.value | currency:'USD':'code'}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="collapse collapse-plus bg-base-200">
+            <input type="checkbox" name="my-accordion-3" #maSelect (click)="cleanMa()" />
+            <div class="collapse-title text-l font-medium">
+              Desea solicitar asistencia medica?
+            </div>
+            <div class="collapse-content">
+              <select class="select w-full max-w-xs" [formControlName]="'medicalAssistance'">
+                <option disabled selected>Seleccione una asistencia medica</option>
+                <option [value]="ma._id" *ngFor="let ma of medicalAssitance">{{ma.description}} {{ma.coverageType}}</option>
+              </select>
+            </div>
+          </div>
         </div>
-        <div class="collapse-content">
-          <select class="select w-full max-w-xs" [formControlName]="'car'">
-            <option disabled selected>Seleccione un auto</option>
-            <option [value]="car.id" *ngFor="let car of cars">
-              {{car.model}} {{car.price.value | currency:'USD':'code'}}
-            </option>
-          </select>
+        <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+          <label for="">Check in</label>
+          <app-input
+            [placeholder]="'Check in'"
+            [type]="'date'"
+            [inputControl]="$any(form.get('checkIn'))"
+          >
+          </app-input>
+          <label for="">Check out</label>
+          <app-input
+            [placeholder]="'Check in'"
+            [type]="'date'"
+            [inputControl]="$any(form.get('checkOut'))"
+          >
+          </app-input>
+        </div>
+    </section>
+    <section class="reserve-info">
+      <div class="divider">Informacion de reserva</div>
+      <div class="carousel h-96 carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+        <div class="carousel-item w-full h-full">
+          <img src="../../../../assets/img/depto.jpg" alt="" />
+        </div>
+        <div *ngIf="form.get('car')?.value" class="carousel-item w-full h-full">
+          <img src="../../../../assets/img/hilux.webp" alt="" />
         </div>
       </div>
-      <div class="collapse collapse-plus bg-base-200">
-        <input type="checkbox" name="my-accordion-3" />
-        <div class="collapse-title text-l font-medium">
-          Desea solicitar asistencia medica?
-        </div>
-        <div class="collapse-content">
-          <select class="select w-full max-w-xs" [formControlName]="'medicalAssistance'">
-            <option disabled selected>Seleccione una asistencia medica</option>
-            <option [value]="ma._id" *ngFor="let ma of medicalAssitance">{{ma.description}} {{ma.coverageType}}</option>
-          </select>
-        </div>
+      <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
+        <p>
+          Propiedad
+          <span>Valor por noche {{reserveSummary.property?.pricePerNight?.price | currency:'USD':'code'}}</span>
+        </p>
+        <p>
+          Auto
+          <span>{{reserveSummary.car?.model || 'Sin auto'}} {{reserveSummary.car?.price?.value | currency:'USD':'code'}}</span>
+        </p>
+        <p>
+          Asistencia medica
+          <span>{{reserveSummary.medicalAssitance?.description || 'Sin asistencia medica'}} {{reserveSummary.medicalAssitance?.coverageType}}</span>
+        </p>
+        <p>CheckIn
+          <span>{{reserveSummary.checkIn | date:'MMMM d, y'}}</span>
+        </p>
+        <p>
+          CheckOut
+          <span>{{reserveSummary.checkOut | date:'MMMM d, y'}}</span>
+        </p>
+        <div class="divider"></div>
+        <p>
+          Total
+          <span>{{reserveSummary.totalPrice | currency: 'USD':'code'}}</span>
+        </p>
+        <app-button class="btn-submit" [type]="'submit'" [classType]="'primary'">
+          Reservar
+        </app-button>
       </div>
-    </div>
-    <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-      <label for="">Check in</label>
-      <app-input
-        [placeholder]="'Check in'"
-        [type]="'date'"
-        [inputControl]="$any(form.get('checkIn'))"
-      >
-      </app-input>
-      <label for="">Check out</label>
-      <app-input
-        [placeholder]="'Check in'"
-        [type]="'date'"
-        [inputControl]="$any(form.get('checkOut'))"
-      >
-      </app-input>
-    </div>
-  </section>
-  <section class="reserve-info">
-    <div class="divider">Informacion de reserva</div>
-    <div class="carousel h-96 carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
-      <div class="carousel-item w-full h-full">
-        <img src="../../../../assets/img/depto.jpg" alt="" />
-      </div>
-      <div *ngIf="form.get('car')?.value" class="carousel-item w-full h-full">
-        <img src="../../../../assets/img/hilux.webp" alt="" />
-      </div>
-    </div>
-    <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
-      <p>
-        Propiedad
-        <span>Valor por noche {{reserveSummary.property?.pricePerNight?.price | currency:'USD':'code'}}</span>
-      </p>
-      <p>
-        Auto
-        <span>{{reserveSummary.car?.model}} {{reserveSummary.car?.price?.value | currency:'USD':'code'}}</span>
-      </p>
-      <p>
-        Asistencia medica
-        <span>{{reserveSummary.medicalAssitance?.description}} {{reserveSummary.medicalAssitance?.coverageType}}</span>
-      </p>
-      <p>CheckIn
-        <span>{{reserveSummary.checkIn | date:'MMMM d, y'}}</span>
-      </p>
-      <p>
-        CheckOut
-        <span>{{reserveSummary.checkOut | date:'MMMM d, y'}}</span>
-      </p>
-      <div class="divider"></div>
-      <p>
-        Total
-        <span>{{reserveSummary.totalPrice | currency: 'USD':'code'}}</span>
-      </p>
-      <app-button class="btn-submit" [classType]="'primary'" (click)="onSubmit(form)">
-        Reservar
-      </app-button>
-    </div>
-  </section>
+    </section>
+  </form>
+  <confirmation-modal #confirmationModal (confirmationEvent)="confirmReserve()">
+    <ng-container modal-title>Confirmar reserva</ng-container>
+    <ng-container modal-message>Usted esta a punto de reservar la propiedad {{reserveSummary.property?.location?.name}}</ng-container>
+  </confirmation-modal>
+  <snackbar></snackbar>
   <app-footer></app-footer>
 </div>
