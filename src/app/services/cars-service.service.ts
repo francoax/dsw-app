@@ -26,7 +26,6 @@ export class CarsServiceService {
     return this.http.delete<ApiResponse>(`${environment.apiUrl}/api/cars/${id}`)
     }
   UpdateCar(car:Car, id:string):Observable<ApiResponse>{
-    console.log(id);
     return this.http.put<ApiResponse>(`${environment.apiUrl}/api/cars/${id}`,car);
     }
 

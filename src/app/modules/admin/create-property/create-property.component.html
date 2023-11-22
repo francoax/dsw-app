@@ -12,7 +12,14 @@
         <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
         <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
         <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-        
+        <div>
+          <div>
+          <label>Localidad</label>
+          </div>
+          <select name="'Locality'" class="select select-bordered w-full max-w-xs" [formControl]="locality">
+            <option *ngFor="let loca of localities" [value]="loca._id">{{loca.name}}</option>
+          </select> 
+        </div>
         <div>
           <div>
           <label>Propiedades</label>
