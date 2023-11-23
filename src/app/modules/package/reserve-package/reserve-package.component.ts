@@ -25,10 +25,10 @@ export class ReservePackageComponent implements OnInit {
   property!: Property;
   car!: Car;
   medicalAssist!: MedicalAssistance;
-  token!: any;
   reserveForm!: FormGroup;
   dateStart = new FormControl('', Validators.required);
   dateEnd = new FormControl('', Validators.required);
+  error = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -57,22 +57,27 @@ export class ReservePackageComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       this.packageId = params['packageId'];
     });
-    this.token = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.token = this.token.token;
     this.packageService.getPackage(this.packageId).subscribe((res) => {
       this.package = res.data;
-      this.propertyService
-        .getProperty(this.package.property)
-        .subscribe((res) => {
+      this.propertyService.getProperty(this.package.property).subscribe({
+        next: (res) => {
           this.property = res.data;
-        });
-      this.carService.getCar(this.package.car).subscribe((res) => {
-        this.car = res.data;
+        },
+        error: () => (this.error = true),
+      });
+      this.carService.getCar(this.package.car).subscribe({
+        next: (res) => {
+          this.car = res.data;
+        },
+        error: () => (this.error = true),
       });
       this.medicalAssistanceService
         .getOne(this.package.medicalAssistance)
-        .subscribe((res) => {
-          this.medicalAssist = res.data;
+        .subscribe({
+          next: (res) => {
+            this.medicalAssist = res.data;
+          },
+          error: () => (this.error = true),
         });
     });
 
@@ -90,12 +95,13 @@ export class ReservePackageComponent implements OnInit {
         this.reserveForm.value.dateStart
       )
     ) {
+      const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
       const reserve: Reserve = {
         date_start: this.reserveForm.value.dateStart,
         date_end: this.reserveForm.value.dateEnd,
         packageReserved: this.packageId,
       };
-      this.reserveService.createReserve(reserve, this.token).subscribe(() => {
+      this.reserveService.createReserve(reserve, token).subscribe(() => {
         this.router.navigate(['/']);
       });
     } else {

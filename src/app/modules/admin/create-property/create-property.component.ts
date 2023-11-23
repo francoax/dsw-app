@@ -18,7 +18,9 @@ import { PropertyServiceService } from 'src/app/services/property/property-servi
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
+import { Locality } from 'src/app/models/locality';
 import { ToastService } from '../../shared/toast/toast.service';
+import { LocalityServiceService } from 'src/app/services/locality-service.service';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -33,12 +35,14 @@ export class CreatePropertyComponent implements OnInit {
   idPropToEdit!: string;
   formScope = 'create';
   properties: Property[] = [];
+  localities: Locality[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
   @Output() eventoListado = new EventEmitter<Property[]>();
 
   constructor(
     private service: PropertyServiceService,
+    private locaServ: LocalityServiceService,
     private readonly toastService: ToastService
   ) {}
 
@@ -49,6 +53,10 @@ export class CreatePropertyComponent implements OnInit {
     this.service.getProperties().subscribe((response) => {
       this.properties = response.data;
     });
+    this.locaServ.getLocalities().subscribe((Response)=>{
+      this.localities = Response.data;
+    });
+
   }
 
   capacity = new FormControl<number>(0, [
@@ -65,6 +73,7 @@ export class CreatePropertyComponent implements OnInit {
     Validators.maxLength(30),
     Validators.required,
   ]);
+  locality= new FormControl('', [Validators.required]);
   image = new FormControl('');
   selectedFile: any;
 
@@ -76,26 +85,10 @@ export class CreatePropertyComponent implements OnInit {
       date: this.date,
     }),
     propertyType: this.propertyType,
+    locality: this.locality,
     image: this.image,
   });
 
-  /*
-  tiene_numeros(control: AbstractControl){
-    const numeros="0123456789";
-    const texto:string = control.value;
-    let i=0;
-    let count=0;
-    for(i=0; i<texto.length; i++){
-      if (numeros.indexOf(texto.charAt(i),0)!=-1){
-         count= count +1;
-      }
-    }
-    if(texto.length != count){
-      return {ValidMayus:true}
-    }
-   return null;
-  }
-  */
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
@@ -112,6 +105,7 @@ export class CreatePropertyComponent implements OnInit {
       formData.append('price', form.value.pricePerNight.price);
       formData.append('date', form.value.pricePerNight.date);
       formData.append('propertyType', form.value.propertyType);
+      formData.append('locality',form.value.locality)
       formData.append('image', this.selectedFile);
 
       if (this.formScope === 'create') {
@@ -168,6 +162,7 @@ export class CreatePropertyComponent implements OnInit {
         date: prop.pricePerNight.date,
       },
       propertyType: prop.propertyType,
+      locality:prop.locality,
     });
     this.formScope = 'editar';
     this.idPropToEdit = prop._id;

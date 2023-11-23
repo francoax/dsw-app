@@ -13,18 +13,21 @@ import KeenSlider, { KeenSliderInstance } from "keen-slider"
 export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy{
  
   @Input() packageList: Package[] | undefined;
+  packageCompletos : Package[] = [];
   @Input() propertyList: Property[] | undefined;
   @Input() carList: Car[] | undefined;
   @Input() asistMedList: MedicalAssistance[] | undefined;
 
   ngOnInit(): void {
-    console.log(this.packageList);
+    if(this.packageList !== undefined){
+      this.packageCompletos = this.packageList.filter(p => p.type === 'completo')
+    }
   }
 
   getPropertyAddress(id: string): string{
     if(this.propertyList !== undefined){
       const property = this.propertyList.find(p => p._id === id);
-      return property ? property.address : '';
+      return property?.address || '';
     }
     return '';
   }  

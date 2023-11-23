@@ -17,15 +17,15 @@ export class SuperAdminsService {
     private readonly appService : AppConfigService) { }
 
   getAdmins() : Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.api}/api/users`);
+    return this.http.get<ApiResponse>(`${this.api}/api/users?role=admin`);
   }
 
   createAdmin(admin : Admin) : Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${this.api}/api/users`, admin)
   }
 
-  updateAdmin(admin : Admin) : Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.api}/api/users`, admin)
+  updateAdmin(admin : Admin, id : string) : Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.api}/api/users/${id}`, admin);
   }
 
   deleteAdmin(id : string) : Observable<ApiResponse> {
