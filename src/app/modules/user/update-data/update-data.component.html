@@ -1,7 +1,7 @@
 <div class="px-10 py-5">
   <h2 class="text-lg font-bold">Modificación de datos</h2>
   <form
-    class="grid grid-cols-2 grid-rows-4 gap-2"
+    class="grid grid-cols-1 sm:grid-cols-2 grid-rows-4 gap-2"
     [formGroup]="updateDataForm"
     (ngSubmit)="onSubmit()"
   >
@@ -50,7 +50,10 @@
     >
   </form>
   <snackbar></snackbar>
-  <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
+  <div
+    *ngIf="loggedUser"
+    class="card w-full bg-primary text-primary-content mt-4"
+  >
     <div class="card-body">
       <h2 class="card-title">Eliminar cuenta</h2>
       <p>
