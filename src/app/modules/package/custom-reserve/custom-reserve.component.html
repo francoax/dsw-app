@@ -7,13 +7,14 @@
     </svg>
     <span>Volver</span>
   </div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+  <form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form)">
     <section class="reserve-entry">
       <h2 class="title">
         Se ha seleccionado para reserva la propiedad perteneciente a
         <span>{{property.location.name}}</span>
       </h2>
-        <div class="data-entry">
+      <div class="data-entry">
+        <div class="selects">
           <div class="collapse collapse-plus bg-base-200">
             <input type="checkbox" name="my-accordion-3" #carSelect (click)="cleanCar()" />
             <div class="collapse-title text-l font-medium">
@@ -41,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+        <div id="dates" class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
           <label for="">Check in</label>
           <app-input
             [placeholder]="'Check in'"
@@ -60,6 +61,7 @@
             CheckIn debe de ser menor a CheckOut
           </span>
         </div>
+      </div>
     </section>
     <section class="reserve-info">
       <div class="divider">Informacion de reserva</div>

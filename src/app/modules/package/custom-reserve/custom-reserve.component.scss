@@ -53,7 +53,7 @@
 
   display: flex;
   flex-direction: column;
-  width: 100%;
+  // width: 100%;
   padding-top: 25px;
 
   .collapse {
@@ -75,4 +75,56 @@
   align-items: center;
   gap: 5px;
   margin-bottom: 1.5rem;
+}
+
+@media (min-width: 576px) {
+  .reserve-entry, .reserve-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #dates, .summary {
+    min-width: 448px;
+  }
+
+  .data-entry {
+    min-width: 448px;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  .form-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .data-entry {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%;
+  }
+
+  .reserve-entry, .selects {
+    flex: 2;
+  }
+
+  .reserve-entry {
+    padding: 0 5%;
+  }
+
+  .reserve-info, #dates {
+    flex: 1;
+  }
+
+  .title {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .divider {
+    font-size: 1.5rem;
+  }
 }
