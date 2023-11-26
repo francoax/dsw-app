@@ -7,10 +7,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
 import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
-import { ReserveFinishedComponent } from './reserve-finished/reserve-finished.component';
 
 @NgModule({
-  declarations: [ReservePackageComponent, ReservesListComponent, CustomReserveComponent, ReserveFinishedComponent],
+  declarations: [ReservePackageComponent, ReservesListComponent, CustomReserveComponent],
   imports: [
     CommonModule,
     PackageRoutingModule,
