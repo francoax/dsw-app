@@ -4,7 +4,6 @@ import { ReservePackageComponent } from './reserve-package/reserve-package.compo
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
 import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
 import { customReserveResolver } from 'src/app/resolvers/custom-reserve.resolver';
-import { ReserveFinishedComponent } from './reserve-finished/reserve-finished.component';
 import { PackageResolverService } from 'src/app/resolvers/package.resolver.service';
 import { MedicalAssistanceResolverService } from 'src/app/resolvers/MedicalAssist.resolver.service';
 import { CarResolverService } from 'src/app/resolvers/car.resolver.service';
@@ -28,12 +27,6 @@ const routes: Routes = [
     path: 'reserve/:id',
     component: CustomReserveComponent,
     resolve: { data: customReserveResolver },
-    children: [
-      {
-        path: 'completed',
-        component: ReserveFinishedComponent,
-      },
-    ],
   },
 ];
 
