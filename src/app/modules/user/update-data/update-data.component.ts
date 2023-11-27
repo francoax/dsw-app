@@ -54,10 +54,17 @@ export class UpdateDataComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.log(err);
+          alert(err.message);
         },
       });
+      this.updateDataForm.disable();
     }
+  }
+
+  enableForm() {
+    this.updateDataForm.disabled
+      ? this.updateDataForm.enable()
+      : this.updateDataForm.disable();
   }
 
   onSubmit() {
