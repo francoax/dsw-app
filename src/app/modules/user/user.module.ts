@@ -9,6 +9,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LayoutComponent } from './layout/layout.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { LayoutComponent } from './layout/layout.component';
     LogInComponent,
     UpdateDataComponent,
     LayoutComponent,
+    ForgotPasswordComponent,
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, UserRoutingModule],
   exports: [SignUpComponent, LogInComponent, UpdateDataComponent],
