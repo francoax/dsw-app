@@ -1,14 +1,10 @@
-<button class="btn" onclick="my_modal.showModal(); this.mod='add'">Agregar registro</button>
-
-<dialog #my_modal id="my_modal" class="modal">
-  <div class="modal-box">
+<div class="collapse bg-base-200 collapse-dsw" [class.collapse-open]="collapse" [class.collapse-close]="!collapse">
+  <input type="checkbox" (click)="toggleCollapse()"/> 
+  <div class="collapse-title text-xl font-medium"  >
+    {{mod == 'add' ? 'Agregar registro' :'Modificar registro'}}
+  </div>
+  <div class="collapse-content"> 
     <form [formGroup]="medicalAssistForm" (ngSubmit)="mod == 'add' ? add(medicalAssistForm) : modify()">
-      <app-input [label]="'ID'"
-                  [placeholder]="'ID'"
-                  [required]="false"
-                  [inputControl]="_id"
-                  [readonly]="true">
-      </app-input>
       <app-input [label]="'Descripción'"
                   [placeholder]="'Descripción'"
                   [required]="true"
@@ -22,14 +18,14 @@
       <app-button [classType]="'primary'" [type]="'submit'">
         <span>{{mod == 'add' ? 'Agregar' : 'Modificar'}}</span>
       </app-button>
-    </form>
-    <form method="dialog">
-      <button (click)="cancel()" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+      <app-button class="ml-2" [classType]="'primary'" [type]="'button'" (click)="cancel()">
+        <span>Cancelar</span>
+      </app-button>
     </form>
   </div>
-</dialog>
+</div>
 
-<div class="overflow-x-auto">
+<div class="overflow-x-auto mx-3">
   <table class="table table-xs">
     <thead>
       <tr>
@@ -68,3 +64,9 @@
   <ng-container modal-message>¿Desea eliminar el registro?</ng-container>
 </confirmation-modal>
 
+<div class="flex justify-center w-full" [class.hidden]="!hasError" style="margin-top: 3rem;">
+  <div role="alert" class="alert alert-warning  w-2/3">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+    <span class="text-black text-lg">{{textAlert}}</span>
+  </div>
+</div>
