@@ -8,6 +8,7 @@ import { UpdateDataComponent } from './update-data/update-data.component';
 import { UserRoutingModule } from './user-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
     UpdateDataComponent,
     LayoutComponent,
     NotificationsComponent,
+    ForgotPasswordComponent,
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, UserRoutingModule],
   exports: [SignUpComponent, LogInComponent, UpdateDataComponent],

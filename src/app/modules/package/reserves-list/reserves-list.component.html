@@ -95,6 +95,7 @@
           <th>Reserva</th>
           <th>Detalles</th>
           <th>Fecha</th>
+          <th>Precio</th>
           <th></th>
         </tr>
       </thead>
@@ -128,11 +129,13 @@
             }}</span>
           </td>
           <td>{{ reserve.dateStart | date }} - {{ reserve.dateEnd | date }}</td>
+          <td>{{ reserve.price | currency }}</td>
           <th>
-            <button>
-              class="btn btn-ghost btn-xs" [id]="reserve.id"
+            <button
+              class="btn btn-ghost btn-xs"
+              [id]="reserve.id"
               (click)="openModal(reserve.id)"
-              <!--no esta pasando el id-->
+            >
               Cancelar reserva
             </button>
           </th>

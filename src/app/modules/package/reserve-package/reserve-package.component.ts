@@ -13,6 +13,7 @@ import { PropertyServiceService } from 'src/app/services/property/property-servi
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { MedicalAssistanceService } from 'src/app/services/medical-assitance/medical-assistance.service';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-reserve-package',
