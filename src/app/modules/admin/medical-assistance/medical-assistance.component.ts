@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MedicalAssistanceRequest } from 'src/app/models/medical-assistance-request';
 import { MedicalAssistance } from 'src/app/models/medical-assistance'
@@ -15,12 +15,14 @@ export class MedicalAssistanceComponent implements OnInit{
   _id = new FormControl('');
   description = new FormControl('',Validators.required);
   coverageType = new FormControl('',Validators.required);
-
   public registros: MedicalAssistance[] = [];
   public mod : string = 'add'; 
+  public collapse : boolean = false;
   public registro !: MedicalAssistance;
+  public textAlert : string = '';
+  public hasError: boolean = false;
 
-  @ViewChild('my_modal') myModal!: ElementRef;
+  @ViewChild('details') details!: ElementRef;
   @ViewChild('confirmationModal') private modalComponent! : ModalComponent;
 
   public medicalAssistForm = this.formBuilder.group({
@@ -35,6 +37,7 @@ export class MedicalAssistanceComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAll();
+    console.log(this.hasError)
   }
 
   getAll(){
@@ -50,18 +53,30 @@ export class MedicalAssistanceComponent implements OnInit{
       coverageType : form.value.coverageType || ''
     }
     this.medAsistService.add(medAsist).subscribe(res => {
+      
       if(res.error !== true){
-        const dialogElement = this.myModal.nativeElement as HTMLDialogElement;
-        dialogElement.close();
         this.medicalAssistForm.reset();
         this.getAll();
+        this.hasError = false;
+        this.textAlert = '';
+      }else{
+        this.hasError = true;
+        this.textAlert = res.message;
       }
     });
+  }
+
+  toggleCollapse() {
+    this.collapse = !this.collapse;
+    console.log(this.collapse)
   }
 
   cancel(){
     this.medicalAssistForm.reset();
     this.mod = 'add';
+    this.collapse = false;
+    console.log(this.collapse)
+
   }
 
   onDelete(registro : MedicalAssistance){
@@ -74,6 +89,11 @@ export class MedicalAssistanceComponent implements OnInit{
       if(res.error !== true){
         console.log(this.registro);
         this.getAll();
+        this.hasError = false;
+        this.textAlert = '';
+      }else{
+        this.hasError = true;
+        this.textAlert = res.message;
       }
     });
   }
@@ -81,7 +101,10 @@ export class MedicalAssistanceComponent implements OnInit{
   onModify(registro : MedicalAssistance){
 
     this.mod = 'modify';
-
+    if(this.collapse === false) {
+      this.toggleCollapse();
+    }
+      
     const data = {
       _id: registro._id,
       description: registro.description,
@@ -89,9 +112,6 @@ export class MedicalAssistanceComponent implements OnInit{
     };
 
     this.medicalAssistForm.patchValue(data);
-
-    const dialogElement = this.myModal.nativeElement as HTMLDialogElement;
-    dialogElement.showModal();
   }
 
   modify(){
@@ -103,12 +123,17 @@ export class MedicalAssistanceComponent implements OnInit{
 
     this.medAsistService.edit(medAsist).subscribe(res => {
       if(res.error !== true){
-        const dialogElement = this.myModal.nativeElement as HTMLDialogElement;
-        dialogElement.close();
         this.medicalAssistForm.reset();
         this.getAll();
-        this.mod='add'
+        this.mod='add';
+        this.hasError = false;
+        this.textAlert = '';
+      }else{
+        this.hasError = true;
+        this.textAlert = res.message;
       }
     });
   }
+
+ 
 }
