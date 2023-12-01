@@ -17,7 +17,7 @@
           <label>Localidad</label>
           </div>
           <select name="'Locality'" class="select select-bordered w-full max-w-xs" [formControl]="locality">
-            <option *ngFor="let loca of localities" [value]="loca._id">{{loca.name}}</option>
+            <option *ngFor="let loca of localities" [value]="loca.id">{{loca.name}}</option>
           </select> 
         </div>
         <div>

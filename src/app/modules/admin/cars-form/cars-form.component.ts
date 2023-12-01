@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -5,6 +6,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Car } from 'src/app/models/car';
 import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ToastService } from '../../shared/toast/toast.service';
+import { LocalityServiceService } from 'src/app/services/locality-service.service';
+import { Locality } from 'src/app/models/locality';
 
 @Component({
   selector: 'app-cars-form',
@@ -17,12 +20,13 @@ formTitle = 'Registrar un Nuevo Auto';
 buttonContent = 'Aceptar';
 idCarToEdit!:string;
 cars:Car[]=[];
+localities:Locality[]=[];
 formScope= 'create';
 
 @ViewChild('formCollapse') formCollase! : ElementRef
 
 
-constructor(private service:CarsServiceService, private readonly toastService: ToastService){}
+constructor(private service:CarsServiceService, private readonly toastService: ToastService, private locaService:LocalityServiceService){}
 carsForm!:FormGroup;
 brand = new FormControl('',[Validators.maxLength(30),Validators.required]);
 model = new FormControl('',[Validators.maxLength(30),Validators.required]);
@@ -31,6 +35,7 @@ plate= new FormControl('',[Validators.maxLength(30),Validators.required]);
 date = new FormControl('',[Validators.maxLength(30),Validators.required]);
 value = new FormControl('',[Validators.maxLength(10),Validators.required]);
 locality = new FormControl('',[Validators.maxLength(30),Validators.required]);
+
 
 
 ngOnInit(): void {
@@ -45,8 +50,11 @@ ngOnInit(): void {
     locality: this.locality,
   });
 
-  this.service.getCars().subscribe((res)=>{this.cars = res.data
+  this.service.getCars().subscribe((res)=>{this.cars = res.data});
+  this.locaService.getLocalities().subscribe((res)=>{this.localities = res.data;
   console.log(res.data)});
+
+
 
   
 }
@@ -65,20 +73,26 @@ if(this.carsForm.valid) {
     this.service.UpdateCar(form.value,this.idCarToEdit).subscribe((res)=>{
       this.toastService.setup({message:'Auto Actualizado',status:true})
       this.toastService.show();
-      const index = this.cars.map(a => a.id).indexOf(res.data._id);
+      const index = this.cars.map(a => a.id).indexOf(this.idCarToEdit);
       this.cars[index]= res.data;
       this.closeForm();
     })
   }
 
   } else{
-    alert('Verifique que los datos ingresados sean validos');
+    this.toastService.setup({
+      message: 'Verifique que los datos ingresados sean validos',
+      status: false,
+    });
+    this.toastService.show();
   }
 
 }
 onDelete(id:string):void{
   this.service.deleteCar(id).subscribe((res)=>{
     this.cars = this.cars.filter(a => a.id !== id);
+    this.toastService.setup({message:'Auto Eliminado',status:true})
+      this.toastService.show();
   })
 }
 

@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
 <div class="collapse bg-base-200">
   <input type="checkbox" #formCollapse /> 
@@ -9,13 +10,20 @@
       <h2 class="text-base font-semibold leading-7 text-gray-900 title">{{formTitle}}</h2>
     </div>
      <form  [formGroup]="carsForm" (ngSubmit)="onSubmit(carsForm)">
-      <app-input [label]="'brand'" [placeholder]="'brand'" [required]="true" [inputControl]="brand"></app-input>
-      <app-input [label]="'model'" [placeholder]="'model'" [required]="true" [inputControl]="model"></app-input>
-      <app-input [label]="'year'" [placeholder]="'year'" [required]="true" [inputControl]="year"></app-input>
-      <app-input [label]="'plate'" [placeholder]="'plate'" [required]="true" [inputControl]="plate"></app-input>
-      <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-      <app-input [label]="'value'" [placeholder]="'value'" [required]="true" [inputControl]="value"></app-input>
-      <app-input [label]="'locality'" [placeholder]="'locality'" [required]="true" [inputControl]="locality"></app-input>
+      <app-input [label]="'Marca'" [placeholder]="''" [required]="true" [inputControl]="brand"></app-input>
+      <app-input [label]="'Modelo'" [placeholder]="''" [required]="true" [inputControl]="model"></app-input>
+      <app-input [label]="'Año'" [placeholder]="''" [required]="true" [inputControl]="year"></app-input>
+      <app-input [label]="'Patente'" [placeholder]="'abc123'" [required]="true" [inputControl]="plate"></app-input>
+      <app-input [label]="'Fecha'" [placeholder]="'yyyy-mm-dd'" [required]="true" [inputControl]="date"></app-input>
+      <app-input [label]="'Valor'" [placeholder]="''" [required]="true" [inputControl]="value"></app-input>
+      <div>
+        <div>
+        <label>Localidad</label>
+        </div>
+        <select name="'Localidad'" class="select select-bordered w-full max-w-xs" [formControl]="locality">
+          <option *ngFor="let loca of localities" [value]="loca.id">{{loca.name}}</option>
+        </select> 
+      </div>
       <app-button [type]="'submit'" [classType]="'primary'">
         {{buttonContent}}
       </app-button>
@@ -26,5 +34,3 @@
   </div>
 </div>
 <app-cars-list [cars]="cars" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-cars-list>
-
-<!-- (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event) -->

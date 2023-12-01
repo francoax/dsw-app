@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges,Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Car } from 'src/app/models/car';
 import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
