@@ -85,7 +85,7 @@ export class CreatePropertyComponent implements OnInit {
       date: this.date,
     }),
     propertyType: this.propertyType,
-    locality: this.locality,
+    location: this.locality,
     image: this.image,
   });
 
@@ -162,7 +162,7 @@ export class CreatePropertyComponent implements OnInit {
         date: prop.pricePerNight.date,
       },
       propertyType: prop.propertyType,
-      locality:prop.locality,
+      location:prop.location.name,
     });
     this.formScope = 'editar';
     this.idPropToEdit = prop._id;
