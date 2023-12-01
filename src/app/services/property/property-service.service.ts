@@ -13,7 +13,7 @@ import { AppConfigService } from '../app/app.service';
 export class PropertyServiceService {
   private propertyListSubject = new Subject<Property[]>();
   properties: Property[] = [];
-  private readonly baseUrl : string = this.appService.apiUrl + '/api/property/';
+  private readonly baseUrl : string = this.appService.apiUrl + '/api/properties/';
   private readonly baseUrl2 : string = this.appService.apiUrl + '/api/property-types/';
 
   constructor(private http: HttpClient,
