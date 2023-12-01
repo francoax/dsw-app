@@ -14,6 +14,7 @@ import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import Reserve from 'src/app/models/reserve';
 import { validateDates } from './form-validators';
+import { AppConfigService } from 'src/app/services/app/app.service';
 
 type reserveSummary = {
   car: Car | null,
@@ -29,7 +30,7 @@ type reserveSummary = {
   templateUrl: './custom-reserve.component.html',
   styleUrls: ['./custom-reserve.component.scss'],
 })
-export class CustomReserveComponent implements OnInit, OnDestroy {
+export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit {
   property!: Property;
   cars!: Car[];
   medicalAssitance!: MedicalAssistance[];
@@ -58,8 +59,13 @@ export class CustomReserveComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly fb: FormBuilder,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly appService : AppConfigService
   ) {}
+
+  ngAfterViewInit(): void {
+    this.appService.setDisplaySearchBar(false)
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ data }) => {
@@ -79,6 +85,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy {
       });
 
     this.scrollIntoView.nativeElement.scrollIntoView();
+    this.appService.setDisplaySearchBar(false)
   }
 
   ngOnDestroy() {
