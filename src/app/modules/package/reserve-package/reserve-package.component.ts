@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -17,7 +11,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { Property } from 'src/app/models/property';
+import { PricePerNight } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
@@ -26,7 +20,15 @@ import { LocationService } from 'src/app/services/location/location.service';
 
 interface PackageFull {
   type: string;
-  property: Property;
+  property: {
+    _id: string;
+    capacity: number;
+    address: string;
+    pricePerNight: PricePerNight;
+    propertyType: string;
+    location: string;
+    image: File;
+  };
   car: Car;
   medicalAssistance: MedicalAssistance;
   nameImage: string;
@@ -80,18 +82,18 @@ export class ReservePackageComponent implements OnInit {
       this.package = pack.data;
     });
 
-    // this.locationService.getLocation(this.package.property.location).subscribe({
-    //   next: (res) => {
-    //     this.package.property.location = res.data.name;
-    //   },
-    //   error: (err) => {
-    //     this.toastService.setup({
-    //       message: err.message,
-    //       status: false,
-    //     });
-    //     this.toastService.show();
-    //   },
-    // });
+    this.locationService.getLocation(this.package.property.location).subscribe({
+      next: (res) => {
+        this.package.property.location = res.data.name;
+      },
+      error: (err) => {
+        this.toastService.setup({
+          message: err.message,
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
 
     this.reserveForm = new FormGroup(
       {
