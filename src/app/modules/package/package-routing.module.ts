@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ReservePackageComponent } from './reserve-package/reserve-package.component';
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
+import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
+import { customReserveResolver } from 'src/app/resolvers/custom-reserve.resolver';
 import { PackageResolverService } from 'src/app/resolvers/package.resolver.service';
 import { MedicalAssistanceResolverService } from 'src/app/resolvers/MedicalAssist.resolver.service';
 import { CarResolverService } from 'src/app/resolvers/car.resolver.service';
@@ -30,6 +32,11 @@ const routes: Routes = [
   {
     path: 'confirmation',
     component: NotificationsComponent,
+  },
+  {
+    path: 'reserve/:id',
+    component: CustomReserveComponent,
+    resolve: { data: customReserveResolver },
   },
 ];
 

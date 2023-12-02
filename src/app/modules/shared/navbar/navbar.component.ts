@@ -23,11 +23,11 @@ export class NavbarComponent {
 
   logout() {
     window.localStorage.removeItem('loggedUser');
-    this.router.navigate(['user/login']);
+    this.router.navigate(['/login']);
   }
 
   buttonClicked() {
-    this.router.navigate(['user/login']);
+    this.router.navigate(['/login']);
   }
 
   goHomePage(){    

@@ -6,12 +6,18 @@ import { ReservePackageComponent } from './reserve-package/reserve-package.compo
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
+import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
-  declarations: [ReservePackageComponent, ReservesListComponent, NotificationsComponent],
+  declarations: [
+    ReservePackageComponent,
+    ReservesListComponent,
+    CustomReserveComponent,
+    NotificationsComponent,
+  ],
   imports: [
     CommonModule,
     PackageRoutingModule,

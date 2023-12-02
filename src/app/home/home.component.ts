@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly route : ActivatedRoute,
   ) {}
-  
+
   ngOnInit(): void {
     this.route.data.subscribe(({ propertyList, packages, cars, medAssists }) => {
       this.propertyList = propertyList;

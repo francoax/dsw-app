@@ -9,6 +9,7 @@ import {
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
+import { PackageAgent } from 'src/app/models/package';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,19 @@ export class PackageService {
 
   getPackage(packageId: string): Observable<ApiResponse> {
     return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
+  }
+
+  createPackage(
+    newPackage: PackageAgent,
+    token: string
+  ): Observable<ApiResponse> {
+    return this._http.post<ApiResponse>(
+      `${this.url}/api/packages`,
+      newPackage,
+      {
+        headers: { Authorization: 'Bearer ' + token },
+      }
+    );
   }
 }
 
