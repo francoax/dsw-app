@@ -16,6 +16,5 @@ export class AppConfigService {
 
   setDisplaySearchBar(value : boolean) : void {
     this.showSearchBarSubject.next(value)
-    console.log('a')
   }
 }
