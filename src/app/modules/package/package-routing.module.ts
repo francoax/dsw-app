@@ -8,6 +8,7 @@ import { CarResolverService } from 'src/app/resolvers/car.resolver.service';
 import { PropertyResolverService } from 'src/app/resolvers/property.resolver.service';
 import { LocationResolverService } from 'src/app/resolvers/location.resolver.service';
 import { packageResolver } from 'src/app/services/package/package.service';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       medAssists: MedicalAssistanceResolverService,
       locations: LocationResolverService,
     },
+  },
+  {
+    path: 'confirmation',
+    component: NotificationsComponent,
   },
 ];
 

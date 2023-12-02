@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -15,6 +21,8 @@ import { Property } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { ToastService } from '../../shared/toast/toast.service';
+import { LocationService } from 'src/app/services/location/location.service';
 
 interface PackageFull {
   type: string;
@@ -38,17 +46,23 @@ function validateDates(): ValidatorFn {
   };
 }
 
+function calculateDays(date1: Date, date2: Date): number {
+  const diffTime = Math.abs(date2.getTime() - date1.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+
 @Component({
   selector: 'app-reserve-package',
   templateUrl: './reserve-package.component.html',
   styleUrls: ['./reserve-package.component.scss'],
 })
 export class ReservePackageComponent implements OnInit {
-  packageId!: string; //el componente recibe el paquete por query param
   package!: PackageFull;
   reserveForm!: FormGroup;
   checkIn = new FormControl('', Validators.required);
   checkOut = new FormControl('', Validators.required);
+  totalPrice = 0;
   error = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
@@ -56,7 +70,9 @@ export class ReservePackageComponent implements OnInit {
   constructor(
     private reserveService: ReserveService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService,
+    private locationService: LocationService
   ) {}
 
   ngOnInit() {
@@ -64,37 +80,74 @@ export class ReservePackageComponent implements OnInit {
       this.package = pack.data;
     });
 
+    this.locationService.getLocation(this.package.property.location).subscribe({
+      next: (res) => {
+        this.package.property.location = res.data.name;
+      },
+      error: (err) => {
+        this.toastService.setup({
+          message: err.message,
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
+
     this.reserveForm = new FormGroup(
       {
         checkIn: this.checkIn,
         checkOut: this.checkOut,
       },
-      validateDates
+      { validators: validateDates() }
     );
+
+    this.reserveForm.valueChanges.subscribe(() => {
+      const days = calculateDays(
+        new Date(this.reserveForm.value.checkIn),
+        new Date(this.reserveForm.value.checkOut)
+      );
+      this.totalPrice =
+        days * this.package.property.pricePerNight.price +
+        this.package.car.price.value;
+    });
   }
 
   onSubmit() {
     if (this.reserveForm.valid) {
-      const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
-      const reserve: Reserve = {
-        date_start: this.reserveForm.value.dateStart,
-        date_end: this.reserveForm.value.dateEnd,
-        packageReserved: this.packageId,
-      };
-      this.reserveService.createReserve(reserve, token).subscribe({
-        next: () => {
-          this.router.navigate(['/']);
-        },
-        error: () => {
-          alert('error');
-        },
-      });
+      this.openModal();
     } else {
-      alert('Verifique que los campos sean correctos');
+      this.toastService.setup({
+        message: 'Por favor, ingrese correctamente los campos.',
+        status: false,
+      });
+      this.toastService.show();
     }
   }
 
   openModal(): void {
     this.modalComponent.open();
+  }
+
+  confirmReserve() {
+    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
+    const reserve: Reserve = {
+      date_start: this.reserveForm.value.checkIn,
+      date_end: this.reserveForm.value.checkOut,
+      packageReserved: this.package.id,
+    };
+    this.reserveService.createReserve(reserve, token).subscribe({
+      next: () => {
+        this.router.navigate(['/packages/confirmation'], {
+          queryParams: { status: 'success' },
+        });
+      },
+      error: (err) => {
+        this.toastService.setup({
+          message: err.message,
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
   }
 }

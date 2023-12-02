@@ -8,14 +8,16 @@
     <section class="reserve-entry">
       <h2 class="title">
         Se ha seleccionado para reserva la propiedad perteneciente a
-        <span>{{ package.property.locality }}</span>
+        <span>{{ package.property.location }}</span>
       </h2>
       <div class="data-entry">
         <div class="selects">
           <div class="collapse collapse-plus bg-base-200">
             <div class="collapse-title text-l font-medium">Auto incluido</div>
             <div class="collapse-content">
-              {{ package.car.brand + package.car.model }}
+              <span>
+                {{ package.car.brand + " " + package.car.model }}
+              </span>
             </div>
           </div>
           <div class="collapse collapse-plus bg-base-200">
@@ -23,11 +25,13 @@
               Asistencia médica incluida
             </div>
             <div class="collapse-content">
-              {{
-                package.medicalAssistance.description +
-                  "Tipo " +
-                  package.medicalAssistance.coverageType
-              }}
+              <span>
+                {{
+                  package.medicalAssistance.description +
+                    "Tipo " +
+                    package.medicalAssistance.coverageType
+                }}
+              </span>
             </div>
           </div>
         </div>
@@ -74,7 +78,7 @@
         <p>
           Propiedad
           <span
-            >Valor por noche
+            >Valor por noche:
             {{
               package.property.pricePerNight.price | currency : "USD" : "code"
             }}</span
@@ -83,7 +87,7 @@
         <p>
           Auto
           <span
-            >{{ package.car.brand }}
+            >{{ package.car.brand + " " + package.car.model }}
             {{ package.car.price.value | currency : "USD" : "code" }}</span
           >
         </p>
@@ -107,10 +111,7 @@
         <div class="divider"></div>
         <p>
           Total
-          <span>{{
-            package.property.pricePerNight.price + package.car.price.value
-              | currency : "USD" : "code"
-          }}</span>
+          <span>{{ totalPrice | currency : "USD" : "code" }}</span>
         </p>
         <app-button
           class="btn-submit"
@@ -122,7 +123,7 @@
       </div>
     </section>
   </form>
-  <confirmation-modal #confirmationModal>
+  <confirmation-modal #confirmationModal (confirmationEvent)="confirmReserve()">
     <ng-container modal-title>Confirmar reserva</ng-container>
     <ng-container modal-message
       >Usted esta a punto de reservar la propiedad

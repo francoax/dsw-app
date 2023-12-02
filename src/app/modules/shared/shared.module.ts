@@ -20,14 +20,11 @@ import { CarouselComponent } from './carousel/carousel.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CarouselComponent
+    CarouselComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
-  exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  exports: [
+    //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
     InputComponent,
     FooterComponent,
@@ -35,9 +32,7 @@ import { CarouselComponent } from './carousel/carousel.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CarouselComponent
+    CarouselComponent,
   ],
 })
 export class SharedModule {}
-
-
