@@ -11,26 +11,38 @@
       </h2>
       <div class="data-entry">
         <div class="selects">
-          <div class="collapse collapse-plus bg-base-200">
-            <div class="collapse-title text-l font-medium">Auto incluido</div>
+          <div
+            tabindex="0"
+            class="collapse collapse-arrow border border-base-300 bg-base-200"
+          >
+            <div class="collapse-title text-xl font-medium">Auto incluido</div>
             <div class="collapse-content">
-              <span>
-                {{ package.car.brand + " " + package.car.model }}
-              </span>
+              <p>
+                {{ package.car.brand + " " + package.car.model }}<br />
+                {{
+                  "Año: " +
+                    package.car.year +
+                    " - Patente: " +
+                    package.car.plate
+                }}
+              </p>
             </div>
           </div>
-          <div class="collapse collapse-plus bg-base-200">
-            <div class="collapse-title text-l font-medium">
+          <div
+            tabindex="0"
+            class="collapse collapse-arrow border border-base-300 bg-base-200"
+          >
+            <div class="collapse-title text-xl font-medium">
               Asistencia médica incluida
             </div>
             <div class="collapse-content">
-              <span>
+              <p>
                 {{
                   package.medicalAssistance.description +
-                    "Tipo " +
+                    " Tipo " +
                     package.medicalAssistance.coverageType
                 }}
-              </span>
+              </p>
             </div>
           </div>
         </div>
@@ -128,5 +140,4 @@
       >Usted esta a punto de reservar la propiedad
     </ng-container>
   </confirmation-modal>
-  <snackbar></snackbar>
 </div>

@@ -137,7 +137,7 @@ export class ReservePackageComponent implements OnInit {
     };
     this.reserveService.createReserve(reserve, token).subscribe({
       next: () => {
-        this.router.navigate(['/packages/confirmation'], {
+        this.router.navigate(['/confirmation'], {
           queryParams: { status: 'success' },
         });
       },
