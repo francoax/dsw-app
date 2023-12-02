@@ -141,7 +141,6 @@ export class ReservesListComponent implements OnInit {
 
   openModal(reserveId: string) {
     this.selectedReserveId = reserveId;
-    console.log(reserveId);
     this.modalComponent.open();
   }
 
