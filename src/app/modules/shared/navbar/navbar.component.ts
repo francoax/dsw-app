@@ -1,24 +1,31 @@
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfigService } from 'src/app/services/app/app.service';
 
 @Component({
   selector: 'navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
-  @Input() showSearch!: boolean;
-  @Input() user!: string;
+export class NavbarComponent implements OnInit {
+  showSearch = false;
   loggedUser = window.localStorage.getItem('loggedUser');
   userName = '';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private readonly appService : AppConfigService) {
+  }
+  ngOnInit(): void {
     if (this.loggedUser) {
       const user = JSON.parse(this.loggedUser);
       this.userName = user.name;
     }
+    this.appService.showSearchBar$.subscribe((show) => {
+      this.showSearch = show
+    })
   }
 
   logout() {
@@ -30,7 +37,7 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
-  goHomePage(){    
+  goHomePage(){
     this.router.navigate(['/home']);
   }
 }

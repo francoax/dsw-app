@@ -80,18 +80,18 @@ export class ReservePackageComponent implements OnInit {
       this.package = pack.data;
     });
 
-    this.locationService.getLocation(this.package.property.location).subscribe({
-      next: (res) => {
-        this.package.property.location = res.data.name;
-      },
-      error: (err) => {
-        this.toastService.setup({
-          message: err.message,
-          status: false,
-        });
-        this.toastService.show();
-      },
-    });
+    // this.locationService.getLocation(this.package.property.location).subscribe({
+    //   next: (res) => {
+    //     this.package.property.location = res.data.name;
+    //   },
+    //   error: (err) => {
+    //     this.toastService.setup({
+    //       message: err.message,
+    //       status: false,
+    //     });
+    //     this.toastService.show();
+    //   },
+    // });
 
     this.reserveForm = new FormGroup(
       {
