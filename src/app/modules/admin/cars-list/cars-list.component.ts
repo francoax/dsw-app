@@ -2,7 +2,6 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, Input, OnChanges,Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Car } from 'src/app/models/car';
-import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
@@ -11,7 +10,6 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   styleUrls: ['./cars-list.component.scss']
 })
 export class CarsListComponent implements OnChanges{
- constructor(private service:CarsServiceService){}
 
  idCarDelete!:string;
  @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
