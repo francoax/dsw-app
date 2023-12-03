@@ -65,6 +65,10 @@ export class CreatePropertyComponent implements OnInit {
     Validators.maxLength(30),
     Validators.required,
   ]);
+  location = new FormControl('', [
+    Validators.maxLength(30),
+    Validators.required,
+  ]);
   image = new FormControl('');
   selectedFile: any;
 
@@ -76,6 +80,7 @@ export class CreatePropertyComponent implements OnInit {
       date: this.date,
     }),
     propertyType: this.propertyType,
+    location: this.location,
     image: this.image,
   });
 
