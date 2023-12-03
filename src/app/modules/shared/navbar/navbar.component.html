@@ -78,8 +78,8 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
-        <li><a href="/packages/reserves">Reservas</a></li>
-        <li><a href="/user/update">Editar datos</a></li>
+        <li><a [routerLink]="['/packages/reserves']">Reservas</a></li>
+        <li><a [routerLink]="['/user/update']">Editar datos</a></li>
         <li><a href="#" (click)="logout()">Cerrar sesión</a></li>
       </ul>
     </div>
