@@ -12,6 +12,7 @@ import { ToastComponent } from './toast/toast.component';
 import { CardComponent } from './card/card.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CardsListComponent } from './card/cards-list/cards-list.component';
+import { UnauthorizedComponent } from './feedbacks/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     ToastComponent,
     CardComponent,
     CarouselComponent,
-    CardsListComponent
+    CardsListComponent,
+    UnauthorizedComponent
   ],
   imports: [
     CommonModule,
