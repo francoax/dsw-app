@@ -2,7 +2,7 @@
 <div class="container-carousel">
   <div class="navigation-wrapper">
     <div class="keen-slider keen-slider--vertical" #sliderRef style="height:300px">
-      <div *ngFor="let package of packageList; let i=index " class="keen-slider__slide number-slide{{i+1}}">
+      <div *ngFor="let package of packageCompletos; let i=index " class="keen-slider__slide number-slide{{i+1}}">
         <img src="../../../../assets/img/{{package.nameImage}}" alt="">
         <button class="btn btn-carousel" onclick="modal_register.showModal()" *ngIf="!userLogged()">
           Reservar Paquete

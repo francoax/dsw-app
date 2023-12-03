@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import { Resolve } from "@angular/router";
 import { PropertyServiceService } from "../services/property-service.service";
 import { Property } from "../models/property";
-import { Observable, of } from "rxjs";
+import { Observable, filter } from "rxjs";
 import { map } from 'rxjs/operators';
+import Package from "../models/package";
 
 @Injectable({ providedIn: 'root'})
 export class PropertyResolverService implements Resolve<Property[]> {
@@ -14,7 +15,7 @@ export class PropertyResolverService implements Resolve<Property[]> {
   
   resolve(): Observable<Property[]> {
     return this.propertyService.getProperties().pipe(
-      map((res) => res.data)
+      map((res) => res.data),
     );
   }
 }

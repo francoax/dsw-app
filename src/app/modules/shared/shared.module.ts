@@ -9,7 +9,9 @@ import { ButtonComponent } from './button/button.component';
 import { RouterModule } from '@angular/router';
 import { ModalComponent } from './modal/modal.component';
 import { ToastComponent } from './toast/toast.component';
+import { CardComponent } from './card/card.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { CardsListComponent } from './card/cards-list/cards-list.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { CarouselComponent } from './carousel/carousel.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CarouselComponent
+    CardComponent,
+    CarouselComponent,
+    CardsListComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,9 @@ import { CarouselComponent } from './carousel/carousel.component';
     SidebarComponent,
     ModalComponent,
     ToastComponent,
-    CarouselComponent
+    CardComponent,
+    CarouselComponent,
+    CardsListComponent
   ],
 })
 export class SharedModule {}

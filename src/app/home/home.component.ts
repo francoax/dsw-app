@@ -4,6 +4,7 @@ import { Property } from '../models/property';
 import { Car } from '../models/car';
 import { MedicalAssistance } from '../models/medical-assistance';
 import { ActivatedRoute } from '@angular/router';
+import { AppConfigService } from '../services/app/app.service';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +19,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly route : ActivatedRoute,
+    private readonly appService : AppConfigService
   ) {}
-  
+
   ngOnInit(): void {
     this.route.data.subscribe(({ propertyList, packages, cars, medAssists }) => {
       this.propertyList = propertyList;
@@ -27,5 +29,7 @@ export class HomeComponent implements OnInit {
       this.carList = cars;
       this.asistMedList = medAssists;
     })
+
+    this.appService.setDisplaySearchBar(true)
   }
 }

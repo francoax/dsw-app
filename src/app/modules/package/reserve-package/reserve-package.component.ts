@@ -2,7 +2,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {Car} from 'src/app/models/car';
+import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import Package from 'src/app/models/package';
 import { Property } from 'src/app/models/property';
@@ -12,6 +12,8 @@ import { PackageService } from 'src/app/services/package/package.service';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { MedicalAssistanceService } from 'src/app/services/medical-assitance/medical-assistance.service';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-reserve-package',
@@ -24,11 +26,10 @@ export class ReservePackageComponent implements OnInit {
   property!: Property;
   car!: Car;
   medicalAssist!: MedicalAssistance;
-  token!: any;
   reserveForm!: FormGroup;
   dateStart = new FormControl('', Validators.required);
   dateEnd = new FormControl('', Validators.required);
-  hosts = new FormControl('', Validators.required);
+  error = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -37,6 +38,7 @@ export class ReservePackageComponent implements OnInit {
     private packageService: PackageService,
     private propertyService: PropertyServiceService,
     private carService: CarService,
+    private medicalAssistanceService: MedicalAssistanceService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -56,24 +58,33 @@ export class ReservePackageComponent implements OnInit {
     this.route.queryParams.subscribe((params: Params) => {
       this.packageId = params['packageId'];
     });
-    this.token = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.token = this.token.token;
     this.packageService.getPackage(this.packageId).subscribe((res) => {
       this.package = res.data;
-      this.propertyService
-        .getProperty(this.package.property)
-        .subscribe((res) => {
+      this.propertyService.getProperty(this.package.property).subscribe({
+        next: (res) => {
           this.property = res.data;
-        });
-      this.carService.getCar(this.package.car).subscribe((res) => {
-        this.car = res.data;
+        },
+        error: () => (this.error = true),
       });
+      this.carService.getCar(this.package.car).subscribe({
+        next: (res) => {
+          this.car = res.data;
+        },
+        error: () => (this.error = true),
+      });
+      this.medicalAssistanceService
+        .getOne(this.package.medicalAssistance)
+        .subscribe({
+          next: (res) => {
+            this.medicalAssist = res.data;
+          },
+          error: () => (this.error = true),
+        });
     });
 
     this.reserveForm = new FormGroup({
       dateStart: this.dateStart,
       dateEnd: this.dateEnd,
-      hosts: this.hosts,
     });
   }
 
@@ -85,12 +96,13 @@ export class ReservePackageComponent implements OnInit {
         this.reserveForm.value.dateStart
       )
     ) {
+      const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
       const reserve: Reserve = {
         date_start: this.reserveForm.value.dateStart,
         date_end: this.reserveForm.value.dateEnd,
         packageReserved: this.packageId,
       };
-      this.reserveService.createReserve(reserve, this.token).subscribe(() => {
+      this.reserveService.createReserve(reserve, token).subscribe(() => {
         this.router.navigate(['/']);
       });
     } else {

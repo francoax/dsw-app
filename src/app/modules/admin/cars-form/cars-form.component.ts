@@ -52,7 +52,6 @@ ngOnInit(): void {
 }
 
 onSubmit(form : FormGroup){
-  console.log(form.value);
 
 if(this.carsForm.valid) {
   if(this.formScope==='create'){
@@ -99,7 +98,6 @@ onUpdate(car: Car){
   })
   this.formScope = 'editar';
   this.idCarToEdit = car.id;
-  console.log(this.idCarToEdit)
 
 }
 

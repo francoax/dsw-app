@@ -21,4 +21,8 @@ export class CarService {
   getCars(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.API);
   }
+
+  getCarsFromLocation(locationId : string) {
+    return this.http.get<ApiResponse>(`${this.API}?locality=${locationId}`)
+  }
 }

@@ -7,6 +7,7 @@ import {
   ValidatorFn,
   ValidationErrors,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -44,7 +45,7 @@ export class SignUpComponent implements OnInit {
     Validators.required,
   ]);
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.signInForm = new FormGroup(
@@ -74,7 +75,9 @@ export class SignUpComponent implements OnInit {
       };
 
       this.userService.saveUser(user).subscribe(() => {
-        this.signInForm.reset();
+        this.router.navigate(['/confirmation'], {
+          queryParams: { action: 'signin' },
+        });
       });
     } else {
       alert('Verifique que los datos ingresados sean válidos');
