@@ -13,6 +13,7 @@ import { CardComponent } from './card/card.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CardsListComponent } from './card/cards-list/cards-list.component';
 import { UnauthorizedComponent } from './feedbacks/unauthorized/unauthorized.component';
+import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UnauthorizedComponent } from './feedbacks/unauthorized/unauthorized.com
     CardComponent,
     CarouselComponent,
     CardsListComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,

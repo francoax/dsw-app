@@ -7,6 +7,7 @@ import { CarResolverService } from './resolvers/car.resolver.service';
 import { MedicalAssistanceResolverService } from './resolvers/MedicalAssist.resolver.service';
 import { authGuard } from './guards/auth.guard';
 import { UnauthorizedComponent } from './modules/shared/feedbacks/unauthorized/unauthorized.component';
+import { NotFoundComponent } from './modules/shared/feedbacks/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -54,6 +55,10 @@ const routes: Routes = [
     path: 'unauthorized',
     component: UnauthorizedComponent
   },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
