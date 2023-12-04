@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
       this.packageList = packages;
       this.carList = cars;
       this.asistMedList = medAssists;
+      this.requiredProps = propertyList;
     })
 
     this.appService.setDisplaySearchBar(true);
@@ -46,7 +47,6 @@ export class HomeComponent implements OnInit {
     this.requiredProps= this.propertyList.filter(prop => {
       return prop.location.name.toLocaleLowerCase().includes(varible.toLocaleLowerCase())
     });
-    this.propertyList = this.requiredProps;
 
   }
 

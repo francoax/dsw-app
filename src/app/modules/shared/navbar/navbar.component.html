@@ -23,6 +23,13 @@
   </div>
   <div class="flex flex-row justify-between items-center gap-4">
     <div class="join" *ngIf="showSearch">
+      <div class="indicator">
+        <button (click)="getInputValue()" class="btn join-item bg-slate-50 rounded-2xl">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EB5757" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" fill="#EB5757" />
+          </svg>          
+        </button>
+      </div>
       <div>
         <div>
           <input
