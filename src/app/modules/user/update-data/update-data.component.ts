@@ -111,7 +111,9 @@ export class UpdateDataComponent implements OnInit {
     this.userService.deleteUser(this.loggedUser.token).subscribe({
       next: () => {
         window.localStorage.removeItem('loggedUser');
-        this.router.navigate(['/user']);
+        this.router.navigate(['/confirmation'], {
+          queryParams: { action: 'delete' },
+        });
       },
     });
   }

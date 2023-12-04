@@ -19,6 +19,7 @@ interface ReserveDetails {
   medicalAssistance: string;
   dateStart: string;
   dateEnd: string;
+  price: number;
 }
 
 @Component({
@@ -64,6 +65,7 @@ export class ReservesListComponent implements OnInit {
       medicalAssistance: '',
       dateStart: '',
       dateEnd: '',
+      price: 0,
     };
     reserveDetails.id = reserve.id as string;
 
@@ -78,6 +80,7 @@ export class ReservesListComponent implements OnInit {
         properties.forEach((property) => {
           if (property._id === propertyId) {
             reserveDetails.propertyAddress = property.address;
+            reserveDetails.price += property.pricePerNight.price;
           }
         });
 
@@ -85,6 +88,7 @@ export class ReservesListComponent implements OnInit {
         cars.forEach((car) => {
           if (car.id === carId) {
             reserveDetails.car = `${car.brand} ${car.model}`;
+            reserveDetails.price += car.price.value;
             const locations = this.route.snapshot.data['locations'];
             locations.forEach((location: { id: string; name: string }) => {
               if (location.id === car.locality) {
@@ -137,7 +141,6 @@ export class ReservesListComponent implements OnInit {
 
   openModal(reserveId: string) {
     this.selectedReserveId = reserveId;
-    console.log(reserveId);
     this.modalComponent.open();
   }
 

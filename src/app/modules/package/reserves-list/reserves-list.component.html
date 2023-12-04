@@ -1,5 +1,4 @@
 <!-- eslint-disable max-len -->
-<navbar [showSearch]="true"></navbar>
 <div class="mx-12">
   <h1 class="text-3xl py-4">Listado de reservas</h1>
   <form
@@ -95,6 +94,7 @@
           <th>Reserva</th>
           <th>Detalles</th>
           <th>Fecha</th>
+          <th>Precio</th>
           <th></th>
         </tr>
       </thead>
@@ -128,11 +128,13 @@
             }}</span>
           </td>
           <td>{{ reserve.dateStart | date }} - {{ reserve.dateEnd | date }}</td>
+          <td>{{ reserve.price | currency }}</td>
           <th>
-            <button>
-              class="btn btn-ghost btn-xs" [id]="reserve.id"
+            <button
+              class="btn btn-ghost btn-xs"
+              [id]="reserve.id"
               (click)="openModal(reserve.id)"
-              <!--no esta pasando el id-->
+            >
               Cancelar reserva
             </button>
           </th>
@@ -151,7 +153,6 @@
     </table>
   </div>
 </div>
-<app-footer></app-footer>
 <confirmation-modal #confirmationModal (confirmationEvent)="cancelReserve()">
   <div modal-title>Cancelar reserva</div>
   <div modal-message>Está seguro de que desea cancelar su reserva?</div>
