@@ -60,10 +60,10 @@
       [inputControl]="email"
     ></app-input>
     <app-input
-      [label]="'Contraseña'"
-      [placeholder]="''"
-      [required]="true"
-      [type]="'password'"
+      [label]="'Nueva contraseña'"
+      [placeholder]="'Omitir para no modificar'"
+      [required]="false"
+      [type]="password.dirty ? 'password' : 'text'"
       [inputControl]="password"
     ></app-input>
     <app-button
