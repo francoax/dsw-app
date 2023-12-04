@@ -28,14 +28,11 @@ import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
     CarouselComponent,
     CardsListComponent,
     UnauthorizedComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
-  exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  exports: [
+    //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
     InputComponent,
     FooterComponent,
@@ -45,9 +42,7 @@ import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
     ToastComponent,
     CardComponent,
     CarouselComponent,
-    CardsListComponent
+    CardsListComponent,
   ],
 })
 export class SharedModule {}
-
-

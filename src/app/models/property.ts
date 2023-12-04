@@ -1,15 +1,15 @@
 export interface Property {
-  _id: string,
-  capacity:      number,
-  address:       string,
-  pricePerNight: PricePerNight,
-  propertyType:  string,
-  location : {
-    name: string
+  _id: string;
+  capacity: number;
+  address: string;
+  pricePerNight: PricePerNight;
+  propertyType: string;
+  location: {
+    name: string;
   };
-  image: File,
+  image: File;
 }
 export interface PricePerNight {
   price: number;
-  date:  string;
+  date: string;
 }

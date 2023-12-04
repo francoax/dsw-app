@@ -1,8 +1,14 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Injectable, inject } from '@angular/core';
 import { AppConfigService } from '../app/app.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/models/common';
+import {
+  ActivatedRouteSnapshot,
+  ResolveFn,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { PackageAgent } from 'src/app/models/package';
 
 @Injectable({
@@ -24,7 +30,10 @@ export class PackageService {
     return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
   }
 
-  createPackage(newPackage : PackageAgent, token : string) : Observable<ApiResponse> {
+  createPackage(
+    newPackage: PackageAgent,
+    token: string
+  ): Observable<ApiResponse> {
     return this._http.post<ApiResponse>(
       `${this.url}/api/packages`,
       newPackage,
@@ -34,3 +43,10 @@ export class PackageService {
     );
   }
 }
+
+export const packageResolver: ResolveFn<ApiResponse> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  return inject(PackageService).getPackage(route.paramMap.get('id')!);
+};

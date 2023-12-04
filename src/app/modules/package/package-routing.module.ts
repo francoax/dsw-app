@@ -9,9 +9,14 @@ import { MedicalAssistanceResolverService } from 'src/app/resolvers/MedicalAssis
 import { CarResolverService } from 'src/app/resolvers/car.resolver.service';
 import { PropertyResolverService } from 'src/app/resolvers/property.resolver.service';
 import { LocationResolverService } from 'src/app/resolvers/location.resolver.service';
+import { packageResolver } from 'src/app/services/package/package.service';
 
 const routes: Routes = [
-  { path: '', component: ReservePackageComponent },
+  {
+    path: ':id',
+    component: ReservePackageComponent,
+    resolve: { pack: packageResolver },
+  },
   {
     path: 'reserves',
     component: ReservesListComponent,

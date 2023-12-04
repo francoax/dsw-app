@@ -11,7 +11,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 
 @NgModule({
-  declarations: [ReservePackageComponent, ReservesListComponent, CustomReserveComponent],
+  declarations: [
+    ReservePackageComponent,
+    ReservesListComponent,
+    CustomReserveComponent,
+  ],
   imports: [
     CommonModule,
     PackageRoutingModule,
