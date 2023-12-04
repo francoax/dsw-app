@@ -90,10 +90,6 @@ export class CreatePropertyComponent implements OnInit {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      // Aquí puedes trabajar con el archivo seleccionado, por ejemplo, cargarlo o mostrar información sobre él.
-      console.log('Archivo seleccionado:', this.selectedFile);
-    }
   }
 
   onSubmit(form: FormGroup) {

@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { Router } from '@angular/router';
+import { ToastService } from '../../shared/toast/toast.service';
 
 @Component({
   selector: 'app-update-data',
@@ -23,7 +24,11 @@ export class UpdateDataComponent implements OnInit {
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.updateDataForm = new FormGroup({
@@ -54,7 +59,11 @@ export class UpdateDataComponent implements OnInit {
           });
         },
         error: (err) => {
-          console.log(err);
+          this.toastService.setup({
+            message: err.error.message,
+            status: false,
+          });
+          this.toastService.show();
         },
       });
     }
@@ -71,11 +80,7 @@ export class UpdateDataComponent implements OnInit {
         password: this.updateDataForm.value.password,
       };
 
-      this.userService
-        .updateUser(user, this.loggedUser.token)
-        .subscribe((res) => {
-          console.log(res);
-        });
+      this.userService.updateUser(user, this.loggedUser.token).subscribe();
     } else {
       alert('Verifique que los datos ingresados sean válidos');
     }
