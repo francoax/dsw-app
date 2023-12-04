@@ -28,11 +28,12 @@
           <input
             class="input input-bordered join-item rounded-2xl"
             placeholder="Location"
+            id="input"
           />
         </div>
       </div>
       <div class="indicator">
-        <button class="btn join-item bg-slate-50 rounded-2xl">
+        <button (click)="getInputValue()" class="btn join-item bg-slate-50 rounded-2xl">
           <svg
             width="20"
             height="20"

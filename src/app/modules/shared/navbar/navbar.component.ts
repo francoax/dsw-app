@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
@@ -40,4 +42,8 @@ export class NavbarComponent implements OnInit {
   goHomePage(){
     this.router.navigate(['/home']);
   }
+  getInputValue(){
+    const inputElement = <HTMLInputElement>document.getElementById('input');
+    this.appService.setInputValue(inputElement.value);
+ }
 }
