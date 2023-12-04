@@ -13,6 +13,9 @@ export class AppConfigService {
   private provideInputValueSubject = new Subject<string>();
   provideInputValue$= this.provideInputValueSubject.asObservable();
 
+  private showBackBtnSubject = new BehaviorSubject<boolean>(false)
+  showshowBackBtn$ = this.showSearchBarSubject.asObservable()
+
   get apiUrl() : string {
     return environment.apiUrl
   }
@@ -22,6 +25,9 @@ export class AppConfigService {
   }
   setInputValue(value : string) :void{
     this.provideInputValueSubject.next(value);
+  }
+  seDisplayBackBtn(value : boolean) : void {
+    this.showSearchBarSubject.next(value)
   }
   
 }

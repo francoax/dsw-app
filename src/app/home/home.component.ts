@@ -15,6 +15,7 @@ import { AppConfigService } from '../services/app/app.service';
 export class HomeComponent implements OnInit {
   inputValue!: string;
   packageList: Package[] = [];
+  showAlert= false;
   propertyList: Property[] = [];
   requiredProps: Property[] = [];
   carList: Car[] = [];
@@ -45,8 +46,13 @@ export class HomeComponent implements OnInit {
   filterByProperty(prop:string){
     const varible = prop;
     this.requiredProps= this.propertyList.filter(prop => {
-      return prop.location.name.toLocaleLowerCase().includes(varible.toLocaleLowerCase())
+      return prop.location.name.toLocaleLowerCase().includes(varible.toLocaleLowerCase());
     });
+    if(this.requiredProps.length === 0){
+      this.showAlert=true;
+    } else{
+      this.showAlert=false;
+    }
 
   }
 
