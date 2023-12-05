@@ -53,10 +53,9 @@ export class CreatePropertyComponent implements OnInit {
     this.service.getProperties().subscribe((response) => {
       this.properties = response.data;
     });
-    this.locaServ.getLocalities().subscribe((Response)=>{
+    this.locaServ.getLocalities().subscribe((Response) => {
       this.localities = Response.data;
     });
-
   }
 
   capacity = new FormControl<number>(0, [
@@ -73,7 +72,7 @@ export class CreatePropertyComponent implements OnInit {
     Validators.maxLength(30),
     Validators.required,
   ]);
-  locality= new FormControl('', [Validators.required]);
+  locality = new FormControl('', [Validators.required]);
   image = new FormControl('');
   selectedFile: any;
 
@@ -91,10 +90,6 @@ export class CreatePropertyComponent implements OnInit {
 
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      // Aquí puedes trabajar con el archivo seleccionado, por ejemplo, cargarlo o mostrar información sobre él.
-      console.log('Archivo seleccionado:', this.selectedFile);
-    }
   }
 
   onSubmit(form: FormGroup) {
@@ -105,7 +100,7 @@ export class CreatePropertyComponent implements OnInit {
       formData.append('price', form.value.pricePerNight.price);
       formData.append('date', form.value.pricePerNight.date);
       formData.append('propertyType', form.value.propertyType);
-      formData.append('locality',form.value.locality)
+      formData.append('locality', form.value.locality);
       formData.append('image', this.selectedFile);
 
       if (this.formScope === 'create') {
@@ -162,7 +157,7 @@ export class CreatePropertyComponent implements OnInit {
         date: prop.pricePerNight.date,
       },
       propertyType: prop.propertyType,
-      location:prop.location.name,
+      location: prop.location.name,
     });
     this.formScope = 'editar';
     this.idPropToEdit = prop._id;
