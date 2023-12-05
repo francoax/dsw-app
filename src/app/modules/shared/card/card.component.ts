@@ -1,25 +1,37 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Property } from 'src/app/models/property';
 import { ToastService } from '../toast/toast.service';
 import { Router } from '@angular/router';
+import { AppConfigService } from 'src/app/services/app/app.service';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
-export class CardComponent {
-  @Input() propertyInfo! : Property
+export class CardComponent implements OnInit {
+  @Input() propertyInfo!: Property;
+  imageSrc! : string;
 
-  constructor(private toast : ToastService,
-    private router : Router) {}
+  constructor(
+    private toast: ToastService,
+    private router: Router,
+    private appService: AppConfigService
+  ) {}
 
-  reserve(id : string) {
-    if(!localStorage.getItem('loggedUser')) {
-      this.toast.setup({message : 'Debe iniciar sesion para poder reservar.', status : false})
-      this.toast.show()
+  ngOnInit(): void {
+    this.imageSrc = `${this.appService.apiUrl}/api/images/${this.propertyInfo.image}`;
+  }
+
+  reserve(id: string) {
+    if (!localStorage.getItem('loggedUser')) {
+      this.toast.setup({
+        message: 'Debe iniciar sesion para poder reservar.',
+        status: false,
+      });
+      this.toast.show();
     } else {
-      this.router.navigate([`/packages/reserve/${id}`])
+      this.router.navigate([`/packages/reserve/${id}`]);
     }
   }
 }
