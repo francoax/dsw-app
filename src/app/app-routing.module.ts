@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { PropertyResolverService } from './resolvers/property.resolver.service';
-import { PackageResolverService } from './resolvers/package.resolver.service';
-import { CarResolverService } from './resolvers/car.resolver.service';
-import { MedicalAssistanceResolverService } from './resolvers/MedicalAssist.resolver.service';
 import { authGuard } from './guards/auth.guard';
 import { UnauthorizedComponent } from './modules/shared/feedbacks/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './modules/shared/feedbacks/not-found/not-found.component';
+import { carResolver } from './resolvers/car.resolver';
+import { propertyResolver } from './resolvers/property.resolver';
+import { packagesResolver } from './resolvers/package.resolver';
+import { medicalAssistanceResolver } from './resolvers/MedicalAssist.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -15,10 +15,10 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      propertyList: PropertyResolverService,
-      packages: PackageResolverService,
-      cars: CarResolverService,
-      medAssists: MedicalAssistanceResolverService,
+      propertyList: propertyResolver,
+      packages: packagesResolver,
+      cars: carResolver,
+      medAssists: medicalAssistanceResolver,
     },
   },
   {
@@ -53,12 +53,12 @@ const routes: Routes = [
   },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent
+    component: UnauthorizedComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({

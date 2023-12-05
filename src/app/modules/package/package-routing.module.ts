@@ -4,12 +4,11 @@ import { ReservePackageComponent } from './reserve-package/reserve-package.compo
 import { ReservesListComponent } from './reserves-list/reserves-list.component';
 import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
 import { customReserveResolver } from 'src/app/resolvers/custom-reserve.resolver';
-import { PackageResolverService } from 'src/app/resolvers/package.resolver.service';
-import { MedicalAssistanceResolverService } from 'src/app/resolvers/MedicalAssist.resolver.service';
-import { CarResolverService } from 'src/app/resolvers/car.resolver.service';
-import { PropertyResolverService } from 'src/app/resolvers/property.resolver.service';
-import { LocationResolverService } from 'src/app/resolvers/location.resolver.service';
-import { packageResolver } from 'src/app/services/package/package.service';
+import { carResolver } from 'src/app/resolvers/car.resolver';
+import { locationResolver } from 'src/app/resolvers/location.resolver';
+import { propertyResolver } from 'src/app/resolvers/property.resolver';
+import { medicalAssistanceResolver } from 'src/app/resolvers/MedicalAssist.resolver';
+import { packageResolver } from 'src/app/resolvers/package.resolver';
 
 const routes: Routes = [
   {
@@ -21,11 +20,10 @@ const routes: Routes = [
     path: 'reserves',
     component: ReservesListComponent,
     resolve: {
-      propertyList: PropertyResolverService,
-      packages: PackageResolverService,
-      cars: CarResolverService,
-      medAssists: MedicalAssistanceResolverService,
-      locations: LocationResolverService,
+      propertyList: propertyResolver,
+      cars: carResolver,
+      medAssists: medicalAssistanceResolver,
+      locations: locationResolver,
     },
   },
   {
