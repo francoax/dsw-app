@@ -34,6 +34,6 @@ export class CarService {
   }
 
   updateCar(id : string, carUpdated : Car) : Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(this.API, carUpdated)
+    return this.http.put<ApiResponse>(`${this.API}${id}`, carUpdated)
   }
 }
