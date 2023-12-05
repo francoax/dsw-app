@@ -30,17 +30,8 @@ export class PackageService {
     return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
   }
 
-  createPackage(
-    newPackage: PackageAgent,
-    token: string
-  ): Observable<ApiResponse> {
-    return this._http.post<ApiResponse>(
-      `${this.url}/api/packages`,
-      newPackage,
-      {
-        headers: { Authorization: 'Bearer ' + token },
-      }
-    );
+  createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
+    return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
 }
 

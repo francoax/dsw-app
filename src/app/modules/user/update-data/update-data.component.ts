@@ -44,9 +44,7 @@ export class UpdateDataComponent implements OnInit {
       this.loggedUser = null;
       this.updateDataForm.disable();
     } else {
-      this.loggedUser = window.localStorage.getItem('loggedUser');
-      this.loggedUser = JSON.parse(this.loggedUser);
-      this.userService.getUser(this.loggedUser.token).subscribe({
+      this.userService.getUser().subscribe({
         next: (res) => {
           const { data } = res;
           this.updateDataForm.setValue({
@@ -80,14 +78,14 @@ export class UpdateDataComponent implements OnInit {
         password: this.updateDataForm.value.password,
       };
 
-      this.userService.updateUser(user, this.loggedUser.token).subscribe();
+      this.userService.updateUser(user).subscribe();
     } else {
       alert('Verifique que los datos ingresados sean válidos');
     }
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.loggedUser.token).subscribe({
+    this.userService.deleteUser().subscribe({
       next: () => {
         window.localStorage.removeItem('loggedUser');
         this.router.navigate(['/confirmation'], {
