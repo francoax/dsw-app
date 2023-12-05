@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Car } from 'src/app/models/car';
-import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 
 @Component({
@@ -18,8 +17,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './cars-list.component.html',
   styleUrls: ['./cars-list.component.scss'],
 })
-export class CarsListComponent implements OnChanges {
-  constructor(private service: CarsServiceService) {}
+export class CarsListComponent implements OnChanges{
 
   idCarDelete!: string;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
