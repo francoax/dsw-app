@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, OnInit } from '@angular/core';
@@ -11,6 +13,7 @@ import { AppConfigService } from 'src/app/services/app/app.service';
 })
 export class NavbarComponent implements OnInit {
   showSearch = false;
+  showBackBtn = false;
   loggedUser = window.localStorage.getItem('loggedUser');
   userName = '';
 
@@ -26,6 +29,7 @@ export class NavbarComponent implements OnInit {
     this.appService.showSearchBar$.subscribe((show) => {
       this.showSearch = show
     })
+    
   }
 
   logout() {
@@ -40,4 +44,15 @@ export class NavbarComponent implements OnInit {
   goHomePage(){
     this.router.navigate(['/home']);
   }
+  getInputValue(){
+    const inputElement = <HTMLInputElement>document.getElementById('input');
+    this.appService.setInputValue(inputElement.value);
+    this.showBackBtn = true;
+ }
+ SetInputValue(){
+  const inputElement ="";
+  this.appService.setInputValue(inputElement);
+  this.showBackBtn = false;
+}
+
 }

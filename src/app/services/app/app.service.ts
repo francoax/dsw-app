@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -10,6 +10,12 @@ export class AppConfigService {
   private showSearchBarSubject = new BehaviorSubject<boolean>(false)
   showSearchBar$ = this.showSearchBarSubject.asObservable()
 
+  private provideInputValueSubject = new Subject<string>();
+  provideInputValue$= this.provideInputValueSubject.asObservable();
+
+  private showBackBtnSubject = new BehaviorSubject<boolean>(false)
+  showshowBackBtn$ = this.showSearchBarSubject.asObservable()
+
   get apiUrl() : string {
     return environment.apiUrl
   }
@@ -17,4 +23,11 @@ export class AppConfigService {
   setDisplaySearchBar(value : boolean) : void {
     this.showSearchBarSubject.next(value)
   }
+  setInputValue(value : string) :void{
+    this.provideInputValueSubject.next(value);
+  }
+  seDisplayBackBtn(value : boolean) : void {
+    this.showSearchBarSubject.next(value)
+  }
+  
 }
