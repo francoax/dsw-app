@@ -4,10 +4,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Car } from 'src/app/models/car';
-import { CarsServiceService } from 'src/app/services/cars-service.service';
 import { ToastService } from '../../shared/toast/toast.service';
 import { LocalityServiceService } from 'src/app/services/locality-service.service';
 import { Locality } from 'src/app/models/locality';
+import { CarService } from 'src/app/services/car/car.service';
 
 @Component({
   selector: 'app-cars-form',
@@ -26,7 +26,7 @@ formScope= 'create';
 @ViewChild('formCollapse') formCollase! : ElementRef
 
 
-constructor(private service:CarsServiceService, private readonly toastService: ToastService, private locaService:LocalityServiceService){}
+constructor(private service: CarService, private readonly toastService: ToastService, private locaService:LocalityServiceService){}
 carsForm!:FormGroup;
 brand = new FormControl('',[Validators.maxLength(30),Validators.required]);
 model = new FormControl('',[Validators.maxLength(30),Validators.required]);
@@ -64,13 +64,13 @@ onSubmit(form : FormGroup){
 if(this.carsForm.valid) {
   if(this.formScope==='create'){
   this.service.createCar(form.value).subscribe((res)=>{
-    this.cars.push(form.value);
+    this.cars.push(res.data);
     this.toastService.setup({message:'Auto Creado',status:true})
     this.toastService.show();
     this.closeForm();
   })
   } else if(this.formScope ==='editar'){
-    this.service.UpdateCar(form.value,this.idCarToEdit).subscribe((res)=>{
+    this.service.updateCar(this.idCarToEdit, form.value).subscribe((res)=>{
       this.toastService.setup({message:'Auto Actualizado',status:true})
       this.toastService.show();
       const index = this.cars.map(a => a.id).indexOf(this.idCarToEdit);

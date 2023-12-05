@@ -23,16 +23,24 @@
   </div>
   <div class="flex flex-row justify-between items-center gap-4">
     <div class="join" *ngIf="showSearch">
+      <div class="indicator">
+        <button *ngIf="showBackBtn" (click)="SetInputValue()" class="btn join-item bg-slate-50 rounded-2xl">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#EB5757" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" fill="#EB5757" />
+          </svg>          
+        </button>
+      </div>
       <div>
         <div>
           <input
             class="input input-bordered join-item rounded-2xl"
             placeholder="Location"
+            id="input"
           />
         </div>
       </div>
       <div class="indicator">
-        <button class="btn join-item bg-slate-50 rounded-2xl">
+        <button (click)="getInputValue()" class="btn join-item bg-slate-50 rounded-2xl">
           <svg
             width="20"
             height="20"
@@ -78,8 +86,8 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
-        <li><a href="/packages/reserves">Reservas</a></li>
-        <li><a href="/user/update">Editar datos</a></li>
+        <li><a [routerLink]="['/packages/reserves']">Reservas</a></li>
+        <li><a [routerLink]="['/user/update']">Editar datos</a></li>
         <li><a href="#" (click)="logout()">Cerrar sesión</a></li>
       </ul>
     </div>
