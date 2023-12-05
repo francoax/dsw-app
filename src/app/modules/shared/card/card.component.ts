@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { Property } from 'src/app/models/property';
+import { Component, Input, OnInit } from '@angular/core';
+import { PropertyV2 } from 'src/app/models/property';
 import { ToastService } from '../toast/toast.service';
 import { Router } from '@angular/router';
 
@@ -8,8 +8,12 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent {
-  @Input() propertyInfo! : Property
+export class CardComponent implements OnInit{
+  @Input() propertyInfo! : PropertyV2
+
+  ngOnInit(): void {
+    console.log(this.propertyInfo)
+  }
 
   constructor(private toast : ToastService,
     private router : Router) {}

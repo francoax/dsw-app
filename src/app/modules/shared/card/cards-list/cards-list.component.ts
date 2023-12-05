@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Property } from 'src/app/models/property';
+import { PropertyV2 } from 'src/app/models/property';
 
 @Component({
   selector: 'app-cards-list',
@@ -7,5 +7,5 @@ import { Property } from 'src/app/models/property';
   styleUrls: ['./cards-list.component.scss']
 })
 export class CardsListComponent {
-  @Input() propertiesList! : Property[]
+  @Input() propertiesList! : PropertyV2[]
 }
