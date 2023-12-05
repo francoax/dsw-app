@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, OnInit } from '@angular/core';
 import Package from '../models/package';
 import { Property } from '../models/property';
@@ -12,8 +13,11 @@ import { AppConfigService } from '../services/app/app.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  inputValue!: string;
   packageList: Package[] = [];
+  showAlert= false;
   propertyList: Property[] = [];
+  requiredProps: Property[] = [];
   carList: Car[] = [];
   asistMedList: MedicalAssistance[] = [];
 
@@ -27,7 +31,30 @@ export class HomeComponent implements OnInit {
     this.packageList = this.route.snapshot.data['packages'];
     this.carList = this.route.snapshot.data['cars'];
     this.asistMedList = this.route.snapshot.data['medAssists'];
+    this.requiredProps = propertyList;
 
     this.appService.setDisplaySearchBar(true);
+    this.appService.provideInputValue$.subscribe( value =>{
+      this.inputValue = value;
+      this.filterByProperty(this.inputValue);
+
+    })
   }
+
+  filterByProperty(prop:string){
+    const varible = prop;
+    this.requiredProps= this.propertyList.filter(prop => {
+      return prop.location.name.toLocaleLowerCase().includes(varible.toLocaleLowerCase());
+    });
+    if(this.requiredProps.length === 0){
+      this.showAlert=true;
+    } else{
+      this.showAlert=false;
+    }
+
+  }
+
+
+
+
 }

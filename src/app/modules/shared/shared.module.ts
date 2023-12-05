@@ -14,6 +14,10 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CardsListComponent } from './card/cards-list/cards-list.component';
 import { UnauthorizedComponent } from './feedbacks/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
+import { LogInComponent } from './log-in/log-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
     CardsListComponent,
     UnauthorizedComponent,
     NotFoundComponent,
+    LogInComponent,
+    SignUpComponent,
+    NotificationsComponent,
+    ForgotPasswordComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [

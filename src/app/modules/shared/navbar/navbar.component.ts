@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @angular-eslint/component-selector */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConfigService } from 'src/app/services/app/app.service';
 
@@ -11,8 +13,10 @@ import { AppConfigService } from 'src/app/services/app/app.service';
 })
 export class NavbarComponent implements OnInit {
   showSearch = false;
+  showBackBtn = false;
   loggedUser = window.localStorage.getItem('loggedUser');
   userName = '';
+  userRole = ''
 
   constructor(
     private router: Router,
@@ -22,6 +26,7 @@ export class NavbarComponent implements OnInit {
     if (this.loggedUser) {
       const user = JSON.parse(this.loggedUser);
       this.userName = user.name;
+      this.userRole = this.getRoleOfLoggedUser();
     }
     this.appService.showSearchBar$.subscribe((show) => {
       this.showSearch = show
@@ -30,7 +35,10 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     window.localStorage.removeItem('loggedUser');
-    this.router.navigate(['/login']);
+  }
+
+  getRoleOfLoggedUser() : string {
+    return JSON.parse(window.localStorage.getItem('loggedUser')!).role
   }
 
   buttonClicked() {
@@ -40,4 +48,15 @@ export class NavbarComponent implements OnInit {
   goHomePage(){
     this.router.navigate(['/home']);
   }
+  getInputValue(){
+    const inputElement = <HTMLInputElement>document.getElementById('input');
+    this.appService.setInputValue(inputElement.value);
+    this.showBackBtn = true;
+ }
+ SetInputValue(){
+  const inputElement ="";
+  this.appService.setInputValue(inputElement);
+  this.showBackBtn = false;
+}
+
 }

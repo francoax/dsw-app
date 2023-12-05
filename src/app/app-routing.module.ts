@@ -8,6 +8,10 @@ import { carResolver } from './resolvers/car.resolver';
 import { propertyResolver } from './resolvers/property.resolver';
 import { packagesResolver } from './resolvers/package.resolver';
 import { medicalAssistanceResolver } from './resolvers/MedicalAssist.resolver';
+import { LogInComponent } from './modules/shared/log-in/log-in.component';
+import { SignUpComponent } from './modules/shared/sign-up/sign-up.component';
+import { NotificationsComponent } from './modules/shared/notifications/notifications.component';
+import { ForgotPasswordComponent } from './modules/shared/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +24,22 @@ const routes: Routes = [
       cars: carResolver,
       medAssists: medicalAssistanceResolver,
     },
+  },
+  {
+    path: 'login',
+    component: LogInComponent,
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent,
+  },
+  {
+    path: 'password-reset',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'confirmation',
+    component: NotificationsComponent,
   },
   {
     path: 'user',
