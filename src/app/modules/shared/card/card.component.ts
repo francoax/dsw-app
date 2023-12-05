@@ -20,7 +20,6 @@ export class CardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.propertyInfo.image)
     this.imageSrc = `${this.appService.apiUrl}/api/images/${this.propertyInfo.image}`;
   }
 
