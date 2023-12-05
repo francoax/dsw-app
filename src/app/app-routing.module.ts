@@ -8,6 +8,10 @@ import { MedicalAssistanceResolverService } from './resolvers/MedicalAssist.reso
 import { authGuard } from './guards/auth.guard';
 import { UnauthorizedComponent } from './modules/shared/feedbacks/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './modules/shared/feedbacks/not-found/not-found.component';
+import { LogInComponent } from './modules/shared/log-in/log-in.component';
+import { SignUpComponent } from './modules/shared/sign-up/sign-up.component';
+import { NotificationsComponent } from './modules/shared/notifications/notifications.component';
+import { ForgotPasswordComponent } from './modules/shared/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -20,6 +24,22 @@ const routes: Routes = [
       cars: CarResolverService,
       medAssists: MedicalAssistanceResolverService,
     },
+  },
+  {
+    path: 'login',
+    component: LogInComponent,
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent,
+  },
+  {
+    path: 'password-reset',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'confirmation',
+    component: NotificationsComponent,
   },
   {
     path: 'user',
@@ -53,12 +73,12 @@ const routes: Routes = [
   },
   {
     path: 'unauthorized',
-    component: UnauthorizedComponent
+    component: UnauthorizedComponent,
   },
   {
     path: '**',
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
