@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Property } from 'src/app/models/property';
+import { PropertyV2 } from 'src/app/models/property';
 import { ToastService } from '../toast/toast.service';
 import { Router } from '@angular/router';
 import { AppConfigService } from 'src/app/services/app/app.service';
@@ -9,8 +9,8 @@ import { AppConfigService } from 'src/app/services/app/app.service';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnInit {
-  @Input() propertyInfo!: Property;
+export class CardComponent {
+  @Input() propertyInfo! : PropertyV2
   imageSrc! : string;
 
   constructor(

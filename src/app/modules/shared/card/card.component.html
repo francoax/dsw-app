@@ -5,6 +5,9 @@
     <p>
       Capacidad para {{propertyInfo.capacity}} personas
     </p>
+    <p>
+      Tipo de Propiedad: {{propertyInfo.propertyType?.description}}
+    </p>
     <p class="card-price">
       {{propertyInfo.pricePerNight.price | currency:'USD':'code'}}<span>/por noche</span>
     </p>
