@@ -8,12 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit{
+export class CardComponent {
   @Input() propertyInfo! : PropertyV2
 
-  ngOnInit(): void {
-    console.log(this.propertyInfo)
-  }
 
   constructor(private toast : ToastService,
     private router : Router) {}
