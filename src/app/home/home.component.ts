@@ -7,7 +7,7 @@ import { MedicalAssistance } from '../models/medical-assistance';
 import { ActivatedRoute } from '@angular/router';
 import { AppConfigService } from '../services/app/app.service';
 import { finalize } from 'rxjs';
-import { SkeletonsService } from '../modules/shared/skeletons/skeletons.service';
+import { SkeletonsService } from '../services/skeletons/skeletons.service';
 
 @Component({
   selector: 'app-home',
@@ -26,26 +26,18 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly route : ActivatedRoute,
     private readonly appService : AppConfigService,
-    private readonly skeletonService : SkeletonsService
   ) {}
 
   ngOnInit(): void {
-    this.skeletonService.showHomeLoading()
-    console.log('hi')
-    this.route.data.subscribe(({ propertyList, packages, cars, medAssists }) => {
-        this.propertyList = propertyList;
-        this.packageList = packages;
-        this.carList = cars;
-        this.asistMedList = medAssists;
-        this.requiredProps = propertyList;
-        this.skeletonService.hideHomeLoading()
-      });
-
+    this.route.data.subscribe(({ data }) => {
+      this.packageList = data.at(0);
+      this.propertyList = data.at(1).data;
+      this.requiredProps = this.propertyList
+    });
     this.appService.setDisplaySearchBar(true);
     this.appService.provideInputValue$.subscribe( value =>{
       this.inputValue = value;
       this.filterByProperty(this.inputValue);
-
     })
   }
 
@@ -59,10 +51,5 @@ export class HomeComponent implements OnInit {
     } else{
       this.showAlert=false;
     }
-
   }
-
-
-
-
 }

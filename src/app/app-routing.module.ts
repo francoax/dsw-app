@@ -12,6 +12,7 @@ import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { SignUpComponent } from './modules/shared/sign-up/sign-up.component';
 import { NotificationsComponent } from './modules/shared/notifications/notifications.component';
 import { ForgotPasswordComponent } from './modules/shared/forgot-password/forgot-password.component';
+import { homeDataResolver } from './resolvers/home-data.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -19,10 +20,7 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
     resolve: {
-      propertyList: PropertyResolverService,
-      packages: PackageResolverService,
-      cars: CarResolverService,
-      medAssists: MedicalAssistanceResolverService,
+      data : homeDataResolver
     },
   },
   {

@@ -20,6 +20,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoaderComponent } from './loader/loader.component';
 import { HomeSkeletonComponent } from './skeletons/home-skeleton/home-skeleton.component';
+import { ReserveSkeletonComponent } from './skeletons/reserve-skeleton/reserve-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { HomeSkeletonComponent } from './skeletons/home-skeleton/home-skeleton.c
     NotificationsComponent,
     ForgotPasswordComponent,
     LoaderComponent,
-    HomeSkeletonComponent
+    HomeSkeletonComponent,
+    ReserveSkeletonComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [
@@ -56,7 +58,8 @@ import { HomeSkeletonComponent } from './skeletons/home-skeleton/home-skeleton.c
     CarouselComponent,
     CardsListComponent,
     LoaderComponent,
-    HomeSkeletonComponent
+    HomeSkeletonComponent,
+    ReserveSkeletonComponent
   ],
 })
 export class SharedModule {}

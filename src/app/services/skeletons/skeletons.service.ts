@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class SkeletonsService {
 
   homeLoading$ = new Subject<boolean>()
+  reserveLoading$ = new Subject<boolean>()
 
   showHomeLoading() : void {
     this.homeLoading$.next(true)
@@ -14,5 +15,13 @@ export class SkeletonsService {
 
   hideHomeLoading() : void {
     this.homeLoading$.next(false)
+  }
+
+  showReserveLoading() : void {
+    this.reserveLoading$.next(true)
+  }
+
+  hideReserveLoading() : void {
+    this.reserveLoading$.next(false)
   }
 }

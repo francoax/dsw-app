@@ -30,6 +30,12 @@ export class PackageService {
     return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
   }
 
+  getCompletePackages(): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(
+      `${this.url}/api/packages?type=completo`
+    );
+  }
+
   createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
     return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }

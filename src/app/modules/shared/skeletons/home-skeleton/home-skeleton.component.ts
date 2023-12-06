@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SkeletonsService } from '../skeletons.service';
+import { SkeletonsService } from '../../../../services/skeletons/skeletons.service';
 
 @Component({
   selector: 'app-home-skeleton',
