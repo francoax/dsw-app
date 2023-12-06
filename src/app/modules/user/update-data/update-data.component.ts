@@ -44,9 +44,7 @@ export class UpdateDataComponent implements OnInit {
       this.loggedUser = null;
       this.updateDataForm.disable();
     } else {
-      this.loggedUser = window.localStorage.getItem('loggedUser');
-      this.loggedUser = JSON.parse(this.loggedUser);
-      this.userService.getUser(this.loggedUser.token).subscribe({
+      this.userService.getUser().subscribe({
         next: (res) => {
           const { data } = res;
           this.updateDataForm.setValue({
@@ -55,39 +53,60 @@ export class UpdateDataComponent implements OnInit {
             address: data.address,
             tel: data.tel,
             email: data.email,
-            password: data.password,
+            password: '',
           });
         },
-        error: (err) => {
+        error: () => {
           this.toastService.setup({
-            message: err.error.message,
+            message: 'Error al obtener los datos del usuario',
             status: false,
           });
           this.toastService.show();
         },
       });
+      this.updateDataForm.disable();
     }
+  }
+
+  enableForm() {
+    this.updateDataForm.disabled
+      ? this.updateDataForm.enable()
+      : this.updateDataForm.disable();
   }
 
   onSubmit() {
     if (this.updateDataForm.valid) {
-      const user: User = {
-        name: this.updateDataForm.value.name,
-        lastname: this.updateDataForm.value.lastname,
-        address: this.updateDataForm.value.address,
-        tel: parseInt(this.updateDataForm.value.tel),
-        email: this.updateDataForm.value.email,
-        password: this.updateDataForm.value.password,
-      };
-
-      this.userService.updateUser(user, this.loggedUser.token).subscribe();
+      if (this.password.dirty) {
+        const user: User = {
+          name: this.updateDataForm.value.name,
+          lastname: this.updateDataForm.value.lastname,
+          address: this.updateDataForm.value.address,
+          tel: parseInt(this.updateDataForm.value.tel),
+          email: this.updateDataForm.value.email,
+          password: this.updateDataForm.value.password,
+        };
+        this.userService.updateUser(user).subscribe();
+      } else {
+        const user: User = {
+          name: this.updateDataForm.value.name,
+          lastname: this.updateDataForm.value.lastname,
+          address: this.updateDataForm.value.address,
+          tel: parseInt(this.updateDataForm.value.tel),
+          email: this.updateDataForm.value.email,
+        };
+        this.userService.updateUser(user).subscribe();
+      }
     } else {
-      alert('Verifique que los datos ingresados sean válidos');
+      this.toastService.setup({
+        message: 'Verifique que los datos ingresados sean válidos',
+        status: false,
+      });
+      this.toastService.show();
     }
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.loggedUser.token).subscribe({
+    this.userService.deleteUser().subscribe({
       next: () => {
         window.localStorage.removeItem('loggedUser');
         this.router.navigate(['/confirmation'], {

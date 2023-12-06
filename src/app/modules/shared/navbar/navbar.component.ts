@@ -57,6 +57,11 @@ export class NavbarComponent implements OnInit {
   const inputElement ="";
   this.appService.setInputValue(inputElement);
   this.showBackBtn = false;
+  this.limpiarInput()
+  
 }
+limpiarInput() {
+  (document.getElementById('input') as HTMLInputElement).value = "";
+ }
 
 }
