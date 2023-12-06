@@ -19,7 +19,7 @@ export class ReserveService {
     return this.http.post<ApiResponse>(this.API, reserve);
   }
 
-  getReserves(): Observable<ApiResponse> {
+  getReservesByUser(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.API + 'user');
   }
 

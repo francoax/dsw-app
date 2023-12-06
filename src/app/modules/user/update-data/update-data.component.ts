@@ -20,7 +20,7 @@ export class UpdateDataComponent implements OnInit {
   tel = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.minLength(8)]);
-  loggedUser!: any;
+  loggedUser = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -39,11 +39,9 @@ export class UpdateDataComponent implements OnInit {
       email: this.email,
       password: this.password,
     });
+    this.updateDataForm.disable();
 
-    if (!window.localStorage.getItem('loggedUser')) {
-      this.loggedUser = null;
-      this.updateDataForm.disable();
-    } else {
+    if (window.localStorage.getItem('loggedUser')) {
       this.userService.getUser().subscribe({
         next: (res) => {
           const { data } = res;
@@ -55,6 +53,7 @@ export class UpdateDataComponent implements OnInit {
             email: data.email,
             password: '',
           });
+          this.loggedUser = true;
         },
         error: () => {
           this.toastService.setup({
@@ -64,7 +63,6 @@ export class UpdateDataComponent implements OnInit {
           this.toastService.show();
         },
       });
-      this.updateDataForm.disable();
     }
   }
 
