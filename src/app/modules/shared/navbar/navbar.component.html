@@ -56,7 +56,7 @@
     </div>
   </div>
   <div class="navbar-end">
-    <button *ngIf="!cancelSearchMobile" (click)="showSearchInputMobile()" class="btn join-item bg-slate-50 rounded-2xl lg:hidden">
+    <button *ngIf="!cancelSearchMobile && showSearch" (click)="showSearchInputMobile()" class="btn join-item mr-2 bg-slate-50 rounded-2xl lg:hidden">
       <svg
         width="20"
         height="20"
