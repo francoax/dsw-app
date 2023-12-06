@@ -16,19 +16,24 @@ export class ToastInterceptor implements HttpInterceptor {
   constructor(private readonly toastSvs : ToastService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(tap((event) => {
-      if(event.type === HttpEventType.Response) {
-        const response = event.body as ApiResponse
-        if(response.error) {
-          this.toastSvs.setup({ message : response.message, status: false})
+    if(request.method !== 'GET'){
+      return next.handle(request).pipe(tap((event) => {
+        if(event.type === HttpEventType.Response) {
+          const response = event.body as ApiResponse
+          if(response.error) {
+            this.toastSvs.setup({ message : response.message, status: false})
+          }
+  
+          if(!response.error) {
+            this.toastSvs.setup({ message : response.message, status: true})
+          }
+  
+          this.toastSvs.show()
         }
-
-        if(!response.error) {
-          this.toastSvs.setup({ message : response.message, status: true})
-        }
-
-        this.toastSvs.show()
-      }
-    }));
+      }));
+    }else{
+      return next.handle(request);
+    }
+    
   }
 }

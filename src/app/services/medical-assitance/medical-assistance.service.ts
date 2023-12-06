@@ -25,25 +25,25 @@ export class MedicalAssistanceService {
 
   add(medicalAsist: MedicalAssistanceRequest): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(
-      this.url + '/api/medicalAssistance',
+      this.url + '/api/medicalAssistances',
       medicalAsist,
       httpOption
     );
   }
 
   getAll() {
-    return this.http.get<ApiResponse>(this.url + '/api/medicalAssistance');
+    return this.http.get<ApiResponse>(this.url + '/api/medicalAssistances');
   }
 
   getOne(id: string) {
     return this.http.get<ApiResponse>(
-      this.url + '/api/medicalAssistance/' + id
+      this.url + '/api/medicalAssistances/' + id
     );
   }
 
   edit(medAsist: MedicalAssistance) {
     return this.http.put<ApiResponse>(
-      this.url + '/api/medicalAssistance/' + medAsist._id,
+      this.url + '/api/medicalAssistances/' + medAsist._id,
       medAsist,
       httpOption
     );
@@ -51,7 +51,7 @@ export class MedicalAssistanceService {
 
   delete(medAsist: MedicalAssistance) {
     return this.http.delete<ApiResponse>(
-      this.url + '/api/medicalAssistance/' + medAsist._id
+      this.url + '/api/medicalAssistances/' + medAsist._id
     );
   }
 }

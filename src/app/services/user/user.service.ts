@@ -13,12 +13,15 @@ export class UserService {
   private API = this.appService.apiUrl + '/api/users/';
   constructor(
     private http: HttpClient,
-    private readonly appService : AppConfigService) {}
+    private readonly appService: AppConfigService
+  ) {}
 
-  getUser(token: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.API + 'me', {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  getUser(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API + 'me');
+  }
+
+  getAll(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API);
   }
 
   getUserByCredentials(
@@ -33,15 +36,15 @@ export class UserService {
     return this.http.post<ApiResponse>(this.API, user);
   }
 
-  updateUser(user: User, token: string): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(this.API, user, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  updateUserById(id: string, user: any): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.API + id, user);
   }
 
-  deleteUser(token: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.API, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  updateUser(user: User): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.API, user);
+  }
+
+  deleteUser(): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(this.API);
   }
 }

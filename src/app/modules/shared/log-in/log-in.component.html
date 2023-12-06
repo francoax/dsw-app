@@ -17,7 +17,9 @@
           [inputControl]="password"
         ></app-input>
         <div class="forgot">
-          <a rel="noopener noreferrer" href="#">Olvidé mi contraseña</a>
+          <a rel="noopener noreferrer" [routerLink]="'/password-reset'"
+            >Olvidé mi contraseña</a
+          >
         </div>
       </div>
       <div class="alert alert-error" *ngIf="responseError !== ''">
@@ -46,9 +48,8 @@
     <div class="mt-4">
       <p class="signup">
         No tienes una cuenta?
-        <a rel="noopener noreferrer" href="/user/signup" class="">Regístrate</a>
+        <a rel="noopener noreferrer" [routerLink]="'/signup'" class="">Regístrate</a>
       </p>
     </div>
   </div>
 </div>
-<snackbar></snackbar>

@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { Property } from 'src/app/models/property';
-import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../shared/modal/modal.component';
@@ -19,7 +18,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss'],
 })
-export class PropertyListComponent implements OnInit, OnChanges {
+export class PropertyListComponent implements OnChanges {
   constructor(
     private service: PropertyServiceService,
     private router: Router
@@ -37,16 +36,6 @@ export class PropertyListComponent implements OnInit, OnChanges {
       // Angular se encargará automáticamente de actualizar el ngFor
       console.log('Lista actualizada en tiempo real:', this.properties);
     }
-  }
-
-  ngOnInit(): void {
-    /*
-    this.service.getProperties().subscribe((response) => {this.properties = response.data
-    });
-    
-    this.service.propertyList.subscribe(properties => {
-      this.properties = properties
-    }) */
   }
 
   onUpdate(prop: Property): void {
