@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, pairwise, startWith } from 'rxjs';
@@ -17,20 +24,22 @@ import { validateDates } from './form-validators';
 import { AppConfigService } from 'src/app/services/app/app.service';
 
 type reserveSummary = {
-  car: Car | null,
-  medicalAssitance: MedicalAssistance | null,
-  property: Property | null,
-  checkIn: string,
-  checkOut: string,
-  totalPrice: number
-}
+  car: Car | null;
+  medicalAssitance: MedicalAssistance | null;
+  property: Property | null;
+  checkIn: string;
+  checkOut: string;
+  totalPrice: number;
+};
 
 @Component({
   selector: 'app-custom-reserve',
   templateUrl: './custom-reserve.component.html',
   styleUrls: ['./custom-reserve.component.scss'],
 })
-export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CustomReserveComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   property!: Property;
   cars!: Car[];
   medicalAssitance!: MedicalAssistance[];
@@ -60,11 +69,11 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
     private readonly activatedRoute: ActivatedRoute,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
-    private readonly appService : AppConfigService
+    private readonly appService: AppConfigService
   ) {}
 
   ngAfterViewInit(): void {
-    this.appService.setDisplaySearchBar(false)
+    this.appService.setDisplaySearchBar(false);
   }
 
   ngOnInit(): void {
@@ -85,7 +94,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
       });
 
     this.scrollIntoView.nativeElement.scrollIntoView();
-    this.appService.setDisplaySearchBar(false)
+    this.appService.setDisplaySearchBar(false);
   }
 
   ngOnDestroy() {
@@ -95,13 +104,16 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   initForm(): FormGroup {
-    return this.fb.group({
-      property: [this.property._id, [Validators.required]],
-      car: [''],
-      medicalAssistance: [''],
-      checkIn: ['', [Validators.required]],
-      checkOut: ['', [Validators.required]],
-    }, { validator: validateDates() });
+    return this.fb.group(
+      {
+        property: [this.property._id, [Validators.required]],
+        car: [''],
+        medicalAssistance: [''],
+        checkIn: ['', [Validators.required]],
+        checkOut: ['', [Validators.required]],
+      },
+      { validator: validateDates() }
+    );
   }
 
   updateSummary(prevValue: any, nextValue: any) {
@@ -139,8 +151,8 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   calculateTotal() {
-    if(this.form.hasError('invalidDate')) {
-      return
+    if (this.form.hasError('invalidDate')) {
+      return;
     }
     const checkIn = new Date(this.form.get('checkIn')?.value);
     const checkOut = new Date(this.form.get('checkOut')?.value);
@@ -173,10 +185,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
       nameImage: '',
     };
 
-    let token = JSON.parse(localStorage.getItem('loggedUser') || '');
-    token = token.token;
-
-    this.packageService.createPackage(newPackage, token).subscribe((res) => {
+    this.packageService.createPackage(newPackage).subscribe((res) => {
       if (res.error) {
         this.toastService.setup({ message: res.message, status: false });
         this.toastService.show();
@@ -186,7 +195,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
           date_start: this.form.value.checkIn,
           packageReserved: res.data.id,
         };
-        this.reserveService.createReserve(newReserve, token).subscribe(() => {
+        this.reserveService.createReserve(newReserve).subscribe(() => {
           this.router.navigate(['./completed'], {
             relativeTo: this.activatedRoute,
           });

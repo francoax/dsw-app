@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, OnInit } from '@angular/core';
 import Package from '../models/package';
-import { Property } from '../models/property';
+import { PropertyV2 } from '../models/property';
 import { Car } from '../models/car';
 import { MedicalAssistance } from '../models/medical-assistance';
 import { ActivatedRoute } from '@angular/router';
@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   inputValue!: string;
   packageList: Package[] = [];
   showAlert= false;
-  propertyList: Property[] = [];
-  requiredProps: Property[] = [];
+  propertyList: PropertyV2[] = [];
+  requiredProps: PropertyV2[] = [];
   carList: Car[] = [];
   asistMedList: MedicalAssistance[] = [];
 
