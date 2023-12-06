@@ -46,8 +46,7 @@ export class ReservesListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.reserveService.getReserves(token).subscribe((response) => {
+    this.reserveService.getReserves().subscribe((response) => {
       response.data.forEach((reserve: Reserve) => {
         this.reserves.push(this.getReserveDetails(reserve));
       });
@@ -145,8 +144,7 @@ export class ReservesListComponent implements OnInit {
   }
 
   cancelReserve() {
-    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.reserveService.deleteReserve(this.selectedReserveId, token);
+    this.reserveService.deleteReserve(this.selectedReserveId);
     this.selectedReserveId = '';
   }
 }
