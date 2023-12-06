@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { PricePerNight, Property } from 'src/app/models/property';
+import { PricePerNight } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
@@ -81,7 +81,6 @@ export class ReservesListComponent implements OnInit {
     this.packageService
       .getPackage(reserve.packageReserved)
       .subscribe((response) => {
-        console.log(response.data);
         const property: PropertyResponse = response.data.property;
         const car: Car = response.data.car;
         const medAssist: MedicalAssistance = response.data.medicalAssistance;
