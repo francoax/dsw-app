@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
 
   buttonClicked() {
     this.router.navigate(['/login']);
+    this.appService.setDisplaySearchBar(false)
   }
 
   goHomePage() {
