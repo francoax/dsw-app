@@ -128,7 +128,7 @@
             }}</span>
           </td>
           <td>{{ reserve.dateStart | date }} - {{ reserve.dateEnd | date }}</td>
-          <td>{{ reserve.price | currency }}</td>
+          <td>{{ reserve.price | currency : "USD" : "code" }}</td>
           <th>
             <button
               class="btn btn-ghost btn-xs"

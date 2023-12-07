@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable prefer-const */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -90,10 +91,8 @@ export class ReservesListComponent implements OnInit {
         const medAssist: MedicalAssistance = response.data.medicalAssistance;
 
         reserveDetails.propertyAddress = property.address;
-        reserveDetails.price += property.pricePerNight.price;
 
         reserveDetails.car = `${car.brand} ${car.model}`;
-        reserveDetails.price += car.price.value;
 
         const locations = this.route.snapshot.data['locations'];
         locations.forEach((location: { id: string; name: string }) => {
@@ -103,14 +102,34 @@ export class ReservesListComponent implements OnInit {
         });
 
         reserveDetails.medicalAssistance = `${medAssist.description} Tipo ${medAssist.coverageType}`;
-
         reserveDetails.dateStart = reserve.date_start;
         reserveDetails.dateEnd = reserve.date_end;
+
+        const getDays = () => {
+          const date1 = new Date(reserve.date_start);
+          const date2 = new Date(reserve.date_end);
+          const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+          const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          return diffDays;
+        };
+        reserveDetails.price = this.calculateTotalPrice(
+          getDays(),
+          property.pricePerNight.price,
+          car.price.value
+        );
 
         return reserveDetails; //aca devuelve
       });
 
     return reserveDetails;
+  }
+
+  calculateTotalPrice(
+    days: number,
+    propertyPrice: number,
+    carPrice: number
+  ): number {
+    return days * propertyPrice + carPrice;
   }
 
   filterReserves() {
