@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { Property } from 'src/app/models/property';
+import { PricePerNight } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
@@ -20,6 +20,16 @@ interface ReserveDetails {
   dateStart: string;
   dateEnd: string;
   price: number;
+}
+
+interface PropertyResponse {
+  id: string;
+  capacity: number;
+  address: string;
+  pricePerNight: PricePerNight;
+  propertyType: string;
+  location: string;
+  urlImage: string;
 }
 
 @Component({
@@ -46,8 +56,7 @@ export class ReservesListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.reserveService.getReserves(token).subscribe((response) => {
+    this.reserveService.getReservesByUser().subscribe((response) => {
       response.data.forEach((reserve: Reserve) => {
         this.reserves.push(this.getReserveDetails(reserve));
       });
@@ -72,39 +81,24 @@ export class ReservesListComponent implements OnInit {
     this.packageService
       .getPackage(reserve.packageReserved)
       .subscribe((response) => {
-        const propertyId = response.data.property;
-        const carId = response.data.car;
-        const medicalAssistanceId = response.data.medicalAssistance;
+        const property: PropertyResponse = response.data.property;
+        const car: Car = response.data.car;
+        const medAssist: MedicalAssistance = response.data.medicalAssistance;
 
-        const properties: Property[] = this.route.snapshot.data['propertyList'];
-        properties.forEach((property) => {
-          if (property._id === propertyId) {
-            reserveDetails.propertyAddress = property.address;
-            reserveDetails.price += property.pricePerNight.price;
+        reserveDetails.propertyAddress = property.address;
+        reserveDetails.price += property.pricePerNight.price;
+
+        reserveDetails.car = `${car.brand} ${car.model}`;
+        reserveDetails.price += car.price.value;
+
+        const locations = this.route.snapshot.data['locations'];
+        locations.forEach((location: { id: string; name: string }) => {
+          if (location.id === property.location) {
+            reserveDetails.location = location.name;
           }
         });
 
-        const cars: Car[] = this.route.snapshot.data['cars'];
-        cars.forEach((car) => {
-          if (car.id === carId) {
-            reserveDetails.car = `${car.brand} ${car.model}`;
-            reserveDetails.price += car.price.value;
-            const locations = this.route.snapshot.data['locations'];
-            locations.forEach((location: { id: string; name: string }) => {
-              if (location.id === car.locality) {
-                reserveDetails.location = location.name;
-              }
-            });
-          }
-        });
-
-        const medicalAssists: MedicalAssistance[] =
-          this.route.snapshot.data['medAssists'];
-        medicalAssists.forEach((medAssist) => {
-          if (medAssist._id === medicalAssistanceId) {
-            reserveDetails.medicalAssistance = `${medAssist.description} Tipo ${medAssist.coverageType}`;
-          }
-        });
+        reserveDetails.medicalAssistance = `${medAssist.description} Tipo ${medAssist.coverageType}`;
 
         reserveDetails.dateStart = reserve.date_start;
         reserveDetails.dateEnd = reserve.date_end;
@@ -145,8 +139,7 @@ export class ReservesListComponent implements OnInit {
   }
 
   cancelReserve() {
-    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
-    this.reserveService.deleteReserve(this.selectedReserveId, token);
+    this.reserveService.deleteReserve(this.selectedReserveId).subscribe();
     this.selectedReserveId = '';
   }
 }

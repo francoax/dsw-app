@@ -15,21 +15,15 @@ export class ReserveService {
     private readonly appService: AppConfigService
   ) {}
 
-  createReserve(reserve: Reserve, token: string): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.API, reserve, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  createReserve(reserve: Reserve): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.API, reserve);
   }
 
-  getReserves(token: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.API + 'user', {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  getReservesByUser(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API + 'user');
   }
 
-  deleteReserve(id: string, token: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.API + id, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  deleteReserve(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(this.API + id);
   }
 }

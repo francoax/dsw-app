@@ -20,7 +20,7 @@ export class UpdateDataComponent implements OnInit {
   tel = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.email]);
   password = new FormControl('', [Validators.minLength(8)]);
-  loggedUser!: any;
+  loggedUser = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -39,14 +39,10 @@ export class UpdateDataComponent implements OnInit {
       email: this.email,
       password: this.password,
     });
+    this.updateDataForm.disable();
 
-    if (!window.localStorage.getItem('loggedUser')) {
-      this.loggedUser = null;
-      this.updateDataForm.disable();
-    } else {
-      this.loggedUser = window.localStorage.getItem('loggedUser');
-      this.loggedUser = JSON.parse(this.loggedUser);
-      this.userService.getUser(this.loggedUser.token).subscribe({
+    if (window.localStorage.getItem('loggedUser')) {
+      this.userService.getUser().subscribe({
         next: (res) => {
           const { data } = res;
           this.updateDataForm.setValue({
@@ -57,6 +53,7 @@ export class UpdateDataComponent implements OnInit {
             email: data.email,
             password: '',
           });
+          this.loggedUser = true;
         },
         error: () => {
           this.toastService.setup({
@@ -66,7 +63,6 @@ export class UpdateDataComponent implements OnInit {
           this.toastService.show();
         },
       });
-      this.updateDataForm.disable();
     }
   }
 
@@ -87,7 +83,7 @@ export class UpdateDataComponent implements OnInit {
           email: this.updateDataForm.value.email,
           password: this.updateDataForm.value.password,
         };
-        this.userService.updateUser(user, this.loggedUser.token).subscribe();
+        this.userService.updateUser(user).subscribe();
       } else {
         const user: User = {
           name: this.updateDataForm.value.name,
@@ -96,7 +92,7 @@ export class UpdateDataComponent implements OnInit {
           tel: parseInt(this.updateDataForm.value.tel),
           email: this.updateDataForm.value.email,
         };
-        this.userService.updateUser(user, this.loggedUser.token).subscribe();
+        this.userService.updateUser(user).subscribe();
       }
     } else {
       this.toastService.setup({
@@ -108,7 +104,7 @@ export class UpdateDataComponent implements OnInit {
   }
 
   deleteUser() {
-    this.userService.deleteUser(this.loggedUser.token).subscribe({
+    this.userService.deleteUser().subscribe({
       next: () => {
         window.localStorage.removeItem('loggedUser');
         this.router.navigate(['/confirmation'], {

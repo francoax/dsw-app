@@ -10,7 +10,7 @@ import {
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import Package from 'src/app/models/package';
-import { Property } from 'src/app/models/property';
+import { PropertyV2 } from 'src/app/models/property';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { Router } from '@angular/router';
 
@@ -25,7 +25,7 @@ import { Router } from '@angular/router';
 export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() packageList: Package[] | undefined;
   packageCompletos: Package[] = [];
-  @Input() propertyList: Property[] | undefined;
+  @Input() propertyList: PropertyV2[] | undefined;
   @Input() carList: Car[] | undefined;
   @Input() asistMedList: MedicalAssistance[] | undefined;
 

@@ -78,9 +78,8 @@ export class ReservePackageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(({ pack }) => {
-      this.package = pack.data;
-    });
+    const { data } = this.route.snapshot.data['pack'];
+    this.package = data;
 
     this.locationService.getLocation(this.package.property.location).subscribe({
       next: (res) => {
@@ -131,13 +130,12 @@ export class ReservePackageComponent implements OnInit {
   }
 
   confirmReserve() {
-    const { token } = JSON.parse(localStorage.getItem('loggedUser') || '');
     const reserve: Reserve = {
       date_start: this.reserveForm.value.checkIn,
       date_end: this.reserveForm.value.checkOut,
       packageReserved: this.package.id,
     };
-    this.reserveService.createReserve(reserve, token).subscribe({
+    this.reserveService.createReserve(reserve).subscribe({
       next: () => {
         this.router.navigate(['/confirmation'], {
           queryParams: { status: 'success' },
