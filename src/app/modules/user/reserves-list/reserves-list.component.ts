@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import { PricePerNight } from 'src/app/models/property';
@@ -9,6 +9,7 @@ import Reserve from 'src/app/models/reserve';
 import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
+import { ToastService } from '../../shared/toast/toast.service';
 
 interface ReserveDetails {
   id: string;
@@ -52,7 +53,9 @@ export class ReservesListComponent implements OnInit {
   constructor(
     private reserveService: ReserveService,
     private packageService: PackageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -61,6 +64,7 @@ export class ReservesListComponent implements OnInit {
         this.reserves.push(this.getReserveDetails(reserve));
       });
     });
+
     this.reservesFull = this.reserves;
   }
 
@@ -76,7 +80,7 @@ export class ReservesListComponent implements OnInit {
       dateEnd: '',
       price: 0,
     };
-    reserveDetails.id = reserve.id as string;
+    reserveDetails.id = reserve._id as string;
 
     this.packageService
       .getPackage(reserve.packageReserved)
@@ -133,13 +137,26 @@ export class ReservesListComponent implements OnInit {
     this.reserves = this.reservesFull;
   }
 
-  openModal(reserveId: string) {
-    this.selectedReserveId = reserveId;
+  openModal(event: Event) {
+    this.selectedReserveId = (event.target as HTMLButtonElement).id;
     this.modalComponent.open();
   }
 
   cancelReserve() {
-    this.reserveService.deleteReserve(this.selectedReserveId).subscribe();
+    this.reserveService.deleteReserve(this.selectedReserveId).subscribe({
+      next: () => {
+        this.router.navigate(['/confirmation'], {
+          queryParams: { action: 'cancel' },
+        });
+      },
+      error: () => {
+        this.toastService.setup({
+          message: 'Error al cancelar reserva',
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
     this.selectedReserveId = '';
   }
 }
