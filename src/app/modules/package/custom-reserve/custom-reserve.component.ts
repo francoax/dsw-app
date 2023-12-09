@@ -41,6 +41,7 @@ export class CustomReserveComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   property!: Property;
+  propertyImgSrc! : string;
   cars!: Car[];
   medicalAssitance!: MedicalAssistance[];
   form!: FormGroup;
@@ -70,7 +71,9 @@ export class CustomReserveComponent
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
     private readonly appService: AppConfigService
-  ) {}
+  ) {
+    window.scrollTo(0, 0)
+  }
 
   ngAfterViewInit(): void {
     this.appService.setDisplaySearchBar(false);
@@ -82,6 +85,8 @@ export class CustomReserveComponent
       this.cars = data.at(1).data;
       this.medicalAssitance = data.at(2).data;
     });
+
+    this.propertyImgSrc = `${this.appService.apiUrl}/api/images/${this.property.image}`;
 
     this.form = this.initForm();
 
@@ -195,10 +200,16 @@ export class CustomReserveComponent
           date_start: this.form.value.checkIn,
           packageReserved: res.data.id,
         };
-        this.reserveService.createReserve(newReserve).subscribe(() => {
-          this.router.navigate(['./completed'], {
-            relativeTo: this.activatedRoute,
-          });
+        this.reserveService.createReserve(newReserve).subscribe({
+          next: () => {
+            this.router.navigate(['/confirmation'], {
+              queryParams: { action: 'success' },
+            });
+          },
+          error: () => {
+            this.toastService.setup({ message: 'Error al intentar reservar...', status: false})
+            this.toastService.show()
+          }
         });
       }
     });
