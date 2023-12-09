@@ -51,6 +51,7 @@ export class CustomReserveComponent
   @ViewChild('carSelect') private carSelect!: ElementRef;
   @ViewChild('maSelect') private maSelect!: ElementRef;
   @ViewChild('focus') private scrollIntoView!: ElementRef;
+  @ViewChild('carousel') private carouselReserve!: ElementRef;
 
   reserveSummary: reserveSummary = {
     car: null,
@@ -233,5 +234,16 @@ export class CustomReserveComponent
 
   back() {
     this.router.navigate(['/']);
+  }
+
+  scrollOnCarousel(image : number): void {
+    const carouselWidth = this.carouselReserve.nativeElement.clientWidth;
+
+    // Images are numbered from 1 to 4 so thats why we substract 1
+    const targetImage = image - 1;
+
+    const targetXPixel = carouselWidth * targetImage + 1;
+
+    this.carouselReserve.nativeElement.scrollTo(targetXPixel, 0);
   }
 }

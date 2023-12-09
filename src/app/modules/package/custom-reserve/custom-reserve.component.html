@@ -1,11 +1,11 @@
 <!-- eslint-disable max-len -->
 <div class="container-reserve">
-  <div class="btn-back" #focus>
-    <svg (click)="back()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-5">
+  <button type="button" (click)="back()" class="btn btn-ghost self-baseline cursor-pointer " #focus>
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-5">
       <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
     </svg>
-    <span>Volver</span>
-  </div>
+    Volver
+  </button>
   <form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit(form)">
     <section class="reserve-entry">
       <h2 class="title">
@@ -64,7 +64,7 @@
     </section>
     <section class="reserve-info">
       <div class="divider">Informacion de reserva</div>
-      <div class="carousel h-96 carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden">
+      <div class="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden">
         <div class="carousel-item w-full h-full">
           <img [src]="propertyImgSrc" alt="property reserved" class="image-full" />
         </div>
@@ -72,19 +72,19 @@
           <img src="../../../../assets/img/hilux.webp" alt="" />
         </div>
       </div>
-      <div class="carousel carousel-center max-w-md sm:hidden lg:inline-flex">
-        <div id="slide1" class="carousel-item relative w-full">
+      <div #carousel class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex">
+        <div id="1" class="carousel-item relative w-full">
           <img [src]="propertyImgSrc" class="w-full" alt="" />
-          <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-            <a href="#slide2" class="btn btn-circle">❮</a>
-            <a href="#slide2" class="btn btn-circle">❯</a>
+          <div *ngIf="form.get('car')?.value" class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-circle">❮</button>
+            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-circle">❯</button>
           </div>
         </div>
-        <div *ngIf="" id="slide2" class="carousel-item relative w-full">
-          <img [src]="propertyImgSrc" class="w-full" alt="" />
+        <div *ngIf="form.get('car')?.value" id="2" class="carousel-item relative w-full">
+          <img src="../../../../assets/img/hilux.webp" class="w-full" alt="" />
           <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-            <a href="#slide1" class="btn btn-circle">❮</a>
-            <a href="#slide1" class="btn btn-circle">❯</a>
+            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-circle">❮</button>
+            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-circle">❯</button>
           </div>
         </div>
       </div>
