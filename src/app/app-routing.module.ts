@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { PropertyResolverService } from './resolvers/property.resolver.service';
-import { PackageResolverService } from './resolvers/package.resolver.service';
-import { CarResolverService } from './resolvers/car.resolver.service';
-import { MedicalAssistanceResolverService } from './resolvers/MedicalAssist.resolver.service';
 import { authGuard } from './guards/auth.guard';
 import { UnauthorizedComponent } from './modules/shared/feedbacks/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './modules/shared/feedbacks/not-found/not-found.component';

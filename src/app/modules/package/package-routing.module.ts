@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReservePackageComponent } from './reserve-package/reserve-package.component';
 import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
 import { customReserveResolver } from 'src/app/resolvers/custom-reserve.resolver';
-import { packageResolver } from 'src/app/services/package/package.service';
+import { packageResolver } from 'src/app/resolvers/package.resolver';
 
 const routes: Routes = [
   {

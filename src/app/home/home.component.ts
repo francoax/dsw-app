@@ -17,7 +17,7 @@ import { SkeletonsService } from '../services/skeletons/skeletons.service';
 export class HomeComponent implements OnInit {
   inputValue!: string;
   packageList: Package[] = [];
-  showAlert= false;
+  showAlert = false;
   propertyList: PropertyV2[] = [];
   requiredProps: PropertyV2[] = [];
   carList: Car[] = [];
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
       this.requiredProps = this.propertyList
     });
     this.appService.setDisplaySearchBar(true);
-    this.appService.provideInputValue$.subscribe( value =>{
+    this.appService.provideInputValue$.subscribe((value) => {
       this.inputValue = value;
       this.filterByProperty(this.inputValue);
     })

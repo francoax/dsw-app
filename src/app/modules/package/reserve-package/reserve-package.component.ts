@@ -78,9 +78,8 @@ export class ReservePackageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(({ pack }) => {
-      this.package = pack.data;
-    });
+    const { data } = this.route.snapshot.data['pack'];
+    this.package = data;
 
     this.locationService.getLocation(this.package.property.location).subscribe({
       next: (res) => {
