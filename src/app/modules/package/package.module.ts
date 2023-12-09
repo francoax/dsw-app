@@ -5,13 +5,15 @@ import { PackageRoutingModule } from './package-routing.module';
 import { ReservePackageComponent } from './reserve-package/reserve-package.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ReservesListComponent } from './reserves-list/reserves-list.component';
 import { CustomReserveComponent } from './custom-reserve/custom-reserve.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 
 @NgModule({
-  declarations: [ReservePackageComponent, ReservesListComponent, CustomReserveComponent],
+  declarations: [
+    ReservePackageComponent,
+    CustomReserveComponent,
+  ],
   imports: [
     CommonModule,
     PackageRoutingModule,

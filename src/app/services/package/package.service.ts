@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app/app.service';
 import { HttpClient } from '@angular/common/http';
@@ -24,13 +25,7 @@ export class PackageService {
     return this._http.get<ApiResponse>(this.url + '/api/packages/' + packageId);
   }
 
-  createPackage(newPackage : PackageAgent, token : string) : Observable<ApiResponse> {
-    return this._http.post<ApiResponse>(
-      `${this.url}/api/packages`,
-      newPackage,
-      {
-        headers: { Authorization: 'Bearer ' + token },
-      }
-    );
+  createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
+    return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
 }

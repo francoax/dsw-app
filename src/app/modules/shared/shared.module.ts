@@ -12,6 +12,12 @@ import { ToastComponent } from './toast/toast.component';
 import { CardComponent } from './card/card.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CardsListComponent } from './card/cards-list/cards-list.component';
+import { UnauthorizedComponent } from './feedbacks/unauthorized/unauthorized.component';
+import { NotFoundComponent } from './feedbacks/not-found/not-found.component';
+import { LogInComponent } from './log-in/log-in.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +30,17 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     ToastComponent,
     CardComponent,
     CarouselComponent,
-    CardsListComponent
+    CardsListComponent,
+    UnauthorizedComponent,
+    NotFoundComponent,
+    LogInComponent,
+    SignUpComponent,
+    NotificationsComponent,
+    ForgotPasswordComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-  ],
-  exports: [ //Acá van todos los componentes para compartirlos a los demás modulos
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  exports: [
+    //Acá van todos los componentes para compartirlos a los demás modulos
     NavbarComponent,
     InputComponent,
     FooterComponent,
@@ -41,9 +50,7 @@ import { CardsListComponent } from './card/cards-list/cards-list.component';
     ToastComponent,
     CardComponent,
     CarouselComponent,
-    CardsListComponent
+    CardsListComponent,
   ],
 })
 export class SharedModule {}
-
-

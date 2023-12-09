@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
 import { Property } from 'src/app/models/property';
-import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../shared/modal/modal.component';

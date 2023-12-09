@@ -16,10 +16,8 @@ export class UserService {
     private readonly appService: AppConfigService
   ) {}
 
-  getUser(token: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(this.API + 'me', {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  getUser(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(this.API + 'me');
   }
 
   getAll(): Observable<ApiResponse> {
@@ -42,15 +40,11 @@ export class UserService {
     return this.http.put<ApiResponse>(this.API + id, user);
   }
 
-  updateUser(user: User, token: string): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(this.API, user, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  updateUser(user: User): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(this.API, user);
   }
 
-  deleteUser(token: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(this.API, {
-      headers: { Authorization: 'Bearer ' + token },
-    });
+  deleteUser(): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(this.API);
   }
 }

@@ -6,6 +6,6 @@ export interface User {
   tel: number;
   address: string;
   email: string;
-  password: string;
+  password?: string;
   role?: string;
 }
