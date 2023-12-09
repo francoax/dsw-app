@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
-import { Property } from 'src/app/models/property';
+import { Property, PropertyV2 } from 'src/app/models/property';
 import { PropertyType } from 'src/app/models/property-type';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../shared/modal/modal.component';
@@ -27,8 +27,8 @@ export class PropertyListComponent implements OnChanges {
   propertiesTypes: PropertyType[] = [];
   idPropDelete!: string;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
-  @Input() properties?: Property[] = [];
-  @Output() UpdateEvent = new EventEmitter<Property>();
+  @Input() properties: PropertyV2[] = [];
+  @Output() UpdateEvent = new EventEmitter<PropertyV2>();
   @Output() DeleteEvent = new EventEmitter<string>();
 
   ngOnChanges(changes: SimpleChanges) {
@@ -38,7 +38,7 @@ export class PropertyListComponent implements OnChanges {
     }
   }
 
-  onUpdate(prop: Property): void {
+  onUpdate(prop: PropertyV2): void {
     this.UpdateEvent.emit(prop);
   }
 

@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PropertyServiceService } from 'src/app/services/property/property-service.service';
-import { Property } from 'src/app/models/property';
+import { Property, PropertyV2 } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { Locality } from 'src/app/models/locality';
@@ -35,7 +35,7 @@ export class CreatePropertyComponent implements OnInit {
   buttonContent = 'Aceptar';
   idPropToEdit!: string;
   formScope = 'create';
-  properties: Property[] = [];
+  properties: PropertyV2[] = [];
   localities: Location[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
@@ -98,12 +98,14 @@ export class CreatePropertyComponent implements OnInit {
       const formData = new FormData();
       formData.append('capacity', form.value.capacity);
       formData.append('address', form.value.address);
-      formData.append('pricePerNight', JSON.stringify(form.value.pricePerNight));
+      formData.append('pricePerNight[price]', form.value.pricePerNight.price);
+      formData.append('pricePerNight[date]', form.value.pricePerNight.date);
       formData.append('propertyType', form.value.propertyType);
       formData.append('location',form.value.location);
       formData.append('image', this.selectedFile);
 
       if (this.formScope === 'create') {
+        console.log(formData);
         this.service.createProperty(formData).subscribe((res) => {
           this.toastService.setup({
             message: 'Propiedad Creada',
@@ -146,7 +148,7 @@ export class CreatePropertyComponent implements OnInit {
     });
   }
 
-  onUpdate(prop: Property) {
+  onUpdate(prop: PropertyV2) {
     this.formCollapse.nativeElement.checked = true;
     this.formTitle = `Editar Propiedad`;
     this.propertyForm.patchValue({
@@ -156,7 +158,7 @@ export class CreatePropertyComponent implements OnInit {
         price: prop.pricePerNight.price.toString(),
         date: prop.pricePerNight.date,
       },
-      propertyType: prop.propertyType,
+      propertyType: prop.propertyType._id,
       location: prop.location.name,
     });
     this.formScope = 'editar';

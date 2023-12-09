@@ -30,6 +30,7 @@ export class PropertyServiceService {
   }
 
   createProperty(formData: FormData): Observable<ApiResponse> {
+    console.log(formData);
     return this.http.post<ApiResponse>(this.baseUrl, formData);
   }
 
