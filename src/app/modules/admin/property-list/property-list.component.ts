@@ -19,7 +19,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
   templateUrl: './property-list.component.html',
   styleUrls: ['./property-list.component.scss'],
 })
-export class PropertyListComponent implements OnInit, OnChanges {
+export class PropertyListComponent implements OnChanges {
   constructor(
     private service: PropertyServiceService,
     private router: Router
@@ -28,7 +28,7 @@ export class PropertyListComponent implements OnInit, OnChanges {
   propertiesTypes: PropertyType[] = [];
   idPropDelete!: string;
   @ViewChild('confirmationModal') confirmationModal!: ModalComponent;
-  @Input() properties: Property[] = [];
+  @Input() properties?: Property[] = [];
   @Output() UpdateEvent = new EventEmitter<Property>();
   @Output() DeleteEvent = new EventEmitter<string>();
 
@@ -37,16 +37,6 @@ export class PropertyListComponent implements OnInit, OnChanges {
       // Angular se encargará automáticamente de actualizar el ngFor
       console.log('Lista actualizada en tiempo real:', this.properties);
     }
-  }
-
-  ngOnInit(): void {
-    /*
-    this.service.getProperties().subscribe((response) => {this.properties = response.data
-    });
-    
-    this.service.propertyList.subscribe(properties => {
-      this.properties = properties
-    }) */
   }
 
   onUpdate(prop: Property): void {

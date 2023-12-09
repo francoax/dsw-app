@@ -21,6 +21,7 @@ import { PropertyType } from 'src/app/models/property-type';
 import { Locality } from 'src/app/models/locality';
 import { ToastService } from '../../shared/toast/toast.service';
 import { LocalityServiceService } from 'src/app/services/locality-service.service';
+import { Location } from 'src/app/models/location';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -35,7 +36,7 @@ export class CreatePropertyComponent implements OnInit {
   idPropToEdit!: string;
   formScope = 'create';
   properties: Property[] = [];
-  localities: Locality[] = [];
+  localities: Location[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
   @Output() eventoListado = new EventEmitter<Property[]>();
@@ -59,7 +60,7 @@ export class CreatePropertyComponent implements OnInit {
 
   }
 
-  capacity = new FormControl<number>(0, [
+  capacity = new FormControl<number>(1, [
     Validators.required,
     Validators.maxLength(30),
   ]);
@@ -73,7 +74,7 @@ export class CreatePropertyComponent implements OnInit {
     Validators.maxLength(30),
     Validators.required,
   ]);
-  locality= new FormControl('', [Validators.required]);
+  location= new FormControl('', [Validators.required]);
   image = new FormControl('');
   selectedFile: any;
 
@@ -85,11 +86,7 @@ export class CreatePropertyComponent implements OnInit {
       date: this.date,
     }),
     propertyType: this.propertyType,
-<<<<<<< HEAD
     location: this.location,
-=======
-    location: this.locality,
->>>>>>> 0da55ee1427b4ffb4b92fb197880301164d30c0b
     image: this.image,
   });
 
@@ -97,7 +94,7 @@ export class CreatePropertyComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
       // Aquí puedes trabajar con el archivo seleccionado, por ejemplo, cargarlo o mostrar información sobre él.
-      console.log('Archivo seleccionado:', this.selectedFile);
+      //console.log('Archivo seleccionado:', this.selectedFile);
     }
   }
 
@@ -106,10 +103,9 @@ export class CreatePropertyComponent implements OnInit {
       const formData = new FormData();
       formData.append('capacity', form.value.capacity);
       formData.append('address', form.value.address);
-      formData.append('price', form.value.pricePerNight.price);
-      formData.append('date', form.value.pricePerNight.date);
+      formData.append('pricePerNight', JSON.stringify(form.value.pricePerNight));
       formData.append('propertyType', form.value.propertyType);
-      formData.append('locality',form.value.locality)
+      formData.append('location',form.value.location);
       formData.append('image', this.selectedFile);
 
       if (this.formScope === 'create') {

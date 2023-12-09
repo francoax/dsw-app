@@ -1,26 +1,26 @@
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
 
-<div class="collapse bg-base-200">
+<div class="collapse bg-base-200 collapse-dsw">
   <input type="checkbox" #formCollapse />
   <div class="collapse-title text-xl font-medium">
       {{formTitle}}
   </div>
   <div class="collapse-content">
       <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
-        <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
-        <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
-        <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
-        <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-        <div>
+        <app-input [label]="'Capacidad'" [placeholder]="'Capacidad'" [required]="true" [inputControl]="capacity"></app-input>
+        <app-input [label]="'Dirección'" [placeholder]="'Dirección'" [required]="true" [inputControl]="address"></app-input>
+        <app-input [label]="'Precio'" [placeholder]="'Precio'" [required]="true" [inputControl]="price"></app-input>
+        <app-input [label]="'Fecha'" [placeholder]="'Fecha'" [required]="true" [inputControl]="date" [type]="'date'"></app-input>
+        <div class="mb-4">
           <div>
           <label>Localidad</label>
           </div>
-          <select name="'Locality'" class="select select-bordered w-full max-w-xs" [formControl]="locality">
-            <option *ngFor="let loca of localities" [value]="loca._id">{{loca.name}}</option>
+          <select name="'Location'" class="select select-bordered w-full max-w-xs" [formControl]="location">
+            <option *ngFor="let loca of localities" [value]="loca.id">{{loca.name}}</option>
           </select> 
         </div>
-        <div>
+        <div class="mb-4">
           <div>
           <label>Propiedades</label>
           </div>
@@ -29,15 +29,18 @@
           </select> 
         </div>
 
-        <input class="input input-bordered w-full max-w-xs" type="file" (change)="onFileSelected($event)">  
+        <div class="flex flex-col mb-4">
+          <label class="mb-1" for="file">Seleccione un archivo</label>
+          <input class="input input-bordered w-full max-w-xs mb-4" type="file" id="file" (change)="onFileSelected($event)">  
+        </div>
 
         <div>
-        <app-button [type]="'submit'" [classType]="'primary'" >
-          {{buttonContent}}
-        </app-button>
-        <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
-          Cancelar
-        </app-button>
+          <app-button [type]="'submit'" [classType]="'primary'" >
+            {{buttonContent}}
+          </app-button>
+          <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
+            Cancelar
+          </app-button>
         </div>
       </form>
     </div>

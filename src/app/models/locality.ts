@@ -1,4 +1,4 @@
 export interface Locality {
-  _id:string;
+  id:string;
   name: string;
 }
