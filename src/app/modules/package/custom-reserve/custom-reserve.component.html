@@ -75,16 +75,16 @@
       <div #carousel class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex">
         <div id="1" class="carousel-item relative w-full">
           <img [src]="propertyImgSrc" class="w-full" alt="" />
-          <div *ngIf="form.get('car')?.value" class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-circle">❮</button>
-            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-circle">❯</button>
+          <div *ngIf="form.get('car')?.value" class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
+            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❮</button>
+            <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❯</button>
           </div>
         </div>
         <div *ngIf="form.get('car')?.value" id="2" class="carousel-item relative w-full">
           <img src="../../../../assets/img/hilux.webp" class="w-full" alt="" />
-          <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-circle">❮</button>
-            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-circle">❯</button>
+          <div class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
+            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-ghost text-red-500">❮</button>
+            <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-ghost text-red-500">❯</button>
           </div>
         </div>
       </div>

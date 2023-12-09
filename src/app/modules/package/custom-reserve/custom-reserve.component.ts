@@ -204,7 +204,7 @@ export class CustomReserveComponent
         this.reserveService.createReserve(newReserve).subscribe({
           next: () => {
             this.router.navigate(['/confirmation'], {
-              queryParams: { action: 'success' },
+              queryParams: { status: 'success' },
             });
           },
           error: () => {
