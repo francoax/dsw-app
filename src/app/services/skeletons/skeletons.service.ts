@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SkeletonsService {
 
-  homeLoading$ = new Subject<boolean>()
-  reserveLoading$ = new Subject<boolean>()
+  private homeLoadingSubject = new BehaviorSubject(false)
+  private reserveLoadingSubject = new BehaviorSubject(false)
+
+  homeLoading$ = this.homeLoadingSubject.asObservable()
+  reserveLoading$ = this.reserveLoadingSubject.asObservable()
 
   showHomeLoading() : void {
-    this.homeLoading$.next(true)
+    this.homeLoadingSubject.next(true)
   }
 
   hideHomeLoading() : void {
-    this.homeLoading$.next(false)
+    this.homeLoadingSubject.next(false)
   }
 
   showReserveLoading() : void {
-    this.reserveLoading$.next(true)
+    this.reserveLoadingSubject.next(true)
   }
 
   hideReserveLoading() : void {
-    this.reserveLoading$.next(false)
+    this.reserveLoadingSubject.next(false)
   }
 }

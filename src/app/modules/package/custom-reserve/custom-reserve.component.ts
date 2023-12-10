@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, pairwise, startWith } from 'rxjs';
+import { Subscription, map, pairwise, startWith } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import { Property } from 'src/app/models/property';
@@ -22,6 +22,8 @@ import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import Reserve from 'src/app/models/reserve';
 import { validateDates } from './form-validators';
 import { AppConfigService } from 'src/app/services/app/app.service';
+import { SkeletonsService } from 'src/app/services/skeletons/skeletons.service';
+import { CustomReserveDataService } from 'src/app/services/app/custom-reserve-data.service';
 
 type reserveSummary = {
   car: Car | null;
@@ -37,9 +39,10 @@ type reserveSummary = {
   templateUrl: './custom-reserve.component.html',
   styleUrls: ['./custom-reserve.component.scss'],
 })
-export class CustomReserveComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit {
+  private skeletonSubscription : Subscription | undefined
+
+  isLoading$ = this.skeletonService.reserveLoading$
   property!: Property;
   cars!: Car[];
   medicalAssitance!: MedicalAssistance[];
@@ -65,11 +68,13 @@ export class CustomReserveComponent
   constructor(
     private readonly packageService: PackageService,
     private readonly reserveService: ReserveService,
+    private readonly customReserveService : CustomReserveDataService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
-    private readonly appService: AppConfigService
+    private readonly appService: AppConfigService,
+    private readonly skeletonService : SkeletonsService
   ) {}
 
   ngAfterViewInit(): void {
@@ -77,21 +82,44 @@ export class CustomReserveComponent
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ data }) => {
-      this.property = data.at(0);
-      this.cars = data.at(1).data;
-      this.medicalAssitance = data.at(2).data;
-    });
+    let propertyId = ""
+    this.activatedRoute.paramMap.subscribe({
+      next: (id) => { propertyId = id.get('id')!}
+    })
+    console.log(propertyId)
+    this.skeletonService.showReserveLoading()
+    this.customReserveService.initReserveData(propertyId)
+      .subscribe({
+        next: ([property, cars, medicalAssitances]) => {
+          console.log(property)
+          console.log(cars)
+          console.log(medicalAssitances)
+          this.property = property
+          this.cars = cars
+          this.medicalAssitance = medicalAssitances
+        },
+        complete : () => {
+          this.skeletonService.hideReserveLoading()
+          this.form = this.initForm();
 
-    this.form = this.initForm();
+          this.reserveSummary = {
+            ...this.reserveSummary,
+            property: this.property,
+          };
 
-    this.reserveSummary = { ...this.reserveSummary, property: this.property };
-
-    this.$form = this.form.valueChanges
-      .pipe(startWith({}), pairwise())
-      .subscribe(([prev, next]) => {
-        this.updateSummary(prev, next);
+          this.$form = this.form.valueChanges
+            .pipe(startWith({}), pairwise())
+            .subscribe(([prev, next]) => {
+              this.updateSummary(prev, next);
+          });
+        }
       });
+
+    // this.activatedRoute.data.subscribe(({ data }) => {
+    //   this.property = data.at(0);
+    //   this.cars = data.at(1).data;
+    //   this.medicalAssitance = data.at(2).data;
+    // });
 
     this.scrollIntoView.nativeElement.scrollIntoView();
     this.appService.setDisplaySearchBar(false);
@@ -100,6 +128,9 @@ export class CustomReserveComponent
   ngOnDestroy() {
     if (this.$form) {
       this.$form.unsubscribe();
+    }
+    if(this.skeletonSubscription) {
+      this.skeletonSubscription.unsubscribe()
     }
   }
 
