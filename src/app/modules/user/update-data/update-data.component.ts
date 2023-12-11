@@ -7,6 +7,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
 import { Router } from '@angular/router';
 import { ToastService } from '../../shared/toast/toast.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
+import Reserve from 'src/app/models/reserve';
 
 @Component({
   selector: 'app-update-data',
@@ -121,7 +122,14 @@ export class UpdateDataComponent implements OnInit {
   checkUserReserves(): void {
     this.reserveService.getReservesByUser().subscribe({
       next: (reserves) => {
-        if (reserves.data.length > 0) {
+        const hasCurrentReserves = (): boolean => {
+          const result = reserves.data.filter((reserve: Reserve) => {
+            new Date(reserve.date_end).getTime() < new Date().getTime();
+          });
+
+          return result.length > 0 ? true : false;
+        };
+        if (reserves.data.length > 0 && hasCurrentReserves()) {
           this.toastService.setup({
             message: 'No puede darse de baja, tiene reservas vigentes',
             status: false,

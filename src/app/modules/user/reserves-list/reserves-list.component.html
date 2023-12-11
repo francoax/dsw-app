@@ -133,6 +133,7 @@
             <button
               class="btn btn-ghost btn-xs"
               [id]="reserve.id"
+              [disabled]="checkCurrentReserve(reserve)"
               (click)="openModal($event)"
             >
               Cancelar reserva

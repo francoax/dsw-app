@@ -178,4 +178,12 @@ export class ReservesListComponent implements OnInit {
     });
     this.selectedReserveId = '';
   }
+
+  checkCurrentReserve(reserve: ReserveDetails): boolean {
+    const today = new Date();
+    const dateStart = new Date(reserve.dateStart);
+    const dateEnd = new Date(reserve.dateEnd);
+    if ((today > dateStart && today < dateEnd) || today > dateEnd) return true;
+    return false;
+  }
 }
