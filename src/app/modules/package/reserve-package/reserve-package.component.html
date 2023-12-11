@@ -15,6 +15,21 @@
             tabindex="0"
             class="collapse collapse-arrow border border-base-300 bg-base-200"
           >
+            <div class="collapse-title text-xl font-medium">
+              Detalles de la propiedad
+            </div>
+            <div class="collapse-content">
+              <p>
+                {{ "Dirección: " + package.property.address }}<br />
+                {{ "Localidad: " + package.property.location }}<br />
+                {{ "Capacidad: " + package.property.capacity + " personas" }}
+              </p>
+            </div>
+          </div>
+          <div
+            tabindex="0"
+            class="collapse collapse-arrow border border-base-300 bg-base-200"
+          >
             <div class="collapse-title text-xl font-medium">Auto incluido</div>
             <div class="collapse-content">
               <p>
@@ -51,6 +66,7 @@
           <app-input
             [placeholder]="'Check in'"
             [type]="'date'"
+            [min]="todayDate()"
             [inputControl]="checkIn"
           >
           </app-input>
@@ -58,6 +74,7 @@
           <app-input
             [placeholder]="'Check in'"
             [type]="'date'"
+            [min]="todayDate()"
             [inputControl]="checkOut"
           >
           </app-input>

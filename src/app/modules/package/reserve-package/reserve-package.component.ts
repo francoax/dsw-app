@@ -64,6 +64,13 @@ export class ReservePackageComponent implements OnInit {
   reserveForm!: FormGroup;
   checkIn = new FormControl('', Validators.required);
   checkOut = new FormControl('', Validators.required);
+  todayDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  };
   totalPrice = 0;
   error = false;
 
