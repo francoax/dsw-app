@@ -6,6 +6,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { Router } from '@angular/router';
 import { ToastService } from '../../shared/toast/toast.service';
+import { ReserveService } from 'src/app/services/reserve/reserve.service';
 
 @Component({
   selector: 'app-update-data',
@@ -26,6 +27,7 @@ export class UpdateDataComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private reserveService: ReserveService,
     private router: Router,
     private toastService: ToastService
   ) {}
@@ -103,13 +105,43 @@ export class UpdateDataComponent implements OnInit {
     }
   }
 
-  deleteUser() {
+  checkUserReserves(): void {
+    this.reserveService.getReservesByUser().subscribe({
+      next: (res) => {
+        if (res.data.length > 0) {
+          this.toastService.setup({
+            message: 'No puede darse de baja, tiene reservas vigentes',
+            status: false,
+          });
+          this.toastService.show();
+        } else {
+          this.deleteUser();
+        }
+      },
+      error: () => {
+        this.toastService.setup({
+          message: 'Error al verificar reservas',
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
+  }
+
+  deleteUser(): void {
     this.userService.deleteUser().subscribe({
       next: () => {
         window.localStorage.removeItem('loggedUser');
         this.router.navigate(['/confirmation'], {
           queryParams: { action: 'delete' },
         });
+      },
+      error: () => {
+        this.toastService.setup({
+          message: 'Error al eliminar usuario',
+          status: false,
+        });
+        this.toastService.show();
       },
     });
   }

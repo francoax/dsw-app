@@ -32,6 +32,13 @@ export class NotificationsComponent implements OnInit {
         this.routerLink = '/';
       }
 
+      if (action === 'cancel') {
+        this.title = 'La reserva se ha cancelado con éxito';
+        this.message =
+          'En breve se procesará la cancelación y recibira el reembolso correspondiente';
+        this.routerLink = '/user/reserves';
+      }
+
       if (status === 'success') {
         this.title = 'Tu reserva ha sido confirmada.';
         this.message =
