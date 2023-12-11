@@ -106,10 +106,7 @@
             <div class="flex items-center gap-3">
               <div class="avatar">
                 <div class="mask mask-squircle w-12 h-12">
-                  <img
-                    src="/tailwind-css-component-profile-2@56w.png"
-                    alt="Reserve picture"
-                  />
+                  <img [src]="reserve.imageUrl" alt="Reserve picture" />
                 </div>
               </div>
               <div>
@@ -133,6 +130,7 @@
             <button
               class="btn btn-ghost btn-xs"
               [id]="reserve.id"
+              [disabled]="checkCurrentReserve(reserve)"
               (click)="openModal($event)"
             >
               Cancelar reserva

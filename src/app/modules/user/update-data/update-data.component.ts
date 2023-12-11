@@ -7,6 +7,7 @@ import { ModalComponent } from '../../shared/modal/modal.component';
 import { Router } from '@angular/router';
 import { ToastService } from '../../shared/toast/toast.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
+import Reserve from 'src/app/models/reserve';
 
 @Component({
   selector: 'app-update-data',
@@ -68,7 +69,7 @@ export class UpdateDataComponent implements OnInit {
     }
   }
 
-  enableForm() {
+  toggleForm() {
     this.updateDataForm.disabled
       ? this.updateDataForm.enable()
       : this.updateDataForm.disable();
@@ -85,7 +86,7 @@ export class UpdateDataComponent implements OnInit {
           email: this.updateDataForm.value.email,
           password: this.updateDataForm.value.password,
         };
-        this.userService.updateUser(user).subscribe();
+        this.editUserData(user);
       } else {
         const user: User = {
           name: this.updateDataForm.value.name,
@@ -94,7 +95,7 @@ export class UpdateDataComponent implements OnInit {
           tel: parseInt(this.updateDataForm.value.tel),
           email: this.updateDataForm.value.email,
         };
-        this.userService.updateUser(user).subscribe();
+        this.editUserData(user);
       }
     } else {
       this.toastService.setup({
@@ -105,10 +106,29 @@ export class UpdateDataComponent implements OnInit {
     }
   }
 
+  editUserData(userData: User): void {
+    this.userService.updateUser(userData).subscribe({
+      next: () => {
+        this.toastService.setup({
+          message: 'Datos modificados exitosamente',
+          status: false,
+        });
+        this.toastService.show();
+      },
+    });
+    this.toggleForm();
+  }
+
   checkUserReserves(): void {
     this.reserveService.getReservesByUser().subscribe({
-      next: (res) => {
-        if (res.data.length > 0) {
+      next: (reserves) => {
+        const hasCurrentReserves = (): boolean => {
+          const result = reserves.data.filter((reserve: Reserve) => {
+            return new Date(reserve.date_end).getTime() > new Date().getTime();
+          });
+          return result.length > 0 ? true : false;
+        };
+        if (reserves.data.length > 0 && hasCurrentReserves()) {
           this.toastService.setup({
             message: 'No puede darse de baja, tiene reservas vigentes',
             status: false,

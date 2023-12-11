@@ -11,6 +11,7 @@ import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { ToastService } from '../../shared/toast/toast.service';
+import { AppConfigService } from 'src/app/services/app/app.service';
 
 interface ReserveDetails {
   id: string;
@@ -22,6 +23,7 @@ interface ReserveDetails {
   dateStart: string;
   dateEnd: string;
   price: number;
+  imageUrl: string;
 }
 
 interface PropertyResponse {
@@ -31,7 +33,7 @@ interface PropertyResponse {
   pricePerNight: PricePerNight;
   propertyType: string;
   location: string;
-  urlImage: string;
+  image: string;
 }
 
 @Component({
@@ -56,7 +58,8 @@ export class ReservesListComponent implements OnInit {
     private packageService: PackageService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private appService: AppConfigService
   ) {}
 
   ngOnInit() {
@@ -80,6 +83,7 @@ export class ReservesListComponent implements OnInit {
       dateStart: '',
       dateEnd: '',
       price: 0,
+      imageUrl: './assets/img/house.png',
     };
     reserveDetails.id = reserve._id as string;
 
@@ -91,6 +95,7 @@ export class ReservesListComponent implements OnInit {
         const medAssist: MedicalAssistance = response.data.medicalAssistance;
 
         reserveDetails.propertyAddress = property.address;
+        reserveDetails.imageUrl = `${this.appService.apiUrl}/api/images/${property.image}`;
 
         reserveDetails.car = `${car.brand} ${car.model}`;
 
@@ -177,5 +182,13 @@ export class ReservesListComponent implements OnInit {
       },
     });
     this.selectedReserveId = '';
+  }
+
+  checkCurrentReserve(reserve: ReserveDetails): boolean {
+    const today = new Date();
+    const dateStart = new Date(reserve.dateStart);
+    const dateEnd = new Date(reserve.dateEnd);
+    if ((today > dateStart && today < dateEnd) || today > dateEnd) return true;
+    return false;
   }
 }
