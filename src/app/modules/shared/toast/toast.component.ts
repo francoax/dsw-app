@@ -5,12 +5,12 @@ import { ToastService } from './toast.service';
 @Component({
   selector: 'snackbar',
   template: `
-    <div *ngIf="show" class="toast toast-center">
+    <div *ngIf="show" class="toast toast-center whitespace-normal min-w-[390px] lg:min-w-max">
       <div
-        class="alert toastPhs"
+        class="alert text-clip"
         [ngClass]="status ? 'response-ok' : 'response-error'"
       >
-        <span *ngIf="message">{{ message }}</span>
+        <ng-container *ngIf="message">{{ message }}</ng-container>
         <ng-content *ngIf="!message"></ng-content>
         <ng-container *ngIf="status">
           <svg
