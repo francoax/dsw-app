@@ -7,6 +7,7 @@ export interface Property {
   pricePerNight: PricePerNight;
   propertyType: string;
   location: {
+    id : string,
     name: string;
   };
   image: File;

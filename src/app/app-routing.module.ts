@@ -4,10 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { authGuard } from './guards/auth.guard';
 import { UnauthorizedComponent } from './modules/shared/feedbacks/unauthorized/unauthorized.component';
 import { NotFoundComponent } from './modules/shared/feedbacks/not-found/not-found.component';
-import { carResolver } from './resolvers/car.resolver';
-import { propertyResolver } from './resolvers/property.resolver';
-import { packagesResolver } from './resolvers/package.resolver';
-import { medicalAssistanceResolver } from './resolvers/MedicalAssist.resolver';
 import { LogInComponent } from './modules/shared/log-in/log-in.component';
 import { SignUpComponent } from './modules/shared/sign-up/sign-up.component';
 import { NotificationsComponent } from './modules/shared/notifications/notifications.component';
@@ -18,12 +14,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    resolve: {
-      propertyList: propertyResolver,
-      packages: packagesResolver,
-      cars: carResolver,
-      medAssists: medicalAssistanceResolver,
-    },
   },
   {
     path: 'login',
