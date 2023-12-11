@@ -3,17 +3,15 @@ import { Injectable } from '@angular/core';
 import { PropertyServiceService } from '../property/property-service.service';
 import { CarService } from '../car/car.service';
 import { MedicalAssistanceService } from '../medical-assitance/medical-assistance.service';
-import { Observable, mergeMap, of, zip } from 'rxjs';
-import { Car } from 'src/app/models/car';
-import { MedicalAssistance } from 'src/app/models/medical-assistance';
+import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Property } from 'src/app/models/property';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomReserveDataService {
 
-  private cars : Car[] = []
-  private medicalAssitances : MedicalAssistance[] = []
+  private property! : Property
 
   constructor(
     private readonly propertiesService : PropertyServiceService,
@@ -23,18 +21,19 @@ export class CustomReserveDataService {
 
   initReserveData(propertyId : string) : Observable<any[]> {
     return this.propertiesService.getProperty(propertyId).pipe(
-      mergeMap(({ data }) => {
-        this.carsService.getCarsFromLocation(data.location.id)
-          .subscribe(({ data }) => {this.cars = data})
-        this.medicalService.getAll()
-          .subscribe(({ data }) => {this.medicalAssitances = data})
-        return zip(
-          of(data),
-          this.cars,
-          this.medicalAssitances
+      switchMap(({ data }) => {
+        this.property = data;
+        const cars$ = this.carsService.getCarsFromLocation(
+          this.property.location.id
         );
-      }
-      )
-    )
+        const medicalAssistances$ = this.medicalService.getAll();
+        return forkJoin([cars$, medicalAssistances$]);
+      }),
+      map(([cars, medicalAssistances]) => [
+        this.property,
+        cars.data,
+        medicalAssistances.data,
+      ])
+    );
   }
 }

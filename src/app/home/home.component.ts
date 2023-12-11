@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   asistMedList: MedicalAssistance[] = [];
 
   constructor(
-    private readonly route: ActivatedRoute,
     private readonly appService: AppConfigService,
     private readonly skeletonService: SkeletonsService,
     private readonly homeService: HomeDataService
@@ -40,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.skeletonService.showHomeLoading();
     this.homeDataSubscription = this.homeService.initHomeData().subscribe({
       next: ([packages, properties]) => {
+        console.log('hi')
         this.packageList = packages;
         this.propertyList = properties;
         this.requiredProps = properties;

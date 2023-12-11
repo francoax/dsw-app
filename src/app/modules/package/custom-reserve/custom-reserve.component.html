@@ -1,5 +1,7 @@
 <!-- eslint-disable max-len -->
-<app-reserve-skeleton *ngIf="isLoading$ | async; else completed"></app-reserve-skeleton>
+<ng-container *ngIf="isLoading$ | async; else completed">
+  <app-reserve-skeleton></app-reserve-skeleton>
+</ng-container>
 <ng-template #completed>
   <div class="container-reserve">
     <div class="btn-back" #focus>

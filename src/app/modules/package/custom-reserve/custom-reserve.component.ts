@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, map, pairwise, startWith } from 'rxjs';
+import { Subscription, pairwise, startWith } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import { Property } from 'src/app/models/property';
@@ -41,11 +41,12 @@ type reserveSummary = {
 })
 export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit {
   private skeletonSubscription : Subscription | undefined
+  private customReserveDataSubscription : Subscription | undefined
 
   isLoading$ = this.skeletonService.reserveLoading$
   property!: Property;
-  cars!: Car[];
-  medicalAssitance!: MedicalAssistance[];
+  cars: Car[] = [];
+  medicalAssitance: MedicalAssistance[] = [];
   form!: FormGroup;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
@@ -82,24 +83,42 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit(): void {
-    let propertyId = ""
-    this.activatedRoute.paramMap.subscribe({
-      next: (id) => { propertyId = id.get('id')!}
+    this.initData()
+    this.router.events.subscribe(() => {
+      window.scrollTo(0,0)
     })
-    console.log(propertyId)
-    this.skeletonService.showReserveLoading()
-    this.customReserveService.initReserveData(propertyId)
+  }
+
+  ngOnDestroy() {
+    if (this.$form) {
+      this.$form.unsubscribe();
+    }
+    if(this.skeletonSubscription) {
+      this.skeletonSubscription.unsubscribe()
+    }
+    if(this.customReserveDataSubscription) {
+      this.customReserveDataSubscription.unsubscribe()
+    }
+  }
+
+  initData() : void {
+    this.skeletonService.showReserveLoading();
+    let propertyId = '';
+    this.activatedRoute.paramMap.subscribe({
+      next: (id) => {
+        propertyId = id.get('id')!;
+      },
+    });
+    this.customReserveDataSubscription = this.customReserveService
+      .initReserveData(propertyId)
       .subscribe({
         next: ([property, cars, medicalAssitances]) => {
-          console.log(property)
-          console.log(cars)
-          console.log(medicalAssitances)
-          this.property = property
-          this.cars = cars
-          this.medicalAssitance = medicalAssitances
+          this.property = property;
+          this.cars = cars;
+          this.medicalAssitance = medicalAssitances;
         },
-        complete : () => {
-          this.skeletonService.hideReserveLoading()
+        complete: () => {
+          this.skeletonService.hideReserveLoading();
           this.form = this.initForm();
 
           this.reserveSummary = {
@@ -111,27 +130,14 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
             .pipe(startWith({}), pairwise())
             .subscribe(([prev, next]) => {
               this.updateSummary(prev, next);
-          });
+            });
+        },
+        error: (e) => {
+          this.toastService.setup({ message : e.message, status : false})
+          this.toastService.show()
         }
       });
-
-    // this.activatedRoute.data.subscribe(({ data }) => {
-    //   this.property = data.at(0);
-    //   this.cars = data.at(1).data;
-    //   this.medicalAssitance = data.at(2).data;
-    // });
-
-    this.scrollIntoView.nativeElement.scrollIntoView();
     this.appService.setDisplaySearchBar(false);
-  }
-
-  ngOnDestroy() {
-    if (this.$form) {
-      this.$form.unsubscribe();
-    }
-    if(this.skeletonSubscription) {
-      this.skeletonSubscription.unsubscribe()
-    }
   }
 
   initForm(): FormGroup {
