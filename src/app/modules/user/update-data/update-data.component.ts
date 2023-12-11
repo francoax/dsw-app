@@ -124,9 +124,8 @@ export class UpdateDataComponent implements OnInit {
       next: (reserves) => {
         const hasCurrentReserves = (): boolean => {
           const result = reserves.data.filter((reserve: Reserve) => {
-            new Date(reserve.date_end).getTime() < new Date().getTime();
+            return new Date(reserve.date_end).getTime() > new Date().getTime();
           });
-
           return result.length > 0 ? true : false;
         };
         if (reserves.data.length > 0 && hasCurrentReserves()) {
