@@ -49,6 +49,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   cars: Car[] = [];
   medicalAssitance: MedicalAssistance[] = [];
   form!: FormGroup;
+  hasReserves = false
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -204,16 +205,32 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onSubmit(form: FormGroup) {
-    if (form.valid) {
-      this.open();
-    } else {
-      this.form.markAllAsTouched();
-      this.toastService.setup({
-        message: 'Por favor, ingrese correctamente los campos.',
-        status: false,
-      });
-      this.toastService.show();
-    }
+    this.reserveService.getReservesByUser().subscribe(({data}) => {
+      if(data.length > 0) {
+        const reserves = data.filter(
+          (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
+        );
+        this.hasReserves = reserves.length > 0;
+      }
+
+      if (this.hasReserves) {
+        this.toastService.setup({
+          message:
+            'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
+          status: false,
+        });
+        this.toastService.show();
+      } else if (form.valid) {
+        this.open();
+      } else {
+        this.form.markAllAsTouched();
+        this.toastService.setup({
+          message: 'Por favor, ingrese correctamente los campos.',
+          status: false,
+        });
+        this.toastService.show();
+      }
+    })
   }
 
   confirmReserve() {
@@ -272,12 +289,8 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
 
   scrollOnCarousel(image : number): void {
     const carouselWidth = this.carouselReserve.nativeElement.clientWidth;
-
-    // Images are numbered from 1 to 4 so thats why we substract 1
     const targetImage = image - 1;
-
     const targetXPixel = carouselWidth * targetImage + 1;
-
     this.carouselReserve.nativeElement.scrollTo(targetXPixel, 0);
   }
 }
