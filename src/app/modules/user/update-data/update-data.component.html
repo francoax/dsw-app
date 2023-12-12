@@ -5,7 +5,7 @@
     <button
       class="btn btn-primary"
       type="button"
-      (click)="enableForm()"
+      (click)="toggleForm()"
       *ngIf="loggedUser"
     >
       <svg
@@ -67,6 +67,7 @@
       [inputControl]="password"
     ></app-input>
     <app-button
+      *ngIf="!updateDataForm.disabled"
       class="flex justify-start items-center"
       [classType]="'primary'"
       [type]="'submit'"
@@ -91,7 +92,10 @@
     </div>
   </div>
 </div>
-<confirmation-modal #confirmationModal (confirmationEvent)="deleteUser()">
+<confirmation-modal
+  #confirmationModal
+  (confirmationEvent)="checkUserReserves()"
+>
   <div modal-title>Eliminar usuario</div>
   <div modal-message>Está seguro que desea darse de baja?</div>
 </confirmation-modal>
