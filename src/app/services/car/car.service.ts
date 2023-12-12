@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AppConfigService } from '../app/app.service';
 import { ApiResponse } from 'src/app/models/common';
 import { Observable } from 'rxjs';
+import { Car } from 'src/app/models/car';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,15 @@ export class CarService {
 
   getCarsFromLocation(locationId : string) {
     return this.http.get<ApiResponse>(`${this.API}?locality=${locationId}`)
+  }
+  deleteCar(id : string) : Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.API}${id}`)
+  }
+  createCar(newCar : Car) : Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.API, newCar)
+  }
+
+  updateCar(id : string, carUpdated : Car) : Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.API}${id}`, carUpdated)
   }
 }

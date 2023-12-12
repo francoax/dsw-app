@@ -5,7 +5,10 @@ export interface Car {
   year: string,
   plate: string,
   price: Price,
-  locality: string,
+  locality:{
+    id : string,
+    name: string;
+  };
 }
 export interface Price {
   date: string,
