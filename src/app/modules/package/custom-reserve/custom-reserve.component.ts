@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, pairwise, startWith } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { Property } from 'src/app/models/property';
+import { PropertyV2 } from 'src/app/models/property';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { ToastService } from '../../shared/toast/toast.service';
 import { PackageAgent } from 'src/app/models/package';
@@ -28,7 +28,7 @@ import { CustomReserveDataService } from 'src/app/services/app/custom-reserve-da
 type reserveSummary = {
   car: Car | null;
   medicalAssitance: MedicalAssistance | null;
-  property: Property | null;
+  property: PropertyV2 | null;
   checkIn: string;
   checkOut: string;
   totalPrice: number;
@@ -44,8 +44,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   private customReserveDataSubscription : Subscription | undefined
 
   isLoading$ = this.skeletonService.reserveLoading$
-  property!: Property;
-  propertyImgSrc! : string;
+  property!: PropertyV2;
   cars: Car[] = [];
   medicalAssitance: MedicalAssistance[] = [];
   form!: FormGroup;
@@ -117,7 +116,6 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
       .subscribe({
         next: ([property, cars, medicalAssitances]) => {
           this.property = property;
-          this.propertyImgSrc = `${this.appService.apiUrl}/api/images/${this.property.image}`;
           this.cars = cars;
           this.medicalAssitance = medicalAssitances;
         },

@@ -26,7 +26,7 @@ export interface PropertyV2 {
   location: {
     name: string;
   };
-  image: File;
+  image: string;
 }
 export interface PricePerNight {
   price: number;

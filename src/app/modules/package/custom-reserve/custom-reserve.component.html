@@ -118,7 +118,7 @@
         <div class="divider">Informacion de reserva</div>
         <div class="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden">
           <div class="carousel-item w-full h-full">
-            <img [src]="propertyImgSrc" alt="property reserved" class="image-full" />
+            <img [src]="property.image" alt="property reserved" class="image-full" />
           </div>
           <div *ngIf="form.get('car')?.value" class="carousel-item w-full h-full">
             <img src="../../../../assets/img/hilux.webp" alt="" />
@@ -126,7 +126,7 @@
         </div>
         <div #carousel class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex">
           <div id="1" class="carousel-item relative w-full">
-            <img [src]="propertyImgSrc" class="w-full" alt="" />
+            <img [src]="property.image" class="w-full" alt="" />
             <div *ngIf="form.get('car')?.value" class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
               <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❮</button>
               <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❯</button>
