@@ -2,7 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <!-- eslint-disable @angular-eslint/template/label-has-associated-control -->
 <!-- eslint-disable max-len -->
-<div class="bg-base-100">
+<div class="bg-base-100 sm:px-2 lg:px-5">
   <div class="navbar">
   <div class="navbar-start">
     <div tabindex="0" role="button" (click)="goHomePage()" class="btn btn-ghost cursor-pointer">
@@ -82,7 +82,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" fill="#EB5757" />
       </svg>
     </button>
-    <div class="dropdown" *ngIf="userName">
+    <div class="dropdown dropdown-bottom dropdown-end" *ngIf="userName">
       <label tabindex="0" class="btn bg-slate-50 rounded-2xl m-1">
         <svg width="20" height="20" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M13.899 0.160969C11.7054 0.352291 9.6863 1.66492 8.48752 3.67987C8.16574 4.21993 7.86887 4.91499 7.68985 5.54709C7.32501 6.83549 7.30234 8.30311 7.62413 9.80948C7.82129 10.7322 8.11135 11.5895 8.53964 12.5219C9.72709 15.106 11.5241 16.9103 13.4095 17.414C14.1166 17.6029 14.8825 17.6029 15.5895 17.414C16.6002 17.1427 17.5815 16.5082 18.4879 15.5371C20.0379 13.8781 21.2095 11.3328 21.5245 8.93279C21.8123 6.74347 21.3115 4.69703 20.0742 3.01629C19.8362 2.69177 19.2267 2.04272 18.9185 1.78116C17.5044 0.582365 15.7119 0.00354958 13.899 0.160969Z" fill="#EB5757"/>
@@ -90,7 +90,7 @@
         </svg>{{ userName }}</label>
       <ul
         tabindex="0"
-        class="dropdown-content z-[10] menu shadow bg-base-100 rounded-box"
+        class="dropdown-content z-[10] menu shadow bg-base-100 rounded-box w-52"
       >
         <ng-container *ngIf="userRole === 'SUPER_ADMIN'">
           <li><a [routerLink]="['/superadmin']">Administracion</a></li>
@@ -130,7 +130,7 @@
     </button>
     </div>
   </div>
-  <div #filterInputMobile class="hidden flex justify-center items-end gap-2 py-4">
+  <div #filterInputMobile class="hidden flex justify-center items-end gap-2 py-4 lg:hidden">
     <label class="form-control justify-center w-full max-w-xs">
       <div class="label">
         <span class="label-text">Ingresa la ubicacion que deseas </span>

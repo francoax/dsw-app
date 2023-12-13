@@ -24,9 +24,10 @@ export interface PropertyV2 {
   pricePerNight: PricePerNight;
   propertyType: PropertyType;
   location: {
+    _id: string,
     name: string;
   };
-  image: File;
+  image: string;
 }
 export interface PricePerNight {
   price: number;

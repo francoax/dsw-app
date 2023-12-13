@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, pairwise, startWith } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { Property } from 'src/app/models/property';
+import { PropertyV2 } from 'src/app/models/property';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { ToastService } from '../../shared/toast/toast.service';
 import { PackageAgent } from 'src/app/models/package';
@@ -28,7 +28,7 @@ import { CustomReserveDataService } from 'src/app/services/app/custom-reserve-da
 type reserveSummary = {
   car: Car | null;
   medicalAssitance: MedicalAssistance | null;
-  property: Property | null;
+  property: PropertyV2 | null;
   checkIn: string;
   checkOut: string;
   totalPrice: number;
@@ -44,16 +44,18 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   private customReserveDataSubscription : Subscription | undefined
 
   isLoading$ = this.skeletonService.reserveLoading$
-  property!: Property;
+  property!: PropertyV2;
   cars: Car[] = [];
   medicalAssitance: MedicalAssistance[] = [];
   form!: FormGroup;
+  hasReserves = false
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
   @ViewChild('carSelect') private carSelect!: ElementRef;
   @ViewChild('maSelect') private maSelect!: ElementRef;
   @ViewChild('focus') private scrollIntoView!: ElementRef;
+  @ViewChild('carousel') private carouselReserve!: ElementRef;
 
   reserveSummary: reserveSummary = {
     car: null,
@@ -201,16 +203,32 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onSubmit(form: FormGroup) {
-    if (form.valid) {
-      this.open();
-    } else {
-      this.form.markAllAsTouched();
-      this.toastService.setup({
-        message: 'Por favor, ingrese correctamente los campos.',
-        status: false,
-      });
-      this.toastService.show();
-    }
+    this.reserveService.getReservesByUser().subscribe(({data}) => {
+      if(data.length > 0) {
+        const reserves = data.filter(
+          (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
+        );
+        this.hasReserves = reserves.length > 0;
+      }
+
+      if (this.hasReserves) {
+        this.toastService.setup({
+          message:
+            'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
+          status: false,
+        });
+        this.toastService.show();
+      } else if (form.valid) {
+        this.open();
+      } else {
+        this.form.markAllAsTouched();
+        this.toastService.setup({
+          message: 'Por favor, ingrese correctamente los campos.',
+          status: false,
+        });
+        this.toastService.show();
+      }
+    })
   }
 
   confirmReserve() {
@@ -232,10 +250,16 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
           date_start: this.form.value.checkIn,
           packageReserved: res.data.id,
         };
-        this.reserveService.createReserve(newReserve).subscribe(() => {
-          this.router.navigate(['./completed'], {
-            relativeTo: this.activatedRoute,
-          });
+        this.reserveService.createReserve(newReserve).subscribe({
+          next: () => {
+            this.router.navigate(['/confirmation'], {
+              queryParams: { status: 'success' },
+            });
+          },
+          error: () => {
+            this.toastService.setup({ message: 'Error al intentar reservar...', status: false})
+            this.toastService.show()
+          }
         });
       }
     });
@@ -259,5 +283,12 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
 
   back() {
     this.router.navigate(['/']);
+  }
+
+  scrollOnCarousel(image : number): void {
+    const carouselWidth = this.carouselReserve.nativeElement.clientWidth;
+    const targetImage = image - 1;
+    const targetXPixel = carouselWidth * targetImage + 1;
+    this.carouselReserve.nativeElement.scrollTo(targetXPixel, 0);
   }
 }
