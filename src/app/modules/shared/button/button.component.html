@@ -1,6 +1,7 @@
 <ng-container *ngIf="routerlink">
   <button
     [type]="type"
+    class="transition-transform hover:scale-105"
     [ngClass]="{
       'btn-primary': classType === 'primary',
       'btn-cancel': classType === 'cancel',
@@ -15,6 +16,7 @@
 <ng-container *ngIf="!routerlink">
   <button
     [type]="type"
+    class="transition-transform hover:scale-105"
     [ngClass]="{
       'btn-primary': classType === 'primary',
       'btn-cancel': classType === 'cancel',
