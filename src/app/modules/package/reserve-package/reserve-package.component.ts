@@ -17,6 +17,7 @@ import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { ToastService } from '../../shared/toast/toast.service';
 import { LocationService } from 'src/app/services/location/location.service';
+import { SkeletonsService } from 'src/app/services/skeletons/skeletons.service';
 
 interface PackageFull {
   type: string;
@@ -60,6 +61,7 @@ function calculateDays(date1: Date, date2: Date): number {
   styleUrls: ['./reserve-package.component.scss'],
 })
 export class ReservePackageComponent implements OnInit {
+  isLoading$ = this.skeletonService.reserveLoading$;
   package!: PackageFull;
   reserveForm!: FormGroup;
   checkIn = new FormControl('', Validators.required);
@@ -81,16 +83,21 @@ export class ReservePackageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private skeletonService: SkeletonsService
   ) {}
 
   ngOnInit() {
     const { data } = this.route.snapshot.data['pack'];
     this.package = data;
+    this.skeletonService.showReserveLoading();
 
     this.locationService.getLocation(this.package.property.location).subscribe({
       next: (res) => {
         this.package.property.location = res.data.name;
+      },
+      complete: () => {
+        this.skeletonService.hideReserveLoading();
       },
       error: (err) => {
         this.toastService.setup({
