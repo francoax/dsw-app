@@ -68,8 +68,13 @@
   );
 }
 
+.container-carousel {
+  padding: 0 5rem;
+}
+
 .navigation-wrapper {
   position: relative;
+  box-shadow: 5px 5px 15px black;
 }
 
 .dots {
@@ -150,7 +155,7 @@ img {
   border-radius: 5px;
 }
 .card-carousel {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
   position: absolute;
   top: 5%;
@@ -159,4 +164,10 @@ img {
   // padding: 10px;
   border-radius: 10px;
   font-size: 20px;
+}
+
+ul > li {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }
