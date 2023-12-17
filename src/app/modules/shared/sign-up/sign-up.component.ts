@@ -44,6 +44,8 @@ export class SignUpComponent implements OnInit {
     Validators.minLength(8),
     Validators.required,
   ]);
+  togglePassword = false;
+  togglePasswordConf = false;
 
   constructor(private userService: UserService, private router: Router) {}
 

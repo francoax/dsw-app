@@ -83,7 +83,7 @@ export class ReservesListComponent implements OnInit {
       dateStart: '',
       dateEnd: '',
       price: 0,
-      imageUrl: './assets/img/house.png',
+      imageUrl: '',
     };
     reserveDetails.id = reserve._id as string;
 
