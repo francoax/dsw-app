@@ -158,10 +158,11 @@ img {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   position: absolute;
-  top: 5%;
-  left: 70%;
+  // top: 5%;
+  // left: 70%;
+  top: 1rem;
+  right: 4rem;
   transform: translate(10%, 10%);
-  // padding: 10px;
   border-radius: 10px;
   font-size: 20px;
 }
