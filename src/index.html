@@ -2,10 +2,10 @@
 <html lang="es" data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <title>Poncho Home&Stay</title>
+    <title>Poncho H&S</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/phs.png" />
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
@@ -16,5 +16,21 @@
   </head>
   <body class="ig-typography ig-scrollbar">
     <app-root></app-root>
+    <script>
+      let prevScrollpos = window.pageYOffset;
+
+      window.onscroll = function() {
+        const currentScrollPos = window.pageYOffset;
+        const navbar = document.getElementById("navbar");
+
+        if (prevScrollpos > currentScrollPos) {
+          navbar.style.transform = "translateY(0)";
+        } else {
+          navbar.style.transform = `translateY(-${navbar.offsetHeight}px)`;
+        }
+
+        prevScrollpos = currentScrollPos;
+      }
+    </script>
   </body>
 </html>
