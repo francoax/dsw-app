@@ -4,6 +4,7 @@ import { Admin } from 'src/app/models/superAdmin';
 import { SuperAdminsService } from 'src/app/services/superadmin/super-admins.service';
 import { ToastService } from '../../shared/toast/toast.service';
 import { checkPasswords } from './form.validators';
+import { ApiResponse } from 'src/app/models/common';
 
 @Component({
   selector: 'app-admin-management',
@@ -67,8 +68,16 @@ export class AdminManagementComponent implements OnInit {
   }
 
   loadList(): void {
-    this.dataService.getAdmins().subscribe((res) => {
-      this.adminList = res.data;
+    this.dataService.getAdmins().subscribe({
+      next: (res) => {
+        this.adminList = res.data;
+      },
+      error: (e) => {
+        this.toastService.setup({
+          message: e.message,
+          status: false
+        })
+      }
     });
   }
 
@@ -84,28 +93,57 @@ export class AdminManagementComponent implements OnInit {
       this.formScope === 'create'
         ? this.dataService
             .createAdmin({ ...form.value, role: 'admin' })
-            .subscribe((res) => {
+            .subscribe({
+              next: (res) => {
+                if (!res.error) {
+                  this.closeForm();
+                  this.adminList.push(res.data);
+
+                  this.initToast(res);
+                }
+              },
+            })
+        : this.dataService.updateAdmin(form.value, this.idToUpdate).subscribe({
+            next: (res) => {
               if (!res.error) {
                 this.closeForm();
-                this.adminList.push(res.data);
+                const index = this.adminList
+                  .map((a) => a._id)
+                  .indexOf(res.data._id);
+                this.adminList[index] = res.data;
+
+                this.initToast(res)
               }
-            })
-        : this.dataService.updateAdmin(form.value, this.idToUpdate).subscribe((res) => {
-            if (!res.error) {
-              this.closeForm();
-              const index = this.adminList
-                .map((a) => a._id)
-                .indexOf(res.data._id);
-              this.adminList[index] = res.data;
+            },
+            error: (e) => {
+              this.toastService.setup({
+                message: e.message,
+                status: false
+              })
+
+              this.toastService.show()
             }
           });
     }
   }
 
   onDelete(id: string): void {
-    this.dataService.deleteAdmin(id).subscribe((res) => {
-      if (!res.error) {
-        this.adminList = this.adminList.filter((a) => a._id !== id);
+    this.dataService.deleteAdmin(id).subscribe({
+      next: (res) => {
+        if(res.error) {
+          throw new Error(res.message)
+        }
+
+        this.adminList = this.adminList.filter(a => a._id !== id)
+
+        this.initToast(res)
+      },
+      error: (e) => {
+        this.toastService.setup({
+          message: e.message,
+          status: false
+        })
+        this.toastService.show()
       }
     });
   }
@@ -113,12 +151,16 @@ export class AdminManagementComponent implements OnInit {
   onUpdate(admin: Admin): void {
     this.formCollapse.nativeElement.checked = true;
     this.formTitle = `Editar administrador: ${admin.name.toUpperCase()}`;
+    this.form.get('password')?.clearValidators()
+    this.form.get('password')?.setValidators([Validators.minLength(5)])
+    this.form.get('password')?.updateValueAndValidity()
+    this.form.get('repeatedPassword')?.clearValidators();
+    this.form.get('repeatedPassword')?.updateValueAndValidity();
     this.form.patchValue({
       name: admin.name,
       lastname: admin.lastname,
       address: admin.address,
       email: admin.email,
-      password: admin.password,
       tel: admin.tel,
     });
     this.buttonContent = 'Actualizar';
@@ -131,6 +173,20 @@ export class AdminManagementComponent implements OnInit {
     this.formTitle = 'Registar nuevo administrador';
     this.buttonContent = 'Aceptar';
     this.form.reset();
+    this.form.get('password')?.setValidators([Validators.required, Validators.minLength(5)]);
+    this.form.get('password')?.updateValueAndValidity();
+    this.form.get('repeatedPassword')?.setValidators([Validators.required]);
+    this.form.get('repeatedPassword')?.updateValueAndValidity();
     this.idToUpdate = '';
+    this.formScope = 'create'
+  }
+
+  initToast(res : ApiResponse) : void {
+    this.toastService.setup({
+      message: res.message,
+      status: !res.error
+    })
+
+    this.toastService.show()
   }
 }
