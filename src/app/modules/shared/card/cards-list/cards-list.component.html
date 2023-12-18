@@ -1,7 +1,3 @@
-<div class="">
-  <section class="flex flex-col items-center lg:flex-row lg:flex-wrap lg:justify-start py-10 lg:pl-10">
-    <app-card class="card-custom" *ngFor="let prop of propertiesList" [propertyInfo]="prop"></app-card>
-  </section>
-</div>
-
-<!-- flex flex-col items-center lg:flex-row p-10 gap-10 lg:flex-wrap -->
+<section class="grid grid-cols-[repeat(auto-fit,_minmax(384px,_1fr))] gap-4 justify-items-center max-w-[1600px] m-auto">
+    <app-card *ngFor="let prop of propertiesList" [propertyInfo]="prop"></app-card>
+</section>
