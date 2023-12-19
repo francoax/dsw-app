@@ -26,6 +26,7 @@ export class MedicalAssistanceComponent implements OnInit {
   _id = new FormControl('');
   description = new FormControl('', Validators.required);
   coverageType = new FormControl('', Validators.required);
+  price = new FormControl('', Validators.required);
   public registros: MedicalAssistance[] = [];
   public mod = 'add';
   public collapse = false;
@@ -40,6 +41,7 @@ export class MedicalAssistanceComponent implements OnInit {
     _id: this._id,
     description: this.description,
     coverageType: this.coverageType,
+    price: this.price,
   });
 
   constructor(
@@ -62,6 +64,7 @@ export class MedicalAssistanceComponent implements OnInit {
     const medAsist: MedicalAssistanceRequest = {
       description: form.value.description || '',
       coverageType: form.value.coverageType || '',
+      price: form.value.price || '',
     };
     this.medAsistService.add(medAsist).subscribe((res) => {
       if (res.error !== true) {
@@ -124,6 +127,7 @@ export class MedicalAssistanceComponent implements OnInit {
       _id: this.medicalAssistForm.value._id || '',
       description: this.medicalAssistForm.value.description || '',
       coverageType: this.medicalAssistForm.value.coverageType || '',
+      price: Number(this.medicalAssistForm.value.price) || 1000,
     };
 
     this.medAsistService.edit(medAsist).subscribe((res) => {

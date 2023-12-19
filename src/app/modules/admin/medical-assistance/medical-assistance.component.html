@@ -1,10 +1,10 @@
 <div class="collapse bg-base-200 collapse-dsw" [class.collapse-open]="collapse" [class.collapse-close]="!collapse">
   <input type="checkbox" (click)="toggleCollapse()"/> 
   <div class="collapse-title text-xl font-medium"  >
-    {{mod == 'add' ? 'Agregar registro' :'Modificar registro'}}
+    {{mod === 'add' ? 'Agregar registro' :'Modificar registro'}}
   </div>
   <div class="collapse-content"> 
-    <form [formGroup]="medicalAssistForm" (ngSubmit)="mod == 'add' ? add(medicalAssistForm) : modify()">
+    <form [formGroup]="medicalAssistForm" (ngSubmit)="mod === 'add' ? add(medicalAssistForm) : modify()">
       <app-input [label]="'Descripción'"
                   [placeholder]="'Descripción'"
                   [required]="true"
@@ -15,8 +15,13 @@
                   [required]="true"
                   [inputControl]="coverageType">
       </app-input>
+      <app-input [label]="'Precio'"
+                  [placeholder]="'Por ejemplo, 1000'"
+                  [required]="true"
+                  [inputControl]="price">
+      </app-input>
       <app-button [classType]="'primary'" [type]="'submit'">
-        <span>{{mod == 'add' ? 'Agregar' : 'Modificar'}}</span>
+        <span>{{mod === 'add' ? 'Agregar' : 'Modificar'}}</span>
       </app-button>
       <app-button class="ml-2" [classType]="'primary'" [type]="'button'" (click)="cancel()">
         <span>Cancelar</span>
@@ -32,6 +37,7 @@
         <th>ID</th> 
         <th>Descripcion</th> 
         <th>Tipo de cobertura</th> 
+        <th>Precio</th>
         <th>Acciones</th> 
       </tr>
     </thead> 
@@ -39,7 +45,8 @@
       <tr *ngFor="let reg of registros">
         <td>{{reg._id}}</td>
         <td>{{reg.description}}</td> 
-        <td>{{reg.coverageType}}</td> 
+        <td>{{reg.coverageType}}</td>
+        <td>{{reg.price}}</td>
         <td>          
           <button class="btn" onclick="my_modal.showModal()" (click)="onModify(reg)"> 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
