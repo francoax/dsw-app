@@ -14,8 +14,6 @@ import { PropertyV2 } from 'src/app/models/property';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { Router } from '@angular/router';
 
-import { Carousel, initTE } from 'tw-elements';
-
 interface PackageFull {
   id: string;
   type: string;
@@ -54,7 +52,6 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       });
     }
-    initTE({ Carousel });
   }
 
   goToReserve(id: string) {
