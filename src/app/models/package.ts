@@ -1,10 +1,11 @@
 interface Package {
   id: string;
+  _id: string;
   type: string;
   property: string;
   car: string;
   medicalAssistance: string;
-  nameImage:string;
+  nameImage: string;
 }
 
 export interface PackageAgent {

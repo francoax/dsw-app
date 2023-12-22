@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PropertyV2 } from 'src/app/models/property';
 import { ToastService } from '../toast/toast.service';
 import { Router } from '@angular/router';
@@ -9,12 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./card.component.scss'],
 })
 export class CardComponent {
-  @Input() propertyInfo! : PropertyV2
+  @Input() propertyInfo!: PropertyV2;
 
-  constructor(
-    private toast: ToastService,
-    private router: Router,
-  ) {}
+  constructor(private toast: ToastService, private router: Router) {}
 
   reserve(id: string) {
     if (!localStorage.getItem('loggedUser')) {

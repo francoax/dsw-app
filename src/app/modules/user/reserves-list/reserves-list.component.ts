@@ -23,7 +23,7 @@ interface ReserveDetails {
   dateStart: string;
   dateEnd: string;
   price: number;
-  imageUrl: string;
+  image: string;
 }
 
 interface PropertyResponse {
@@ -83,7 +83,7 @@ export class ReservesListComponent implements OnInit {
       dateStart: '',
       dateEnd: '',
       price: 0,
-      imageUrl: '',
+      image: '',
     };
     reserveDetails.id = reserve._id as string;
 
@@ -95,7 +95,7 @@ export class ReservesListComponent implements OnInit {
         const medAssist: MedicalAssistance = response.data.medicalAssistance;
 
         reserveDetails.propertyAddress = property.address;
-        reserveDetails.imageUrl = `${this.appService.apiUrl}/api/images/${property.image}`;
+        reserveDetails.image = property.image;
 
         reserveDetails.car = `${car.brand} ${car.model}`;
 
