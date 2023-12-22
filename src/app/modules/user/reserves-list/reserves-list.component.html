@@ -2,13 +2,13 @@
 <div class="mx-12">
   <h1 class="text-3xl py-4">Listado de reservas</h1>
   <form
-    class="flex flex-row items-center gap-4"
+    class="flex flex-row items-center gap-4 py-3 pl-3 bg-slate-900 rounded-lg lg:w-1/2"
     [formGroup]="dateFilterForm"
     (ngSubmit)="filterReserves()"
   >
     <span class="text-xl">Filtrar por fecha </span>
     <div>
-      <label class="label cursor-pointer">
+      <label class="label cursor-pointer gap-2">
         <span class="label-text">Fecha inicio</span>
         <input
           type="radio"
@@ -20,7 +20,7 @@
       </label>
     </div>
     <div>
-      <label class="label cursor-pointer">
+      <label class="label cursor-pointer gap-2">
         <span class="label-text">Fecha fin</span>
         <input
           type="radio"
@@ -107,12 +107,8 @@
               <div class="avatar">
                 <div class="mask mask-squircle w-12 h-12">
                   <img
-                    [src]="
-                      reserve.imageUrl.includes('undefined')
-                        ? './assets/img/house.png'
-                        : reserve.imageUrl
-                    "
-                    alt="Reserve picture"
+                    [src]="reserve.image"
+                    alt="Imagen de la propiedad reservada"
                   />
                 </div>
               </div>
@@ -133,16 +129,21 @@
           </td>
           <td>{{ reserve.dateStart | date }} - {{ reserve.dateEnd | date }}</td>
           <td>{{ reserve.price | currency : "USD" : "code" }}</td>
-          <th>
-            <button
-              class="btn btn-ghost btn-xs"
-              [id]="reserve.id"
-              [disabled]="checkCurrentReserve(reserve)"
-              (click)="openModal($event)"
+          <td>
+            <div
+              [ngClass]="checkCurrentReserve(reserve) ? 'tooltip' : ''"
+              data-tip="Esta reserva está en curso o ya finalizó"
             >
-              Cancelar reserva
-            </button>
-          </th>
+              <button
+                class="btn btn-ghost btn-xs"
+                [id]="reserve.id"
+                [disabled]="checkCurrentReserve(reserve)"
+                (click)="openModal($event)"
+              >
+                Cancelar reserva
+              </button>
+            </div>
+          </td>
         </tr>
       </tbody>
       <!-- foot -->
