@@ -69,7 +69,7 @@
 }
 
 .container-carousel {
-  padding: 0 5rem;
+  padding: 0 2.5rem;
 }
 
 .navigation-wrapper {
@@ -135,25 +135,25 @@ img {
   position: relative;
 }
 .btn-carousel {
-  background-color: white;
-  color: black;
+  // background-color: rgb(204, 0, 0);
+  // color: black;
   position: absolute;
   top: 20%;
   left: 10%;
   // padding: 10px;
-  border-radius: 5px;
+  // border-radius: 5px;
 }
 
-.btn-carousel:hover {
-  background-color: white;
-  color: black;
-  position: absolute;
-  top: 20%;
-  left: 10%;
-  transform: scale(1.05);
-  // padding: 10px;
-  border-radius: 5px;
-}
+// .btn-carousel:hover {
+//   background-color: white;
+//   color: black;
+//   position: absolute;
+//   top: 20%;
+//   left: 10%;
+//   transform: scale(1.05);
+//   // padding: 10px;
+//   border-radius: 5px;
+// }
 .card-carousel {
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
