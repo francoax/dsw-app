@@ -13,4 +13,5 @@ export class InputComponent {
   @Input() required = false;
   @Input() readonly = false;
   @Input() inputControl!: FormControl;
+  @Input() min = '';
 }

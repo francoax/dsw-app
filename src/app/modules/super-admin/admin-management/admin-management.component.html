@@ -17,7 +17,12 @@
               <app-input [inputControl]="$any(form.get('email'))" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
             </div>
             <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('password'))" [type]="'password'" [label]="'Contraseña *'" [placeholder]="'**********'"></app-input>
+              <app-input
+                [inputControl]="$any(form.get('password'))"
+                [type]="'password'"
+                [label]="formScope === 'create' ? 'Contraseña *' : 'Nueva contraseña (opcional)'"
+                [placeholder]="'**********'">
+              </app-input>
             </div>
             <div class="mt-2">
               <app-input [inputControl]="$any(form.get('repeatedPassword'))" [type]="'password'" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>

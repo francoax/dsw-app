@@ -1,143 +1,225 @@
-<div class="container-reserve">
-  <form
-    class="form-container"
-    [formGroup]="reserveForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <section class="reserve-entry">
-      <h2 class="title">
-        Se ha seleccionado para reserva la propiedad perteneciente a
-        <span>{{ package.property.location }}</span>
-      </h2>
-      <div class="data-entry">
-        <div class="selects">
-          <div
-            tabindex="0"
-            class="collapse collapse-arrow border border-base-300 bg-base-200"
-          >
-            <div class="collapse-title text-xl font-medium">Auto incluido</div>
-            <div class="collapse-content">
-              <p>
-                {{ package.car.brand + " " + package.car.model }}<br />
-                {{
-                  "Año: " +
-                    package.car.year +
-                    " - Patente: " +
-                    package.car.plate
-                }}
-              </p>
-            </div>
-          </div>
-          <div
+<!-- eslint-disable max-len -->
+<ng-container *ngIf="isLoading$ | async; else completed">
+  <app-reserve-skeleton></app-reserve-skeleton>
+</ng-container>
+<ng-template #completed>
+  <div class="container-reserve">
+    <form
+      class="form-container"
+      [formGroup]="reserveForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <section class="reserve-entry">
+        <h2 class="title">
+          Se ha seleccionado para reserva la propiedad perteneciente a
+          <span>{{ package.property.location }}</span>
+        </h2>
+        <div class="data-entry">
+          <div class="selects">
+            <!-- <div
             tabindex="0"
             class="collapse collapse-arrow border border-base-300 bg-base-200"
           >
             <div class="collapse-title text-xl font-medium">
-              Asistencia médica incluida
+              Detalles de la propiedad
             </div>
             <div class="collapse-content">
               <p>
-                {{
-                  package.medicalAssistance.description +
-                    " Tipo " +
-                    package.medicalAssistance.coverageType
-                }}
+                {{ "Dirección: " + package.property.address }}<br />
+                {{ "Localidad: " + package.property.location }}<br />
+                {{ "Capacidad: " + package.property.capacity + " personas" }}
+              </p>
+            </div>
+          </div> -->
+            <div
+              tabindex="0"
+              class="collapse collapse-arrow border border-base-300 bg-base-200"
+            >
+              <div class="collapse-title text-xl font-medium">
+                Auto incluido
+              </div>
+              <div class="collapse-content">
+                <p>
+                  {{ package.car.brand + " " + package.car.model }}<br />
+                  {{
+                    "Año: " +
+                      package.car.year +
+                      " - Patente: " +
+                      package.car.plate
+                  }}
+                </p>
+              </div>
+            </div>
+            <div
+              tabindex="0"
+              class="collapse collapse-arrow border border-base-300 bg-base-200"
+            >
+              <div class="collapse-title text-xl font-medium">
+                Asistencia médica incluida
+              </div>
+              <div class="collapse-content">
+                <p>
+                  {{
+                    package.medicalAssistance.description +
+                      " Tipo " +
+                      package.medicalAssistance.coverageType
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div id="dates" class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
+            <label for="">Check in</label>
+            <app-input
+              [placeholder]="'Check in'"
+              [type]="'date'"
+              [min]="todayDate()"
+              [inputControl]="checkIn"
+            >
+            </app-input>
+            <label for="">Check out</label>
+            <app-input
+              [placeholder]="'Check in'"
+              [type]="'date'"
+              [min]="todayDate()"
+              [inputControl]="checkOut"
+            >
+            </app-input>
+            <span
+              *ngIf="
+                reserveForm.hasError('invalidDate') &&
+                reserveForm.get('checkIn')?.touched
+              "
+              class="label-text-alt text-red-500"
+            >
+              CheckIn debe de ser menor a CheckOut
+            </span>
+          </div>
+        </div>
+        <div class="divider text-base leading-6">Datos sobre la propiedad</div>
+        <div class="flex flex-col gap-5 sm:w-md lg:w-full">
+          <ul
+            class="mt-6 grid grid-cols-1 justify-items-center gap-4 text-sm leading-6 text-gray-300 sm:grid-cols-3 sm:gap-6"
+          >
+            <li>Dirección : {{ package.property.address }}</li>
+            <li>Ubicación: {{ package.property.location }}</li>
+            <li>Capacidad: {{ package.property.capacity }} personas</li>
+          </ul>
+          <div class="divider text-base leading-6">Preguntas frecuentes</div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" checked="checked" />
+            <div class="collapse-title text-xl font-medium">
+              Que hacer luego de una reserva?
+            </div>
+            <div class="collapse-content">
+              <p>
+                Luego de que haya confirmado su reserva, nos estaremos
+                comunicando con usted via mail y/o teléfono para proceder con el
+                proceso de residencia. En la misma, se le explicara reglas
+                basicas que se deben cumplir durante la estadia.
+              </p>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" />
+            <div class="collapse-title text-xl font-medium">
+              Que cubren las asistencias medicas?
+            </div>
+            <div class="collapse-content">
+              <p>
+                Gracias a la confianza de nuestros afiliados, podemos ofrecer
+                una cobertura completa ante cualquier caso extremo. Puede
+                sentirse seguro al 100% durante su estadia.
+              </p>
+            </div>
+          </div>
+          <div class="collapse bg-base-200">
+            <input type="radio" name="my-accordion-1" />
+            <div class="collapse-title text-xl font-medium">
+              En caso de alquilar un vehiculo, que uso puedo darle?
+            </div>
+            <div class="collapse-content">
+              <p>
+                Nuestros vehiculos estan para satisfacer cualquier demanda que
+                usted necesite. No establecemos un limite en su uso, pero si
+                ocurre algun daño al mismo, debera hacerse cargo de los gastos.
+                No cubrimos los daños causados por nuestros clientes.
+                Recomendamos el cuidado del mismo, tanto para usted como para
+                nosotros.
               </p>
             </div>
           </div>
         </div>
-        <div id="dates" class="max-w-md bg-gray-800 rounded-lg shadow-md p-6">
-          <label for="">Check in</label>
-          <app-input
-            [placeholder]="'Check in'"
-            [type]="'date'"
-            [inputControl]="checkIn"
-          >
-          </app-input>
-          <label for="">Check out</label>
-          <app-input
-            [placeholder]="'Check in'"
-            [type]="'date'"
-            [inputControl]="checkOut"
-          >
-          </app-input>
-          <span
-            *ngIf="
-              reserveForm.hasError('invalidDate') &&
-              reserveForm.get('checkIn')?.touched
-            "
-            class="label-text-alt text-red-500"
-          >
-            CheckIn debe de ser menor a CheckOut
-          </span>
-        </div>
-      </div>
-    </section>
-    <section class="reserve-info">
-      <div class="divider">Informacion de reserva</div>
-      <div
-        class="carousel h-96 carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box"
-      >
-        <div class="carousel-item w-full h-full">
-          <img src="../../../../assets/img/depto.jpg" alt="" />
-        </div>
-        <div class="carousel-item w-full h-full">
-          <img src="../../../../assets/img/hilux.webp" alt="" />
-        </div>
-      </div>
-      <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
-        <p>
-          Propiedad
-          <span
-            >Valor por noche:
-            {{
-              package.property.pricePerNight.price | currency : "USD" : "code"
-            }}</span
-          >
-        </p>
-        <p>
-          Auto
-          <span
-            >{{ package.car.brand + " " + package.car.model }}
-            {{ package.car.price.value | currency : "USD" : "code" }}</span
-          >
-        </p>
-        <p>
-          Asistencia medica
-          <span
-            >{{
-              package.medicalAssistance.description || "Sin asistencia medica"
-            }}
-            {{ package.medicalAssistance.coverageType }}</span
-          >
-        </p>
-        <p>
-          CheckIn
-          <span>{{ checkIn.value | date : "MMMM d, y" }}</span>
-        </p>
-        <p>
-          CheckOut
-          <span>{{ checkOut.value | date : "MMMM d, y" }}</span>
-        </p>
-        <div class="divider"></div>
-        <p>
-          Total
-          <span>{{ totalPrice | currency : "USD" : "code" }}</span>
-        </p>
-        <app-button
-          class="btn-submit"
-          [type]="'submit'"
-          [classType]="'primary'"
+      </section>
+      <section class="reserve-info">
+        <div class="divider">Informacion de reserva</div>
+        <div
+          class="carousel h-96 carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box"
         >
-          Reservar
-        </app-button>
-      </div>
-    </section>
-  </form>
-  <confirmation-modal #confirmationModal (confirmationEvent)="confirmReserve()">
-    <ng-container modal-title>Confirmar reserva</ng-container>
-    <ng-container modal-message
-      >Usted esta a punto de reservar la propiedad
-    </ng-container>
-  </confirmation-modal>
-</div>
+          <div class="carousel-item w-full h-full">
+            <img src="../../../../assets/img/depto.jpg" alt="" />
+          </div>
+          <div class="carousel-item w-full h-full">
+            <img src="../../../../assets/img/hilux.webp" alt="" />
+          </div>
+        </div>
+        <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
+          <p>
+            Propiedad
+            <span
+              >Valor por noche:
+              {{
+                package.property.pricePerNight.price | currency : "USD" : "code"
+              }}</span
+            >
+          </p>
+          <p>
+            Auto
+            <span
+              >{{ package.car.brand + " " + package.car.model }}
+              {{ package.car.price.value | currency : "USD" : "code" }}</span
+            >
+          </p>
+          <p>
+            Asistencia medica
+            <span
+              >{{
+                package.medicalAssistance.description || "Sin asistencia medica"
+              }}
+              {{ package.medicalAssistance.coverageType }}</span
+            >
+          </p>
+          <p>
+            CheckIn
+            <span>{{ checkIn.value | date : "MMMM d, y" }}</span>
+          </p>
+          <p>
+            CheckOut
+            <span>{{ checkOut.value | date : "MMMM d, y" }}</span>
+          </p>
+          <div class="divider"></div>
+          <p>
+            Total
+            <span>{{ totalPrice | currency : "USD" : "code" }}</span>
+          </p>
+          <app-button
+            class="btn-submit"
+            [type]="'submit'"
+            [classType]="'primary'"
+          >
+            Reservar
+          </app-button>
+        </div>
+      </section>
+    </form>
+    <confirmation-modal
+      #confirmationModal
+      (confirmationEvent)="confirmReserve()"
+    >
+      <ng-container modal-title>Confirmar reserva</ng-container>
+      <ng-container modal-message
+        >Usted esta a punto de reservar la propiedad
+      </ng-container>
+    </confirmation-modal>
+  </div>
+</ng-template>

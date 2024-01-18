@@ -14,6 +14,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
+    window.scroll(0, 0);
     this.route.queryParams.subscribe((params) => {
       const action = params['action'];
       const status = params['status'];

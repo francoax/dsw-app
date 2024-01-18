@@ -14,6 +14,15 @@ import { PropertyV2 } from 'src/app/models/property';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { Router } from '@angular/router';
 
+interface PackageFull {
+  id: string;
+  type: string;
+  car: Car;
+  medicalAssist: MedicalAssistance;
+  property: PropertyV2;
+  nameImage: string;
+}
+
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
@@ -24,43 +33,25 @@ import { Router } from '@angular/router';
 })
 export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() packageList: Package[] | undefined;
-  packageCompletos: Package[] = [];
-  @Input() propertyList: PropertyV2[] | undefined;
-  @Input() carList: Car[] | undefined;
-  @Input() asistMedList: MedicalAssistance[] | undefined;
+  packageFull: PackageFull[] = [];
 
   constructor(private readonly router: Router) {}
 
   ngOnInit(): void {
     if (this.packageList !== undefined) {
-      this.packageCompletos = this.packageList.filter(
-        (p) => p.type === 'completo'
-      );
-    }
-  }
+      this.packageList = this.packageList.filter((p) => p.type === 'completo');
 
-  getPropertyAddress(id: string): string {
-    if (this.propertyList !== undefined) {
-      const property = this.propertyList.find((p) => p._id === id);
-      return property?.address || '';
+      this.packageList.forEach((p) => {
+        this.packageFull.push({
+          id: p.id,
+          type: p.type,
+          car: p.car as unknown as Car,
+          medicalAssist: p.medicalAssistance as unknown as MedicalAssistance,
+          property: p.property as unknown as PropertyV2,
+          nameImage: p.nameImage,
+        });
+      });
     }
-    return '';
-  }
-
-  getAssistMed(id: string): string {
-    if (this.asistMedList !== undefined) {
-      const asistMed = this.asistMedList.find((a) => a._id === id);
-      return asistMed ? asistMed.description + ' ' + asistMed.coverageType : '';
-    }
-    return '';
-  }
-
-  getCar(id: string): string {
-    if (this.carList !== undefined) {
-      const car = this.carList.find((c) => c.id === id);
-      return car ? car.brand + ' ' + car.model : '';
-    }
-    return '';
   }
 
   goToReserve(id: string) {
