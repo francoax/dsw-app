@@ -68,13 +68,14 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('sliderRef') sliderRef!: ElementRef<HTMLElement>;
 
-  currentSlide = 1;
+  currentSlide = 0;
   dotHelper: Array<number> = [];
-  slider: KeenSliderInstance | null = null;
+  slider!: KeenSliderInstance;
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.slider = new KeenSlider(this.sliderRef.nativeElement, {
+        loop: true,
         initial: this.currentSlide,
         slideChanged: (s) => {
           this.currentSlide = s.track.details.rel;
@@ -86,10 +87,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.slider) {
-      this.slider.destroy();
-    }
+  ngOnDestroy() {
     if (this.slider) this.slider.destroy();
   }
 }

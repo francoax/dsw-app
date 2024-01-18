@@ -1,5 +1,5 @@
 <div class="card card-compact w-96 bg-base-100 shadow-xl">
-  <figure><img [src]="propertyInfo.image" alt="property" /></figure>
+  <figure><img loading="lazy" [src]="propertyInfo.image" alt="property" /></figure>
   <div class="card-body">
     <h2 class="card-title text-lg border-solid border-b-2 border-slate-500 truncate">
       {{ propertyInfo.location.name }}
