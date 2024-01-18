@@ -1,4 +1,4 @@
-import { PropertyType } from "./property-type";
+import { PropertyType } from './property-type';
 
 export interface Property {
   _id: string;
@@ -7,7 +7,7 @@ export interface Property {
   pricePerNight: PricePerNight;
   propertyType: string;
   location: {
-    id : string,
+    id: string;
     name: string;
   };
   image: File;
@@ -24,7 +24,8 @@ export interface PropertyV2 {
   pricePerNight: PricePerNight;
   propertyType: PropertyType;
   location: {
-    _id: string,
+    _id: string;
+    id: string;
     name: string;
   };
   image: string;
