@@ -24,6 +24,7 @@ export interface PropertyV2 {
   pricePerNight: PricePerNight;
   propertyType: PropertyType;
   location: {
+    _id: string;
     id: string;
     name: string;
   };
