@@ -186,9 +186,8 @@
               >{{
                 package.medicalAssistance.description || "Sin asistencia medica"
               }}
-              {{ package.medicalAssistance.coverageType }}
-              {{'Valor '+package.medicalAssistance.price}}</span
-            >
+              {{ package.medicalAssistance.coverageType }}</span>
+              <span>{{'Valor '+(package.medicalAssistance.price || 0)}}</span>
           </p>
           <p>
             CheckIn
