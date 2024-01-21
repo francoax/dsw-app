@@ -21,14 +21,10 @@ export class CustomReserveDataService {
   initReserveData(propertyId: string): Observable<any[]> {
     return this.propertiesService.getProperty(propertyId).pipe(
       switchMap(({ data }) => {
-        console.log(data)
+        console.log(data);
         this.property = data;
         const cars$ = this.carsService.getCarsFromLocation(
-<<<<<<< HEAD
-          this.property.location.id || this.property.location._id
-=======
           this.property.location._id || this.property.location.id
->>>>>>> dev
         );
         const medicalAssistances$ = this.medicalService.getAll();
         return forkJoin([cars$, medicalAssistances$]);
