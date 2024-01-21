@@ -24,7 +24,11 @@ export class CustomReserveDataService {
         console.log(data)
         this.property = data;
         const cars$ = this.carsService.getCarsFromLocation(
+<<<<<<< HEAD
           this.property.location.id || this.property.location._id
+=======
+          this.property.location._id || this.property.location.id
+>>>>>>> dev
         );
         const medicalAssistances$ = this.medicalService.getAll();
         return forkJoin([cars$, medicalAssistances$]);
