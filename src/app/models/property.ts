@@ -26,7 +26,6 @@ export interface PropertyV2 {
   location: {
     _id: string;
     id: string;
-    _id: string,
     name: string;
   };
   image: string;
