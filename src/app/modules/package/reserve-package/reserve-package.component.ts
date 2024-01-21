@@ -164,4 +164,8 @@ export class ReservePackageComponent implements OnInit {
       },
     });
   }
+
+  back() {
+    this.router.navigate(['/']);
+  }
 }

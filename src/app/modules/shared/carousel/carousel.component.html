@@ -3,96 +3,32 @@
 <div class="container-carousel">
   <div class="navigation-wrapper rounded-2xl">
     <div
-      class="keen-slider keen-slider--vertical h-[300px] rounded-2xl"
+      class="keen-slider keen-slider--vertical shadow-none h-auto sm:h-[350px]  rounded-[5px]"
       #sliderRef
     >
-      <div
-        *ngFor="let package of packageFull; let i = index"
-        class="keen-slider__slide number-slide{{ i + 1 }}"
-      >
-        <img
-          src="../../../../assets/img/mendoza.jpg"
-          alt="Imágen del paquete"
-        />
-        <button
-          class="btn btn-carousel"
-          onclick="modal_register.showModal()"
-          *ngIf="!userLogged()"
-        >
-          Reservar Paquete
-        </button>
-        <button
-          class="btn btn-carousel"
-          (click)="goToReserve(package.id)"
-          *ngIf="userLogged()"
-        >
-          Reservar Paquete
-        </button>
-        <div class="card-carousel">
-          <div class="card-body">
+      <div *ngFor="let package of packageFull; let i = index">
+        <div class="keen-slider__slide number-slide">
+          <img src="../../../../assets/img/mendoza.jpg" alt="Imágen del paquete"/>
+          <button
+            class="btn btn-primary text-white text-sm bg-red-500 border-red-500 hover:[bg-red-500, border-red-500] btn-carousel"
+            onclick="modal_register.showModal()"
+            *ngIf="!userLogged()"
+          >
+            Reservar Paquete
+          </button>
+          <button
+            class="btn btn-primary text-white text-sm bg-red-500 border-red-500 hover:[bg-red-500, border-red-500] btn-carousel"
+            (click)="goToReserve(package.id)"
+            *ngIf="userLogged()"
+          >
+            Reservar Paquete
+          </button>
+          <div class="card-carousel">
             <ul>
-              <li>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
-                  />
-                </svg>
-                {{ package.property.address }}
-              </li>
-              <li>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"
-                  />
-                </svg>
-
-                {{ package.car.brand + " " + package.car.model }}
-              </li>
-              <li>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M16.712 4.33a9.027 9.027 0 011.652 1.306c.51.51.944 1.064 1.306 1.652M16.712 4.33l-3.448 4.138m3.448-4.138a9.014 9.014 0 00-9.424 0M19.67 7.288l-4.138 3.448m4.138-3.448a9.014 9.014 0 010 9.424m-4.138-5.976a3.736 3.736 0 00-.88-1.388 3.737 3.737 0 00-1.388-.88m2.268 2.268a3.765 3.765 0 010 2.528m-2.268-4.796a3.765 3.765 0 00-2.528 0m4.796 4.796c-.181.506-.475.982-.88 1.388a3.736 3.736 0 01-1.388.88m2.268-2.268l4.138 3.448m0 0a9.027 9.027 0 01-1.306 1.652c-.51.51-1.064.944-1.652 1.306m0 0l-3.448-4.138m3.448 4.138a9.014 9.014 0 01-9.424 0m5.976-4.138a3.765 3.765 0 01-2.528 0m0 0a3.736 3.736 0 01-1.388-.88 3.737 3.737 0 01-.88-1.388m2.268 2.268L7.288 19.67m0 0a9.024 9.024 0 01-1.652-1.306 9.027 9.027 0 01-1.306-1.652m0 0l4.138-3.448M4.33 16.712a9.014 9.014 0 010-9.424m4.138 5.976a3.765 3.765 0 010-2.528m0 0c.181-.506.475-.982.88-1.388a3.736 3.736 0 011.388-.88m-2.268 2.268L4.33 7.288m6.406 1.18L7.288 4.33m0 0a9.024 9.024 0 00-1.652 1.306A9.025 9.025 0 004.33 7.288"
-                  />
-                </svg>
-
-                {{
-                  package.medicalAssist.description +
-                    " " +
-                    package.medicalAssist.coverageType
-                }}
-              </li>
+              <li><span>Cobertura medica:</span> {{package.medicalAssist.description}}.</li>
+              <li><span>Auto incluido:</span> {{package.car.brand}} {{package.car.model}}.</li>
+              <li><span>Ubicacion:</span> {{package.property.location.name}}.</li>
+              <li><span>Para</span> {{package.property.capacity}} <span>personas</span>.</li>
             </ul>
           </div>
         </div>
@@ -102,7 +38,7 @@
       [ngClass]="
         'arrow arrow--left ' + (currentSlide === 0 ? 'arrow--disabled' : '')
       "
-      (click)="slider?.prev()"
+      (click)="slider.prev()"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -125,13 +61,6 @@
       <path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z" />
     </svg>
   </div>
-  <div class="dots">
-    <button
-      (click)="slider?.moveToIdx(i)"
-      *ngFor="let slide of dotHelper; let i = index"
-      [class]="'dot ' + (i === currentSlide ? 'active' : '')"
-    ></button>
-  </div>
 </div>
 
 <dialog id="modal_register" class="modal d-none">
@@ -140,7 +69,6 @@
     <p class="py-4">Debe iniciar sesión si quiere reservar</p>
     <div class="modal-action">
       <form method="dialog">
-        <!-- if there is a button in form, it will close the modal -->
         <button class="btn">Cerrar</button>
       </form>
     </div>
