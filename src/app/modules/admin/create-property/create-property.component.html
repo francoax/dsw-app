@@ -7,56 +7,52 @@
       {{formTitle}}
   </div>
   <div class="collapse-content">
-      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
-        <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
-        <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
-        <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
-        <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-        <div>
-          <div>
-          <label>Localidad</label>
-          </div>
-          <select name="'Locality'" class="select select-bordered w-full max-w-xs" [formControl]="locality">
-            <option *ngFor="let loca of localities" [value]="loca.id">{{loca.name}}</option>
-          </select> 
+    <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
+      <div class="grid grid-cols-[repeat(2,_minmax(320px,_1fr))] gap-1 w-[50%]">
+        <div class="flex flex-col">
+          <label [ngClass]="{
+              'text-red-500' : propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched
+            }" class="label">Localidad</label>
+          <select [ngClass]="{
+              'border-red-500' : propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched
+            }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'location'">
+            <option selected disabled>Seleccionar localidad</option>
+            <option *ngFor="let locality of localities" [value]="locality.id">{{locality.name}}</option>
+          </select>
+          <span *ngIf="propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
         </div>
-        <div>
-          <div>
-          <label>Propiedades</label>
-          </div>
-          <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
-            <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
-          </select> 
+        <div class="flex flex-col">
+          <label [ngClass]="{
+              'text-red-500' : propertyForm.get('propertyType')?.errors !== null && propertyForm.get('propertyType')?.touched
+            }" class="label">Tipo de propiedad</label>
+          <select [ngClass]="{
+              'border-red-500' : propertyForm.get('propertyType')?.errors !== null && propertyForm.get('propertyType')?.touched
+            }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'propertyType'">
+            <option selected disabled>Seleccionar tipo de propiedad</option>
+            <option *ngFor="let propType of propertiesTypes" [value]="propType._id">{{propType.description}}</option>
+          </select>
+          <span *ngIf="propertyForm.get('propertyType')?.errors !== null && propertyForm.get('propertyType')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
         </div>
-
-        <input class="input input-bordered w-full max-w-xs" type="file" (change)="onFileSelected($event)">  
-
-        <div>
-        <app-button [type]="'submit'" [classType]="'primary'" >
-          {{buttonContent}}
-        </app-button>
+        <app-input [placeholder]="''" [label]="'Direccion'" [inputControl]="$any(propertyForm.get('address'))"></app-input>
+        <app-input [placeholder]="''" [label]="'Capacidad de personas'" [inputControl]="$any(propertyForm.get('capacity'))"></app-input>
+        <app-input [placeholder]="''" [label]="'Precio por noche'" [inputControl]="$any(propertyForm.get('pricePerNight'))"></app-input>
+      </div>
+      <div class="flex-co">
+        <label class="label">Imagen (MAX 4.5MB)</label>
+        <input [ngClass]="{
+          'border-red-500' : propertyForm.get('image')?.errors !== null && propertyForm.get('image')?.touched
+        }" class="file-input file-input-bordered w-full max-w-xs" formControlName="image" id="image" type="file" (change)="onFileChange($event)">
+        <span *ngIf="propertyForm.get('image')?.errors !== null && propertyForm.get('image')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
+      </div>
+      <div class="flex gap-6 mt-6">
         <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
           Cancelar
         </app-button>
-        </div>
-      </form>
+        <app-button [type]="'submit'" [classType]="'primary'" >
+          {{buttonContent}}
+        </app-button>
+      </div>
+    </form>
     </div>
 </div>
 <app-property-list [properties]="properties" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-property-list>
-
-
-  <!-- 
-    <app-sidebar [buttonsList]="[{ name: 'CreateProperty', path:'CreateProperty'}]">
-      <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()">
-        <app-input [label]="'capacity'" [placeholder]="'capacity'" [required]="true" [inputControl]="capacity"></app-input>
-        <app-input [label]="'address'" [placeholder]="'address'" [required]="true" [inputControl]="address"></app-input>
-        <app-input [label]="'price'" [placeholder]="'price'" [required]="true" [inputControl]="price"></app-input>
-        <app-input [label]="'date'" [placeholder]="'date'" [required]="true" [inputControl]="date"></app-input>
-        <select name="'PropertyType'" class="select select-bordered w-full max-w-xs" [formControl]="propertyType">
-          <option *ngFor="let propT of propertiesTypes" [value]="propT._id">{{propT.description}}</option>
-        </select>
-        <div>
-        <app-button [content]="'Submit'" [type]="'primary'"></app-button>
-        </div>
-      </form>
-  -->

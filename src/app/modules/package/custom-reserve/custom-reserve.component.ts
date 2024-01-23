@@ -199,7 +199,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
     const totalDays = prevCalculate / (1000 * 3600 * 24) || 0;
     const carPrice = this.reserveSummary.car?.price.value || 0;
     this.reserveSummary.totalPrice =
-      carPrice + this.property.pricePerNight.price * totalDays;
+      carPrice + this.property.pricePerNight * totalDays;
   }
 
   onSubmit(form: FormGroup) {
