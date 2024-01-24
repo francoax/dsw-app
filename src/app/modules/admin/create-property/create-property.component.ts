@@ -128,6 +128,32 @@ export class CreatePropertyComponent implements OnInit {
           }
         });
     }
+
+    if (this.formScope === 'update') {
+      if (this.propertyForm.valid) {
+        this.service
+          .UpdateProperty(form.value, this.idPropToEdit)
+          .subscribe(({ message, data, error }) => {
+            if (error) {
+              this.toastService.setup({
+                message,
+                status: !error,
+              });
+              this.toastService.show();
+              return;
+            }
+
+            this.toastService.setup({
+              message,
+              status: true,
+            });
+            this.toastService.show();
+            const index = this.properties.map((p) => p._id).indexOf(data._id);
+            this.properties[index] = data;
+            this.closeForm();
+          });
+      }
+    }
   }
 
   onDelete(id: string): void {
@@ -141,20 +167,26 @@ export class CreatePropertyComponent implements OnInit {
   onUpdate(prop: Property) {
     this.formCollapse.nativeElement.checked = true;
     this.formTitle = `Editar Propiedad`;
+    this.propertyForm.get('image')?.clearValidators();
+    this.propertyForm.get('image')?.updateValueAndValidity();
     this.propertyForm.patchValue({
       capacity: prop.capacity,
       address: prop.address,
       pricePerNight: prop.pricePerNight,
       propertyType: prop.propertyType._id,
       location: prop.location._id,
+      image: prop.image,
     });
-    this.formScope = 'editar';
+    this.formScope = 'update';
     this.idPropToEdit = prop._id;
   }
   closeForm(): void {
     this.formCollapse.nativeElement.checked = false;
     this.formTitle = 'Registar nueva Propiedad';
     this.buttonContent = 'Aceptar';
+    this.formScope = 'create';
+    this.propertyForm.get('image')?.setValidators([Validators.required]);
+    this.propertyForm.get('image')?.updateValueAndValidity();
     this.propertyForm.reset();
   }
 }

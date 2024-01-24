@@ -9,8 +9,9 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Capacidad</th>
+        <th>Ubicacion</th>
         <th>Direccion</th>
+        <th>Capacidad</th>
         <th>Precio por noche</th>
         <th>Tipo de propiedad</th>
         <th></th>
@@ -19,9 +20,10 @@
     <tbody>
       <tr *ngFor="let prop of properties">
         <td>{{prop?._id}}</td>
-        <td>{{prop?.capacity}}</td>
+        <td>{{prop?.location?.name}}</td>
         <td>{{prop?.address}}</td>
-        <td>{{prop?.pricePerNight}}</td>
+        <td>{{prop?.capacity}}</td>
+        <td>{{prop?.pricePerNight | currency : "USD" : "code"}}</td>
         <td>{{prop?.propertyType?.description}}</td>
         <th>
           <div class="table-icons">

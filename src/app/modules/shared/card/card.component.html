@@ -6,7 +6,7 @@
     </h2>
     <p>{{ propertyInfo.address }}</p>
     <p>Capacidad de {{ propertyInfo.capacity }} personas</p>
-    <p>Tipo: {{ propertyInfo.propertyType.description }}</p>
+    <p>Tipo: {{ propertyInfo.propertyType?.description }}</p>
     <div class="card-actions justify-end">
       <p class="card-price ">
         {{ propertyInfo.pricePerNight | currency : "USD" : "code"}}<span> /noche</span>
