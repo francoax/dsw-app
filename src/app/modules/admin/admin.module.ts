@@ -12,6 +12,8 @@ import { AdminComponent } from './admin.component';
 import { MedicalAssistanceComponent } from './medical-assistance/medical-assistance.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
+import { PropertyTypeManagementComponent } from './property-type-management/property-type-management.component';
+import { PropTypesListComponent } from './prop-types-list/prop-types-list.component';
 
 
 
@@ -23,7 +25,9 @@ import { ToastInterceptor } from '../shared/toast/toast.interceptor';
     CarsListComponent,
     CreatePropertyComponent,
     PropertyListComponent,
-    MedicalAssistanceComponent
+    MedicalAssistanceComponent,
+    PropertyTypeManagementComponent,
+    PropTypesListComponent
     ],
   imports: [
     CommonModule,
