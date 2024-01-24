@@ -6,10 +6,10 @@
     </h2>
     <p>{{ propertyInfo.address }}</p>
     <p>Capacidad de {{ propertyInfo.capacity }} personas</p>
-    <p>Tipo: {{ propertyInfo.propertyType.description }}</p>
+    <p>Tipo: {{ propertyInfo.propertyType?.description }}</p>
     <div class="card-actions justify-end">
       <p class="card-price ">
-        {{ propertyInfo.pricePerNight.price | currency : "USD" : "code"}}<span> /noche</span>
+        {{ propertyInfo.pricePerNight | currency : "USD" : "code"}}<span> /noche</span>
       </p>
       <app-button [classType]="'primary'" (click)="reserve(propertyInfo._id)">
         Reservar

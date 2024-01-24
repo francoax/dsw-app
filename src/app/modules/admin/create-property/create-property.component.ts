@@ -2,6 +2,7 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,6 +11,7 @@ import {
 } from '@angular/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   Validators,
@@ -27,7 +29,6 @@ import { LocalityServiceService } from 'src/app/services/locality-service.servic
   styleUrls: ['./create-property.component.scss'],
 })
 export class CreatePropertyComponent implements OnInit {
-  [x: string]: any;
   propertiesTypes: PropertyType[] =
     []; /* crear modelo y pasar a :PropertyType */
   formTitle = 'Registrar nueva Propiedad';
@@ -38,11 +39,16 @@ export class CreatePropertyComponent implements OnInit {
   localities: Locality[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
+  propertyForm!: FormGroup;
+  imageUploaded!: any;
+  preview!: string;
+
   @Output() eventoListado = new EventEmitter<Property[]>();
 
   constructor(
     private service: PropertyServiceService,
     private locaServ: LocalityServiceService,
+    private readonly fb: FormBuilder,
     private readonly toastService: ToastService
   ) {}
 
@@ -56,85 +62,97 @@ export class CreatePropertyComponent implements OnInit {
     this.locaServ.getLocalities().subscribe((Response) => {
       this.localities = Response.data;
     });
+
+    this.propertyForm = this.initForm();
   }
 
-  capacity = new FormControl<number>(0, [
-    Validators.required,
-    Validators.maxLength(30),
-  ]);
-  address = new FormControl('', [
-    Validators.maxLength(50),
-    Validators.required,
-  ]);
-  price = new FormControl('', []);
-  date = new FormControl('', [Validators.required]);
-  propertyType = new FormControl('', [
-    Validators.maxLength(30),
-    Validators.required,
-  ]);
-  locality = new FormControl('', [Validators.required]);
-  image = new FormControl('');
-  selectedFile: any;
-
-  propertyForm = new FormGroup({
-    capacity: this.capacity,
-    address: this.address,
-    pricePerNight: new FormGroup({
-      price: this.price,
-      date: this.date,
-    }),
-    propertyType: this.propertyType,
-    location: this.locality,
-    image: this.image,
-  });
-
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+  initForm(): FormGroup {
+    return this.fb.group({
+      capacity: [null, [Validators.required, Validators.min(1)]],
+      address: [null, [Validators.required]],
+      pricePerNight: [null, [Validators.required]],
+      propertyType: [null, [Validators.required]],
+      location: [null, [Validators.required]],
+      image: [Blob, [Validators.required]],
+    });
   }
 
-  onSubmit(form: FormGroup) {
-    if (this.propertyForm.valid) {
-      const formData = new FormData();
-      formData.append('capacity', form.value.capacity);
-      formData.append('address', form.value.address);
-      formData.append('price', form.value.pricePerNight.price);
-      formData.append('date', form.value.pricePerNight.date);
-      formData.append('propertyType', form.value.propertyType);
-      formData.append('locality', form.value.locality);
-      formData.append('image', this.selectedFile);
-
-      if (this.formScope === 'create') {
-        this.service.createProperty(formData).subscribe((res) => {
-          this.toastService.setup({
-            message: 'Propiedad Creada',
-            status: true,
+  onFileChange(event: any) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files[0];
+      if (!file.type.startsWith('image')) {
+        this.propertyForm.get('image')?.setErrors({ required: true });
+      } else {
+        reader.onload = (e) => {
+          const imgBase64 = reader.result;
+          this.propertyForm.patchValue({
+            image: imgBase64,
           });
-          this.toastService.show();
-          this.properties.push(res.data);
-          this.closeForm();
-        });
-      } else if (this.formScope === 'editar') {
-        this.service
-          .UpdateProperty(form.value, this.idPropToEdit)
-          .subscribe((res) => {
-            this.toastService.setup({
-              message: 'Propiedad Actualizada',
-              status: true,
-            });
-            this.toastService.show();
-            const index = this.properties
-              .map((a) => a._id)
-              .indexOf(res.data._id);
-            this.properties[index] = res.data;
-            this.closeForm();
-          });
+        };
+        reader.readAsDataURL(file);
       }
-    } else {
+    }
+  }
+
+  onSubmit(form: FormGroup): void {
+    if (!this.propertyForm.valid) {
+      this.propertyForm.markAllAsTouched();
       this.toastService.setup({
-        message: 'Verifique que los datos ingresados sean validos',
+        message: 'Error, por favor revise el formulario.',
         status: false,
       });
       this.toastService.show();
+      return;
+    }
+
+    if (this.formScope === 'create') {
+      this.service
+        .createProperty(form.value)
+        .subscribe(({ message, data, error }) => {
+          if (error) {
+            this.toastService.setup({
+              message: message,
+              status: false,
+            });
+            this.toastService.show();
+          } else {
+            this.toastService.setup({
+              message: message,
+              status: true,
+            });
+            this.toastService.show();
+
+            this.closeForm();
+            this.properties.push(data);
+          }
+        });
+    }
+
+    if (this.formScope === 'update') {
+      if (this.propertyForm.valid) {
+        this.service
+          .UpdateProperty(form.value, this.idPropToEdit)
+          .subscribe(({ message, data, error }) => {
+            if (error) {
+              this.toastService.setup({
+                message,
+                status: !error,
+              });
+              this.toastService.show();
+              return;
+            }
+
+            this.toastService.setup({
+              message,
+              status: true,
+            });
+            this.toastService.show();
+            const index = this.properties.map((p) => p._id).indexOf(data._id);
+            this.properties[index] = data;
+            this.closeForm();
+          });
+      }
     }
   }
 
@@ -149,23 +167,26 @@ export class CreatePropertyComponent implements OnInit {
   onUpdate(prop: Property) {
     this.formCollapse.nativeElement.checked = true;
     this.formTitle = `Editar Propiedad`;
+    this.propertyForm.get('image')?.clearValidators();
+    this.propertyForm.get('image')?.updateValueAndValidity();
     this.propertyForm.patchValue({
       capacity: prop.capacity,
       address: prop.address,
-      pricePerNight: {
-        price: prop.pricePerNight.price.toString(),
-        date: prop.pricePerNight.date,
-      },
-      propertyType: prop.propertyType,
-      location: prop.location.name,
+      pricePerNight: prop.pricePerNight,
+      propertyType: prop.propertyType._id,
+      location: prop.location._id,
+      image: prop.image,
     });
-    this.formScope = 'editar';
+    this.formScope = 'update';
     this.idPropToEdit = prop._id;
   }
   closeForm(): void {
     this.formCollapse.nativeElement.checked = false;
     this.formTitle = 'Registar nueva Propiedad';
     this.buttonContent = 'Aceptar';
+    this.formScope = 'create';
+    this.propertyForm.get('image')?.setValidators([Validators.required]);
+    this.propertyForm.get('image')?.updateValueAndValidity();
     this.propertyForm.reset();
   }
 }

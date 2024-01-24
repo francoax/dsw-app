@@ -11,7 +11,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { PricePerNight } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
@@ -25,7 +24,7 @@ interface PackageFull {
     _id: string;
     capacity: number;
     address: string;
-    pricePerNight: PricePerNight;
+    pricePerNight: number;
     propertyType: string;
     location: string;
     image: File;
@@ -122,7 +121,7 @@ export class ReservePackageComponent implements OnInit {
         new Date(this.reserveForm.value.checkOut)
       );
       this.totalPrice =
-        days * this.package.property.pricePerNight.price +
+        days * this.package.property.pricePerNight +
         this.package.car.price.value;
     });
   }

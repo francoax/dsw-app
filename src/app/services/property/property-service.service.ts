@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Property } from '../../models/property';
+import { Property, PropertyCreation } from '../../models/property';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { ApiResponse } from '../../models/common';
@@ -34,8 +34,8 @@ export class PropertyServiceService {
     this.propertyListSubject.next(this.properties);
   }
 
-  createProperty(formData: FormData): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.baseUrl, formData);
+  createProperty(newProperty: PropertyCreation): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.baseUrl, newProperty);
   }
 
   getProperties(): Observable<ApiResponse> {

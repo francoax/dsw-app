@@ -5,7 +5,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import { PricePerNight } from 'src/app/models/property';
 import Reserve from 'src/app/models/reserve';
 import { PackageService } from 'src/app/services/package/package.service';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
@@ -30,7 +29,7 @@ interface PropertyResponse {
   id: string;
   capacity: number;
   address: string;
-  pricePerNight: PricePerNight;
+  pricePerNight: number;
   propertyType: string;
   location: string;
   image: string;
@@ -119,7 +118,7 @@ export class ReservesListComponent implements OnInit {
         };
         reserveDetails.price = this.calculateTotalPrice(
           getDays(),
-          property.pricePerNight.price,
+          property.pricePerNight,
           car.price.value
         );
 
