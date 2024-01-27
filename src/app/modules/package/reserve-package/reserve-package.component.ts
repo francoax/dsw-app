@@ -122,7 +122,8 @@ export class ReservePackageComponent implements OnInit {
       );
       this.totalPrice =
         days * this.package.property.pricePerNight +
-        this.package.car.price.value + (this.package.medicalAssistance.price|| 0);
+        this.package.car.price +
+        (this.package.medicalAssistance.price || 0);
     });
   }
 

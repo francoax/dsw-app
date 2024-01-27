@@ -119,7 +119,7 @@ export class ReservesListComponent implements OnInit {
         reserveDetails.price = this.calculateTotalPrice(
           getDays(),
           property.pricePerNight,
-          car.price.value
+          car.price
         );
 
         return reserveDetails; //aca devuelve

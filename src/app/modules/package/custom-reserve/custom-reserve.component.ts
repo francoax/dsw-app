@@ -39,16 +39,18 @@ type reserveSummary = {
   templateUrl: './custom-reserve.component.html',
   styleUrls: ['./custom-reserve.component.scss'],
 })
-export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit {
-  private skeletonSubscription : Subscription | undefined
-  private customReserveDataSubscription : Subscription | undefined
+export class CustomReserveComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
+  private skeletonSubscription: Subscription | undefined;
+  private customReserveDataSubscription: Subscription | undefined;
 
-  isLoading$ = this.skeletonService.reserveLoading$
+  isLoading$ = this.skeletonService.reserveLoading$;
   property!: PropertyV2;
   cars: Car[] = [];
   medicalAssitance: MedicalAssistance[] = [];
   form!: FormGroup;
-  hasReserves = false
+  hasReserves = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -71,13 +73,13 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private readonly packageService: PackageService,
     private readonly reserveService: ReserveService,
-    private readonly customReserveService : CustomReserveDataService,
+    private readonly customReserveService: CustomReserveDataService,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
     private readonly appService: AppConfigService,
-    private readonly skeletonService : SkeletonsService
+    private readonly skeletonService: SkeletonsService
   ) {}
 
   ngAfterViewInit(): void {
@@ -85,25 +87,25 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit(): void {
-    this.initData()
+    this.initData();
     this.router.events.subscribe(() => {
-      window.scrollTo(0,0)
-    })
+      window.scrollTo(0, 0);
+    });
   }
 
   ngOnDestroy() {
     if (this.$form) {
       this.$form.unsubscribe();
     }
-    if(this.skeletonSubscription) {
-      this.skeletonSubscription.unsubscribe()
+    if (this.skeletonSubscription) {
+      this.skeletonSubscription.unsubscribe();
     }
-    if(this.customReserveDataSubscription) {
-      this.customReserveDataSubscription.unsubscribe()
+    if (this.customReserveDataSubscription) {
+      this.customReserveDataSubscription.unsubscribe();
     }
   }
 
-  initData() : void {
+  initData(): void {
     this.skeletonService.showReserveLoading();
     let propertyId = '';
     this.activatedRoute.paramMap.subscribe({
@@ -135,9 +137,9 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
             });
         },
         error: (e) => {
-          this.toastService.setup({ message : e.message, status : false})
-          this.toastService.show()
-        }
+          this.toastService.setup({ message: e.message, status: false });
+          this.toastService.show();
+        },
       });
     this.appService.setDisplaySearchBar(false);
   }
@@ -197,14 +199,14 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
     const checkOut = new Date(this.form.get('checkOut')?.value);
     const prevCalculate = checkOut.getTime() - checkIn.getTime();
     const totalDays = prevCalculate / (1000 * 3600 * 24) || 0;
-    const carPrice = this.reserveSummary.car?.price.value || 0;
+    const carPrice = this.reserveSummary.car?.price || 0;
     this.reserveSummary.totalPrice =
       carPrice + this.property.pricePerNight * totalDays + (this.reserveSummary.medicalAssitance?.price || 0);
   }
 
   onSubmit(form: FormGroup) {
-    this.reserveService.getReservesByUser().subscribe(({data}) => {
-      if(data.length > 0) {
+    this.reserveService.getReservesByUser().subscribe(({ data }) => {
+      if (data.length > 0) {
         const reserves = data.filter(
           (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
         );
@@ -228,7 +230,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
         });
         this.toastService.show();
       }
-    })
+    });
   }
 
   confirmReserve() {
@@ -257,9 +259,12 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
             });
           },
           error: () => {
-            this.toastService.setup({ message: 'Error al intentar reservar...', status: false})
-            this.toastService.show()
-          }
+            this.toastService.setup({
+              message: 'Error al intentar reservar...',
+              status: false,
+            });
+            this.toastService.show();
+          },
         });
       }
     });
@@ -285,7 +290,7 @@ export class CustomReserveComponent implements OnInit, OnDestroy, AfterViewInit 
     this.router.navigate(['/']);
   }
 
-  scrollOnCarousel(image : number): void {
+  scrollOnCarousel(image: number): void {
     const carouselWidth = this.carouselReserve.nativeElement.clientWidth;
     const targetImage = image - 1;
     const targetXPixel = carouselWidth * targetImage + 1;
