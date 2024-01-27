@@ -32,6 +32,8 @@ export class PackageService {
   }
 
   createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
+    newPackage.type="completo"
+    console.log(newPackage);
     return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
 }
