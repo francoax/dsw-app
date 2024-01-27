@@ -32,7 +32,6 @@
   p {
     display: flex;
     flex-direction: column;
-    margin: 5px;
 
     span {
       font-size: 0.9rem;
@@ -50,7 +49,6 @@
 }
 
 .data-entry {
-
   display: flex;
   flex-direction: column;
   padding-top: 25px;
@@ -77,13 +75,15 @@
 }
 
 @media (min-width: 576px) {
-  .reserve-entry, .reserve-info {
+  .reserve-entry,
+  .reserve-info {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #dates, .summary {
+  #dates,
+  .summary {
     min-width: 448px;
   }
 
@@ -91,7 +91,6 @@
     min-width: 448px;
     min-height: 330px;
   }
-
 }
 
 @media (min-width: 1200px) {
@@ -107,7 +106,8 @@
     gap: 10%;
   }
 
-  .reserve-entry, .selects {
+  .reserve-entry,
+  .selects {
     flex: 2;
   }
 
@@ -115,7 +115,8 @@
     padding: 0 5%;
   }
 
-  .reserve-info, #dates {
+  .reserve-info,
+  #dates {
     flex: 1;
   }
 
