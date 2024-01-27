@@ -152,6 +152,7 @@
           <p>
             Asistencia medica
             <span>{{reserveSummary.medicalAssitance?.description || 'Sin asistencia medica'}} {{reserveSummary.medicalAssitance?.coverageType}}</span>
+            <span>{{'Valor '+(reserveSummary.medicalAssitance?.price || 0)}}</span>
           </p>
           <p>CheckIn
             <span>{{reserveSummary.checkIn | date:'MMMM d, y'}}</span>
