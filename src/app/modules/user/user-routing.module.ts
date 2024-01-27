@@ -21,13 +21,13 @@ const routes: Routes = [
       {
         path: 'reserves',
         component: ReservesListComponent,
-        resolve: {
-          propertyList: propertyResolver,
-          packages: packagesResolver,
-          cars: carResolver,
-          medAssists: medicalAssistanceResolver,
-          locations: locationResolver,
-        },
+        // resolve: {
+        //   propertyList: propertyResolver,
+        //   packages: packagesResolver,
+        //   cars: carResolver,
+        //   medAssists: medicalAssistanceResolver,
+        //   locations: locationResolver,
+        // },
       },
     ],
   },
