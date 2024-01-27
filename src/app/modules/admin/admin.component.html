@@ -1,7 +1,12 @@
 <app-sidebar
-  [buttonsList]="[{ name: 'Propiedades', path:'properties'},
-                  { name: 'Vehiculos', path:'/admin/cars'},
-                  { name: 'Asistencia Médica', path:'/admin/medicalAssistance'}]">
+  [buttonsList]="
+  [
+    { name: 'Propiedades', path:'properties'},
+    { name: 'Tipos de Propiedades', path:'property-types'},
+    { name: 'Vehiculos', path:'cars'},
+    { name: 'Asistencia Médica', path:'medicalAssistance'},
+  ]
+">
   <router-outlet></router-outlet>
 </app-sidebar>
 

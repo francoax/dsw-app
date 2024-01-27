@@ -1,0 +1,23 @@
+<!-- eslint-disable max-len -->
+<div class="mx-auto p-2 pt-0">
+  <div class="collapse bg-base-200">
+    <input type="checkbox" #formCollapse />
+    <div class="collapse-title text-xl font-medium">
+      {{formTitle}}
+    </div>
+    <div class="collapse-content">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <app-input [inputControl]="$any(form.get('description'))" [required]="true" [label]="'Descripcion'" [placeholder]="''"></app-input>
+        <div class="flex gap-5">
+          <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
+            Cancelar
+          </app-button>
+          <app-button [type]="'submit'" [classType]="'primary'">
+            {{formButton}}
+          </app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <app-prop-types-list [typesList]="propertyTypesList" (DeleteEvent)="onDelete($event)" (UpdateEvent)="onUpdate($event)"></app-prop-types-list>
+</div>
