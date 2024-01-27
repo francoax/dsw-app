@@ -4,9 +4,25 @@
 </ng-container>
 <ng-template #completed>
   <div class="container-reserve">
-    <button type="button" (click)="back()" class="btn btn-ghost self-baseline cursor-pointer " #focus>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 ml-5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+    <button
+      type="button"
+      (click)="back()"
+      class="btn btn-ghost self-baseline cursor-pointer"
+      #focus
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-6 h-6 ml-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+        />
       </svg>
       Volver
     </button>
@@ -14,38 +30,61 @@
       <section class="reserve-entry">
         <h2 class="title">
           Se ha seleccionado para reserva la propiedad perteneciente a
-          <span>{{property.location.name}}</span>
+          <span>{{ property.location.name }}</span>
         </h2>
         <div class="data-entry min-h-2">
           <div class="selects">
             <div class="collapse collapse-plus bg-base-200">
-              <input type="checkbox" name="my-accordion-3" #carSelect (click)="cleanCar()" />
+              <input
+                type="checkbox"
+                name="my-accordion-3"
+                #carSelect
+                (click)="cleanCar()"
+              />
               <div class="collapse-title text-l font-medium">
                 Desea agregar un auto?
               </div>
               <div class="collapse-content">
-                <select class="select w-full max-w-xs" [formControlName]="'car'">
+                <select
+                  class="select w-full max-w-xs"
+                  [formControlName]="'car'"
+                >
                   <option disabled selected>Seleccione un auto</option>
                   <option [value]="car.id" *ngFor="let car of cars">
-                    {{car.model}} {{car.price.value | currency:'USD':'code'}}
+                    {{ car.model }} {{ car.price | currency : "USD" : "code" }}
                   </option>
                 </select>
               </div>
             </div>
             <div class="collapse collapse-plus bg-base-200">
-              <input type="checkbox" name="my-accordion-3" #maSelect (click)="cleanMa()" />
+              <input
+                type="checkbox"
+                name="my-accordion-3"
+                #maSelect
+                (click)="cleanMa()"
+              />
               <div class="collapse-title text-l font-medium">
                 Desea solicitar asistencia medica?
               </div>
               <div class="collapse-content">
-                <select class="select w-full max-w-xs" [formControlName]="'medicalAssistance'">
-                  <option disabled selected>Seleccione una asistencia medica</option>
-                  <option [value]="ma._id" *ngFor="let ma of medicalAssitance">{{ma.description}} {{ma.coverageType}}</option>
+                <select
+                  class="select w-full max-w-xs"
+                  [formControlName]="'medicalAssistance'"
+                >
+                  <option disabled selected>
+                    Seleccione una asistencia medica
+                  </option>
+                  <option [value]="ma._id" *ngFor="let ma of medicalAssitance">
+                    {{ ma.description }} {{ ma.coverageType }}
+                  </option>
                 </select>
               </div>
             </div>
           </div>
-          <div id="dates" class="max-w-md max-h-72 bg-gray-800 rounded-lg shadow-md p-6">
+          <div
+            id="dates"
+            class="max-w-md max-h-72 bg-gray-800 rounded-lg shadow-md p-6"
+          >
             <label for="">Check in</label>
             <app-input
               [placeholder]="'Check in'"
@@ -60,21 +99,26 @@
               [inputControl]="$any(form.get('checkOut'))"
             >
             </app-input>
-            <span *ngIf="form.hasError('invalidDate') && form.get('checkIn')?.touched" class="label-text-alt text-red-500">
+            <span
+              *ngIf="
+                form.hasError('invalidDate') && form.get('checkIn')?.touched
+              "
+              class="label-text-alt text-red-500"
+            >
               CheckIn debe de ser menor a CheckOut
             </span>
           </div>
         </div>
         <div class="divider text-base leading-6">Datos sobre la propiedad</div>
         <div class="flex flex-col gap-5 sm:w-md lg:w-full">
-          <ul class="mt-6 grid grid-cols-1 justify-items-center gap-4 text-sm leading-6 text-gray-300 sm:grid-cols-3 sm:gap-6">
-            <li>Dirección : {{property.address}}</li>
-            <li>Ubicación: {{property.location.name}}</li>
-            <li>Capacidad: {{property.capacity}} personas</li>
+          <ul
+            class="mt-6 grid grid-cols-1 justify-items-center gap-4 text-sm leading-6 text-gray-300 sm:grid-cols-3 sm:gap-6"
+          >
+            <li>Dirección : {{ property.address }}</li>
+            <li>Ubicación: {{ property.location.name }}</li>
+            <li>Capacidad: {{ property.capacity }} personas</li>
           </ul>
-          <div class="divider text-base leading-6">
-            Preguntas frecuentes
-          </div>
+          <div class="divider text-base leading-6">Preguntas frecuentes</div>
           <div class="collapse bg-base-200">
             <input type="radio" name="my-accordion-1" checked="checked" />
             <div class="collapse-title text-xl font-medium">
@@ -82,8 +126,10 @@
             </div>
             <div class="collapse-content">
               <p>
-                Luego de que haya confirmado su reserva, nos estaremos comunicando con usted via mail y/o teléfono para proceder con el proceso de residencia.
-                En la misma, se le explicara reglas basicas que se deben cumplir durante la estadia.
+                Luego de que haya confirmado su reserva, nos estaremos
+                comunicando con usted via mail y/o teléfono para proceder con el
+                proceso de residencia. En la misma, se le explicara reglas
+                basicas que se deben cumplir durante la estadia.
               </p>
             </div>
           </div>
@@ -94,8 +140,9 @@
             </div>
             <div class="collapse-content">
               <p>
-                Gracias a la confianza de nuestros afiliados, podemos ofrecer una cobertura completa ante cualquier caso extremo.
-                Puede sentirse seguro al 100% durante su estadia.
+                Gracias a la confianza de nuestros afiliados, podemos ofrecer
+                una cobertura completa ante cualquier caso extremo. Puede
+                sentirse seguro al 100% durante su estadia.
               </p>
             </div>
           </div>
@@ -106,9 +153,12 @@
             </div>
             <div class="collapse-content">
               <p>
-                Nuestros vehiculos estan para satisfacer cualquier demanda que usted necesite. No establecemos un limite en su uso, pero si ocurre
-                algun daño al mismo, debera hacerse cargo de los gastos. No cubrimos los daños causados por nuestros clientes.
-                Recomendamos el cuidado del mismo, tanto para usted como para nosotros.
+                Nuestros vehiculos estan para satisfacer cualquier demanda que
+                usted necesite. No establecemos un limite en su uso, pero si
+                ocurre algun daño al mismo, debera hacerse cargo de los gastos.
+                No cubrimos los daños causados por nuestros clientes.
+                Recomendamos el cuidado del mismo, tanto para usted como para
+                nosotros.
               </p>
             </div>
           </div>
@@ -116,65 +166,144 @@
       </section>
       <section class="reserve-info">
         <div class="divider">Informacion de reserva</div>
-        <div class="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden">
+        <div
+          class="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden"
+        >
           <div class="carousel-item w-full h-full">
-            <img [src]="property.image" alt="property reserved" class="image-full" />
+            <img
+              [src]="property.image"
+              alt="property reserved"
+              class="image-full"
+            />
           </div>
-          <div *ngIf="form.get('car')?.value" class="carousel-item w-full h-full">
+          <div
+            *ngIf="form.get('car')?.value"
+            class="carousel-item w-full h-full"
+          >
             <img src="../../../../assets/img/hilux.webp" alt="" />
           </div>
         </div>
-        <div #carousel class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex">
+        <div
+          #carousel
+          class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex"
+        >
           <div id="1" class="carousel-item relative w-full">
             <img [src]="property.image" class="w-full" alt="" />
-            <div *ngIf="form.get('car')?.value" class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
-              <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❮</button>
-              <button type="button" (click)="scrollOnCarousel(2)" class="btn btn-ghost text-red-500">❯</button>
+            <div
+              *ngIf="form.get('car')?.value"
+              class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2"
+            >
+              <button
+                type="button"
+                (click)="scrollOnCarousel(2)"
+                class="btn btn-ghost text-red-500"
+              >
+                ❮
+              </button>
+              <button
+                type="button"
+                (click)="scrollOnCarousel(2)"
+                class="btn btn-ghost text-red-500"
+              >
+                ❯
+              </button>
             </div>
           </div>
-          <div *ngIf="form.get('car')?.value" id="2" class="carousel-item relative w-full">
-            <img src="../../../../assets/img/hilux.webp" class="w-full" alt="" />
-            <div class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2">
-              <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-ghost text-red-500">❮</button>
-              <button type="button" (click)="scrollOnCarousel(1)" class="btn btn-ghost text-red-500">❯</button>
+          <div
+            *ngIf="form.get('car')?.value"
+            id="2"
+            class="carousel-item relative w-full"
+          >
+            <img
+              src="../../../../assets/img/hilux.webp"
+              class="w-full"
+              alt=""
+            />
+            <div
+              class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2"
+            >
+              <button
+                type="button"
+                (click)="scrollOnCarousel(1)"
+                class="btn btn-ghost text-red-500"
+              >
+                ❮
+              </button>
+              <button
+                type="button"
+                (click)="scrollOnCarousel(1)"
+                class="btn btn-ghost text-red-500"
+              >
+                ❯
+              </button>
             </div>
           </div>
         </div>
         <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
           <p>
             Propiedad
-            <span>Valor por noche {{reserveSummary.property?.pricePerNight | currency:'USD':'code'}}</span>
+            <span
+              >Valor por noche
+              {{
+                reserveSummary.property?.pricePerNight
+                  | currency : "USD" : "code"
+              }}</span
+            >
           </p>
           <p>
             Auto
-            <span>{{reserveSummary.car?.model || 'Sin auto'}} {{reserveSummary.car?.price?.value | currency:'USD':'code'}}</span>
+            <span
+              >{{ reserveSummary.car?.model || "Sin auto" }}
+              {{ reserveSummary.car?.price | currency : "USD" : "code" }}</span
+            >
           </p>
           <p>
             Asistencia medica
-            <span>{{reserveSummary.medicalAssitance?.description || 'Sin asistencia medica'}} {{reserveSummary.medicalAssitance?.coverageType}}</span>
+            <span
+              >{{
+                reserveSummary.medicalAssitance?.description ||
+                  "Sin asistencia medica"
+              }}
+              {{ reserveSummary.medicalAssitance?.coverageType }}</span
+            >
           </p>
-          <p>CheckIn
-            <span>{{reserveSummary.checkIn | date:'MMMM d, y'}}</span>
+          <p>
+            CheckIn
+            <span>{{ reserveSummary.checkIn | date : "MMMM d, y" }}</span>
           </p>
           <p>
             CheckOut
-            <span>{{reserveSummary.checkOut | date:'MMMM d, y'}}</span>
+            <span>{{ reserveSummary.checkOut | date : "MMMM d, y" }}</span>
           </p>
           <div class="divider"></div>
           <p>
             Total
-            <span>{{reserveSummary.totalPrice | currency: 'USD':'code'}}</span>
+            <span>{{
+              reserveSummary.totalPrice | currency : "USD" : "code"
+            }}</span>
           </p>
-          <app-button class="btn-submit" [type]="'submit'" [classType]="hasReserves ? 'disabled' : 'primary'">
+          <app-button
+            class="btn-submit"
+            [type]="'submit'"
+            [classType]="hasReserves ? 'disabled' : 'primary'"
+          >
             Reservar
           </app-button>
-          <span class="text-red-500" *ngIf="hasReserves">Perdon, pero no puede reservar por el momento.</span>
+          <span class="text-red-500" *ngIf="hasReserves"
+            >Perdon, pero no puede reservar por el momento.</span
+          >
         </div>
       </section>
     </form>
-    <confirmation-modal #confirmationModal (confirmationEvent)="confirmReserve()">
+    <confirmation-modal
+      #confirmationModal
+      (confirmationEvent)="confirmReserve()"
+    >
       <ng-container modal-title>Confirmar reserva</ng-container>
-      <ng-container modal-message>Usted esta a punto de reservar la propiedad {{reserveSummary.property?.location?.name}}</ng-container>
+      <ng-container modal-message
+        >Usted esta a punto de reservar la propiedad
+        {{ reserveSummary.property?.location?.name }}</ng-container
+      >
     </confirmation-modal>
   </div>
 </ng-template>

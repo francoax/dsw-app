@@ -4,10 +4,6 @@ export interface Car {
   model: string;
   year: string;
   plate: string;
-  price: Price;
+  price: number;
   locality: string;
-}
-export interface Price {
-  date: string;
-  value: number;
 }
