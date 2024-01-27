@@ -63,7 +63,7 @@ export class PackagesFormComponent implements OnInit{
       property: [null,[Validators.required]],
       car: [null,[Validators.required]],
       medicalAssistance: [null,[Validators.required]],
-      nameImage: [Blob,[Validators.required]],
+      image: [Blob,[Validators.required]],
     });
   }
  
@@ -72,12 +72,12 @@ export class PackagesFormComponent implements OnInit{
     if (event.target.files && event.target.files.length) {
         const file = event.target.files[0];
         if (!file.type.startsWith('image')) {
-          this.packagesForm.get('nameImage')?.setErrors({ required: true });
+          this.packagesForm.get('image')?.setErrors({ required: true });
         } else {
           reader.onload = (e) => {
             const imgBase64 = reader.result;
             this.packagesForm.patchValue({
-              nameImage: imgBase64,
+              image: imgBase64,
             });
           };
           reader.readAsDataURL(file);
@@ -133,8 +133,8 @@ export class PackagesFormComponent implements OnInit{
       this.formTitle = 'Registar nueva Propiedad';
       this.buttonContent = 'Aceptar';
       this.formScope = 'create';
-      this.packagesForm.get('nameImage')?.setValidators([Validators.required]);
-      this.packagesForm.get('nameImage')?.updateValueAndValidity();
+      this.packagesForm.get('image')?.setValidators([Validators.required]);
+      this.packagesForm.get('image')?.updateValueAndValidity();
       this.packagesForm.reset();
     }
     

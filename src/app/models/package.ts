@@ -4,7 +4,7 @@ interface Package {
   property: string;
   car: string;
   medicalAssistance: string;
-  nameImage:string;
+  image:string;
 }
 
 export interface PackageAgent {
