@@ -201,7 +201,7 @@ export class CustomReserveComponent
     const totalDays = prevCalculate / (1000 * 3600 * 24) || 0;
     const carPrice = this.reserveSummary.car?.price || 0;
     this.reserveSummary.totalPrice =
-      carPrice + this.property.pricePerNight * totalDays;
+      carPrice + this.property.pricePerNight * totalDays + (this.reserveSummary.medicalAssitance?.price || 0);
   }
 
   onSubmit(form: FormGroup) {

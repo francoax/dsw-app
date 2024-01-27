@@ -240,33 +240,44 @@
           </div>
         </div>
         <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
-          <p>
-            Propiedad
-            <span
-              >Valor por noche
-              {{
-                reserveSummary.property?.pricePerNight
-                  | currency : "USD" : "code"
-              }}</span
-            >
-          </p>
-          <p>
-            Auto
-            <span
-              >{{ reserveSummary.car?.model || "Sin auto" }}
-              {{ reserveSummary.car?.price | currency : "USD" : "code" }}</span
-            >
-          </p>
-          <p>
-            Asistencia medica
-            <span
-              >{{
+          <div>
+            <p>Propiedad</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">Valor por noche </span>
+              <span class="text-sm font-bold">
+                {{
+                  reserveSummary.property?.pricePerNight
+                    | currency : "USD" : "code"
+                }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <p>Auto</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">{{
+                reserveSummary.car?.model || "Sin auto"
+              }}</span>
+              <span class="text-sm font-bold">
+                {{ reserveSummary.car?.price | currency : "USD" : "code" }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <p>Asistencia médica</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">{{
                 reserveSummary.medicalAssitance?.description ||
                   "Sin asistencia medica"
-              }}
-              {{ reserveSummary.medicalAssitance?.coverageType }}</span
-            >
-          </p>
+              }}</span>
+              <span class="text-sm font-bold">
+                {{
+                  reserveSummary.medicalAssitance?.price
+                    | currency : "USD" : "code"
+                }}
+              </span>
+            </div>
+          </div>
           <p>
             CheckIn
             <span>{{ reserveSummary.checkIn | date : "MMMM d, y" }}</span>
