@@ -5,6 +5,7 @@ Proyecto creado en la asignatura de Desarrollo de Software 2023.
 - [ Poncho Home \& Stay](#-poncho-home--stay)
   - [Informacion general](#informacion-general)
   - [Tecnologias](#tecnologias)
+  - [Metodologia](#metodologia)
   - [Documentacion](#documentacion)
   - [Guia de instalacion](#guia-de-instalacion)
   - [Desarrolladores](#desarrolladores)
@@ -23,6 +24,22 @@ El proyecto fue desarrollado utilizando el stack M.E.A.N.
 
 Por parte de estilos, utilizamos [TailwindCSS](https://tailwindcss.com/) a la par de [DaisyUI](https://daisyui.com/),
 que ofrece una serie de componentes estilados con Tailwind. Ademas, para formateo de codigo, nos decidimos por utilizar [ESLint](https://eslint.org/).
+
+## Metodologia
+Para las branches de nuestro proyecto, seguimos la forma:
+
+* main: produccion
+* dev: desarrollo
+
+Para cada nueva implementacion, se utilizo la forma de:
+
+* feature/new-feature
+* fix/problem
+
+Ademas para no corromper los datos, se generaron dos bases de datos distintas. Una enfocada a produccion y otra a desarrollo, las cuales estan pasadas por
+variables de entorno en cada uno.
+
+Para la publicacion de nuestro proyecto, utilizamos [Vercel](https://vercel.com). Tanto frontend como backend estan alojados en dicha pagina.
 
 ## Documentacion
 * Proposal: [Proposal](https://github.com/tomasbottoni/tp_Poncho-Home-Stay/blob/main/proposal.md)
