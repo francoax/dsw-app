@@ -2,38 +2,12 @@
 /* eslint-disable prefer-const */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Car } from 'src/app/models/car';
-import { MedicalAssistance } from 'src/app/models/medical-assistance';
-import Reserve from 'src/app/models/reserve';
-import { PackageService } from 'src/app/services/package/package.service';
+import { Router } from '@angular/router';
+import { ReserveList } from 'src/app/models/reserve';
 import { ReserveService } from 'src/app/services/reserve/reserve.service';
 import { ModalComponent } from '../../shared/modal/modal.component';
 import { ToastService } from '../../shared/toast/toast.service';
-import { AppConfigService } from 'src/app/services/app/app.service';
-
-interface ReserveDetails {
-  id: string;
-  location: string;
-  propertyAddress: string;
-  propertyType: string;
-  car: string;
-  medicalAssistance: string;
-  dateStart: string;
-  dateEnd: string;
-  price: number;
-  imageUrl: string;
-}
-
-interface PropertyResponse {
-  id: string;
-  capacity: number;
-  address: string;
-  pricePerNight: number;
-  propertyType: string;
-  location: string;
-  image: string;
-}
+import { SkeletonsService } from 'src/app/services/skeletons/skeletons.service';
 
 @Component({
   selector: 'app-reserves-list',
@@ -41,91 +15,42 @@ interface PropertyResponse {
   styleUrls: ['./reserves-list.component.scss'],
 })
 export class ReservesListComponent implements OnInit {
-  reserves: ReserveDetails[] = [];
-  reservesFull: ReserveDetails[] = [];
+  reserves: ReserveList[] = [];
+  reservesFiltered: ReserveList[] = [];
   dateFilterForm = new FormGroup({
-    radioOption: new FormControl(''),
+    radioOption: new FormControl('', Validators.required),
     dateFilter: new FormControl('', Validators.required),
   });
   selectedReserveId = '';
   error = false;
+  $isLoading = this.skeletonService.userReservesLoading$;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
   constructor(
     private reserveService: ReserveService,
-    private packageService: PackageService,
-    private route: ActivatedRoute,
     private router: Router,
     private toastService: ToastService,
-    private appService: AppConfigService
+    private readonly skeletonService: SkeletonsService
   ) {}
 
   ngOnInit() {
-    this.reserveService.getReservesByUser().subscribe((response) => {
-      response.data.forEach((reserve: Reserve) => {
-        this.reserves.push(this.getReserveDetails(reserve));
-      });
-    });
-
-    this.reservesFull = this.reserves;
-  }
-
-  getReserveDetails(reserve: Reserve): ReserveDetails {
-    let reserveDetails: ReserveDetails = {
-      id: '',
-      location: '',
-      propertyAddress: '',
-      propertyType: '',
-      car: '',
-      medicalAssistance: '',
-      dateStart: '',
-      dateEnd: '',
-      price: 0,
-      imageUrl: '',
-    };
-    reserveDetails.id = reserve._id as string;
-
-    this.packageService
-      .getPackage(reserve.packageReserved)
-      .subscribe((response) => {
-        const property: PropertyResponse = response.data.property;
-        const car: Car = response.data.car;
-        const medAssist: MedicalAssistance = response.data.medicalAssistance;
-
-        reserveDetails.propertyAddress = property.address;
-        reserveDetails.imageUrl = `${this.appService.apiUrl}/api/images/${property.image}`;
-
-        reserveDetails.car = `${car.brand} ${car.model}`;
-
-        const locations = this.route.snapshot.data['locations'];
-        locations.forEach((location: { id: string; name: string }) => {
-          if (location.id === property.location) {
-            reserveDetails.location = location.name;
-          }
-        });
-
-        reserveDetails.medicalAssistance = `${medAssist.description} Tipo ${medAssist.coverageType}`;
-        reserveDetails.dateStart = reserve.date_start;
-        reserveDetails.dateEnd = reserve.date_end;
-
-        const getDays = () => {
-          const date1 = new Date(reserve.date_start);
-          const date2 = new Date(reserve.date_end);
-          const timeDiff = Math.abs(date2.getTime() - date1.getTime());
-          const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-          return diffDays;
-        };
-        reserveDetails.price = this.calculateTotalPrice(
-          getDays(),
-          property.pricePerNight,
-          car.price
+    this.skeletonService.showUserReservesLoading();
+    this.reserveService
+      .getReservesByUser()
+      .subscribe(({ message, data, error }) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        console.log(message);
+        this.reserves = data.sort(
+          (a: { date_start: Date }, b: { date_start: Date }) =>
+            a.date_start > b.date_start ? -1 : 1
         );
-
-        return reserveDetails; //aca devuelve
+        this.reservesFiltered = this.reserves;
+        this.skeletonService.hideUserReservesLoading();
       });
-
-    return reserveDetails;
   }
 
   calculateTotalPrice(
@@ -137,27 +62,26 @@ export class ReservesListComponent implements OnInit {
   }
 
   filterReserves() {
-    this.resetFilter();
-
     if (this.dateFilterForm.value.radioOption === 'option1') {
-      this.reserves = this.reserves.filter(
+      this.reservesFiltered = this.reserves.filter(
         (reserve) =>
-          new Date(reserve.dateStart) >
+          new Date(reserve.date_start) >
           new Date(this.dateFilterForm.value.dateFilter as string)
       );
     }
 
     if (this.dateFilterForm.value.radioOption === 'option2') {
-      this.reserves = this.reserves.filter(
+      this.reservesFiltered = this.reserves.filter(
         (reserve) =>
-          new Date(reserve.dateEnd) <=
+          new Date(reserve.date_end) <=
           new Date(this.dateFilterForm.value.dateFilter as string)
       );
     }
   }
 
   resetFilter() {
-    this.reserves = this.reservesFull;
+    this.reservesFiltered = this.reserves;
+    this.dateFilterForm.reset();
   }
 
   openModal(event: Event) {
@@ -183,10 +107,10 @@ export class ReservesListComponent implements OnInit {
     this.selectedReserveId = '';
   }
 
-  checkCurrentReserve(reserve: ReserveDetails): boolean {
+  checkCurrentReserve(reserve: ReserveList): boolean {
     const today = new Date();
-    const dateStart = new Date(reserve.dateStart);
-    const dateEnd = new Date(reserve.dateEnd);
+    const dateStart = new Date(reserve.date_start);
+    const dateEnd = new Date(reserve.date_end);
     if ((today > dateStart && today < dateEnd) || today > dateEnd) return true;
     return false;
   }
