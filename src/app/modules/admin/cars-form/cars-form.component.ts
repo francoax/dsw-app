@@ -128,7 +128,7 @@ export class CarsFormComponent implements OnInit {
       year: car.year,
       plate: car.plate,
       price: car.price,
-      locality: car.locality,
+      locality: car.location,
     });
     this.formScope = 'editar';
     this.idCarToEdit = car.id;

@@ -8,7 +8,7 @@
     >
       <div *ngFor="let package of packageFull; let i = index">
         <div class="keen-slider__slide number-slide">
-          <img src="../../../../assets/img/mendoza.jpg" alt="Imágen del paquete"/>
+          <img [src]="package.image" alt="Imágen del paquete"/>
           <button
             class="btn btn-primary text-white text-sm bg-red-500 border-red-500 hover:[bg-red-500, border-red-500] btn-carousel"
             onclick="modal_register.showModal()"
@@ -27,7 +27,7 @@
             <ul>
               <li><span>Cobertura medica:</span> {{package.medicalAssist.description}}.</li>
               <li><span>Auto incluido:</span> {{package.car.brand}} {{package.car.model}}.</li>
-              <li><span>Ubicacion:</span> {{package.property.location.name}}.</li>
+              <li><span>Ubicacion:</span> {{package.property.location}}.</li>
               <li><span>Para</span> {{package.property.capacity}} <span>personas</span>.</li>
             </ul>
           </div>

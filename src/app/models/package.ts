@@ -1,9 +1,13 @@
+import { Car } from "./car";
+import { MedicalAssistance } from "./medical-assistance";
+import { Property } from "./property";
+
 interface Package {
   id: string;
   type: string;
-  property: string;
-  car: string;
-  medicalAssistance: string;
+  property: Property;
+  car: Car;
+  medicalAssistance: MedicalAssistance;
   image:string;
 }
 
@@ -12,7 +16,7 @@ export interface PackageAgent {
   property: string;
   car: string;
   medicalAssistance: string;
-  nameImage: string;
+  image: string;
 }
 
 export default Package;

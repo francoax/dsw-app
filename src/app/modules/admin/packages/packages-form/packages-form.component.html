@@ -15,8 +15,8 @@
         <select [ngClass]="{
             'border-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
           }" class="select select-bordered w-[320px] max-w-xs" [(ngModel)]="selectedLoca" (change)="loadCars()" [formControlName]="'property'">
-          <option selected disabled>Seleccionar propiedad</option>
-          <option *ngFor="let prop of props" [value]="prop._id">{{ prop.location.name +' '+'Direc:'+' '+prop.address +' '+'Capacidad:'+prop.capacity}}</option>
+          <option selected disabled value="">Seleccionar propiedad</option>
+          <option *ngFor="let prop of props" [value]="prop._id">{{ prop.location +' '+'Direc:'+' '+prop.address +' '+'Capacidad:'+prop.capacity}}</option>
         </select>
         <label [ngClass]="{
           'text-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
@@ -24,7 +24,7 @@
         <select [ngClass]="{
             'border-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
           }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'car'">
-          <option selected disabled>Seleccionar Vehiculo</option>
+          <option selected disabled value="">Seleccionar Vehiculo</option>
           <option *ngFor="let c of cars" [value]="c.id">{{c.brand+' '+c.model}}</option>
         </select>
         <label [ngClass]="{
@@ -39,9 +39,9 @@
         <div class="flex flex-col">
           <label class="label">Imagen (MAX 4.5MB)</label>
           <input [ngClass]="{
-            'border-red-500' : packagesForm.get('nameImage')?.errors !== null && packagesForm.get('nameImage')?.touched
-          }" class="file-input file-input-bordered w-full max-w-xs" formControlName="nameImage" id="image" type="file" (change)="onFileChange($event)">
-          <span *ngIf="packagesForm.get('nameImage')?.errors !== null && packagesForm.get('nameImage')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
+            'border-red-500' : packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched
+          }" class="file-input file-input-bordered w-full max-w-xs" formControlName="image" id="image" type="file" (change)="onFileChange($event)">
+          <span *ngIf="packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
         </div>
         <div class="flex gap-6 mt-6">
           <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
@@ -57,3 +57,4 @@
   </div>
 
 </div>
+<app-packages-list [paquetes]="packages" (UpdateEvent)="onUpdate($event)" (DeleteEvent)="onDelete($event)"></app-packages-list>

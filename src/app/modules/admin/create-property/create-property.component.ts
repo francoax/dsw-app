@@ -20,7 +20,6 @@ import { PropertyServiceService } from 'src/app/services/property/property-servi
 import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
-import { Locality } from 'src/app/models/locality';
 import { ToastService } from '../../shared/toast/toast.service';
 import { LocalityServiceService } from 'src/app/services/locality-service.service';
 @Component({
@@ -36,7 +35,6 @@ export class CreatePropertyComponent implements OnInit {
   idPropToEdit!: string;
   formScope = 'create';
   properties: Property[] = [];
-  localities: Locality[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
   propertyForm!: FormGroup;
@@ -58,9 +56,6 @@ export class CreatePropertyComponent implements OnInit {
     });
     this.service.getProperties().subscribe((response) => {
       this.properties = response.data;
-    });
-    this.locaServ.getLocalities().subscribe((Response) => {
-      this.localities = Response.data;
     });
 
     this.propertyForm = this.initForm();
@@ -174,7 +169,7 @@ export class CreatePropertyComponent implements OnInit {
       address: prop.address,
       pricePerNight: prop.pricePerNight,
       propertyType: prop.propertyType._id,
-      location: prop.location._id,
+      location: prop.location,
       image: prop.image,
     });
     this.formScope = 'update';
