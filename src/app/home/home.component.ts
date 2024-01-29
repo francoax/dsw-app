@@ -39,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.skeletonService.showHomeLoading();
     this.homeDataSubscription = this.homeService.initHomeData().subscribe({
       next: ([packages, properties]) => {
-        console.log('hi')
         this.packageList = packages;
         this.propertyList = properties;
         this.requiredProps = properties;

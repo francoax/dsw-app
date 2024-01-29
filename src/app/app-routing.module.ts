@@ -56,6 +56,8 @@ const routes: Routes = [
   },
   {
     path: 'packages',
+    canActivate: [authGuard],
+    data: { expectedRole: 'user' },
     loadChildren: () =>
       import('./modules/package/package.module').then(
         (mod) => mod.PackageModule
