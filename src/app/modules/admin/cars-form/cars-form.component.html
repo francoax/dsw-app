@@ -6,11 +6,6 @@
     {{ formTitle }}
   </div>
   <div class="collapse-content">
-    <div class="mt-6">
-      <h2 class="text-base font-semibold leading-7 text-gray-900 title">
-        {{ formTitle }}
-      </h2>
-    </div>
     <form [formGroup]="carsForm" (ngSubmit)="onSubmit(carsForm)">
       <div class="form-container">
         <app-input
@@ -94,16 +89,18 @@
           </div>
         </div>
       </div>
-      <app-button [type]="'submit'" [classType]="'primary'">
-        {{ buttonContent }}
-      </app-button>
-      <app-button
-        (click)="closeForm()"
-        [type]="'button'"
-        [classType]="'cancel'"
-      >
-        Cancelar
-      </app-button>
+      <div class="flex gap-5">
+        <app-button
+          (click)="closeForm()"
+          [type]="'button'"
+          [classType]="'cancel'"
+        >
+          Cancelar
+        </app-button>
+        <app-button [type]="'submit'" [classType]="'primary'">
+          {{ buttonContent }}
+        </app-button>
+      </div>
     </form>
   </div>
 </div>

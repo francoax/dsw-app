@@ -14,7 +14,7 @@ import { CarService } from 'src/app/services/car/car.service';
   styleUrls: ['./cars-form.component.scss'],
 })
 export class CarsFormComponent implements OnInit {
-  formTitle = 'Registrar un Nuevo Auto';
+  formTitle = 'Registrar nuevo Vehiculo';
   buttonContent = 'Aceptar';
   idCarToEdit!: string;
   cars: Car[] = [];
@@ -121,7 +121,7 @@ export class CarsFormComponent implements OnInit {
 
   onUpdate(car: Car) {
     this.formCollase.nativeElement.checked = true;
-    this.formTitle = 'Editar Auto';
+    this.formTitle = `Editar auto: ${car.brand.toUpperCase()} ${car.model.toUpperCase()}`;
     this.carsForm.patchValue({
       brand: car.brand,
       model: car.model,
@@ -132,6 +132,7 @@ export class CarsFormComponent implements OnInit {
     });
     this.formScope = 'editar';
     this.idCarToEdit = car.id;
+    this.buttonContent = 'Editar';
   }
 
   onCountryChange(event: any) {
