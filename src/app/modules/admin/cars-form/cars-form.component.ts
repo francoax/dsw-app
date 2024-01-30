@@ -40,8 +40,7 @@ export class CarsFormComponent implements OnInit {
     Validators.required,
   ]);
   plate = new FormControl('', [Validators.maxLength(30), Validators.required]);
-  date = new FormControl('', [Validators.maxLength(30), Validators.required]);
-  value = new FormControl('', [Validators.maxLength(10), Validators.required]);
+  value = new FormControl('', [Validators.required]);
   country = new FormControl('', [Validators.required]);
   state = new FormControl('', [Validators.required]);
   city = new FormControl('', [Validators.required]);
@@ -53,10 +52,7 @@ export class CarsFormComponent implements OnInit {
       model: this.model,
       year: this.year,
       plate: this.plate,
-      price: new FormGroup({
-        date: this.date,
-        value: this.value,
-      }),
+      price: this.value,
       country: this.country,
       state: this.state,
       city: this.city,
