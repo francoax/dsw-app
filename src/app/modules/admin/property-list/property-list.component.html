@@ -20,7 +20,7 @@
     <tbody>
       <tr *ngFor="let prop of properties">
         <td>{{prop?._id}}</td>
-        <td>{{prop?.location?.name}}</td>
+        <td>{{prop?.location}}</td>
         <td>{{prop?.address}}</td>
         <td>{{prop?.capacity}}</td>
         <td>{{prop?.pricePerNight | currency : "USD" : "code"}}</td>

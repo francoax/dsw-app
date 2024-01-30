@@ -4,7 +4,7 @@ import { AppConfigService } from '../app/app.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/models/common';
-import { PackageAgent } from 'src/app/models/package';
+import Package, { PackageAgent } from 'src/app/models/package';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +32,17 @@ export class PackageService {
   }
 
   createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
+    newPackage.type="completo"
+    console.log(newPackage);
     return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
+  deletePackage(packageId: string): Observable<ApiResponse> {
+    return this._http.delete<ApiResponse>(this.url + '/api/packages/' + packageId);
+  }
+
+  updatePackage(pack: Package,id: string): Observable<ApiResponse>{
+    return this._http.put<ApiResponse>(`${this.url}/api/packages/${id}`, pack);
+
+  }
+
 }

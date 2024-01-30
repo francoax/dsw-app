@@ -64,7 +64,7 @@ export class CarsFormComponent implements OnInit {
     });
 
     this.locationService.getCountries().subscribe((res) => {
-      res.forEach((country) => {
+      res.data.forEach((country: { name: { common: string }; cca2: any }) => {
         if (country.name.common !== 'Falkland Islands')
           this.countries.push({
             name: country.name.common,
@@ -124,7 +124,7 @@ export class CarsFormComponent implements OnInit {
       year: car.year,
       plate: car.plate,
       price: car.price,
-      locality: car.locality,
+      locality: car.location,
     });
     this.formScope = 'editar';
     this.idCarToEdit = car.id;
@@ -133,8 +133,9 @@ export class CarsFormComponent implements OnInit {
   onCountryChange(event: any) {
     this.ccode = event.target.value;
     this.locationService.getStates(this.ccode).subscribe((res) => {
+      const response = res.data.data;
       this.states = [];
-      res.data.forEach((state) => {
+      response.forEach((state: { name: any; isoCode: any }) => {
         this.states.push({ name: state.name, isoCode: state.isoCode });
       });
     });
@@ -144,8 +145,9 @@ export class CarsFormComponent implements OnInit {
     this.locationService
       .getLocations(this.ccode, event.target.value)
       .subscribe((res) => {
+        const response = res.data.data;
         this.locations = [];
-        res.data.forEach((location) => {
+        response.forEach((location: { name: string }) => {
           this.locations.push(location.name);
         });
       });

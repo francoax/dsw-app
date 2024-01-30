@@ -17,7 +17,7 @@
               'border-red-500' : propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched
             }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'location'">
             <option selected disabled>Seleccionar localidad</option>
-            <option *ngFor="let locality of localities" [value]="locality.id">{{locality.name}}</option>
+            <!-- <option *ngFor="let locality of localities" [value]="locality.id">{{locality.name}}</option> -->
           </select>
           <span *ngIf="propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
         </div>
