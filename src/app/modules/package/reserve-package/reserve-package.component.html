@@ -185,7 +185,74 @@
             <img src="../../../../assets/img/hilux.webp" alt="" />
           </div>
         </div>
+        <!--Agregado  -->
         <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
+          <div>
+            <p>Propiedad</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">Valor por noche </span>
+              <span class="text-sm font-bold">
+                {{
+                  package.property.pricePerNight
+                    | currency : "USD" : "code"
+                }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <p>Auto</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">{{
+                package.car.model && package.car.brand || "Sin auto"
+              }}</span>
+              <span class="text-sm font-bold">
+                {{ package.car.price | currency : "USD" : "code" }}
+              </span>
+            </div>
+          </div>
+          <div>
+            <p>Asistencia médica</p>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-bold">{{
+                package.medicalAssistance.description ||
+                  "Sin asistencia medica"
+              }}</span>
+              <span class="text-sm font-bold">
+                {{
+                  package.medicalAssistance.price
+                    | currency : "USD" : "code"
+                }}
+              </span>
+            </div>
+          </div>
+          <p>
+            CheckIn
+            <span>{{ reserveForm.value.checkIn | date : "MMMM d, y" }}</span>
+          </p>
+          <p>
+            CheckOut
+            <span>{{ reserveForm.value.checkOut | date : "MMMM d, y" }}</span>
+          </p>
+          <div class="divider"></div>
+          <p>
+            Total
+            <span>{{
+              totalPrice | currency : "USD" : "code"
+            }}</span>
+          </p>
+          <app-button
+            class="btn-submit"
+            [type]="'submit'"
+            [classType]="hasReserves ? 'disabled' : 'primary'"
+          >
+            Reservar
+          </app-button>
+          <span class="text-red-500" *ngIf="hasReserves"
+            >Perdon, pero no puede reservar por el momento.</span
+          >
+        </div>
+        <!-- aca -->
+        <!-- <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
           <p>
             Propiedad
             <span
@@ -231,7 +298,7 @@
           >
             Reservar
           </app-button>
-        </div>
+        </div> -->
       </section>
     </form>
     <confirmation-modal

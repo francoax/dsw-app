@@ -21,7 +21,6 @@ import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { ToastService } from '../../shared/toast/toast.service';
-import { LocalityServiceService } from 'src/app/services/locality-service.service';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -45,7 +44,6 @@ export class CreatePropertyComponent implements OnInit {
 
   constructor(
     private service: PropertyServiceService,
-    private locaServ: LocalityServiceService,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService
   ) {}

@@ -30,6 +30,6 @@ export class LocationService {
   }
 
   getLocation(id: string): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(this.API + '/api/locations/' + id);
+    return this._http.get<ApiResponse>(`${this.API}/${id}`);
   }
 }

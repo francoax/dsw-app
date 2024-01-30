@@ -32,7 +32,6 @@
   p {
     display: flex;
     flex-direction: column;
-    margin: 5px;
 
     span {
       font-size: 0.9rem;
@@ -41,9 +40,10 @@
   }
 }
 
-.divider + p {
+.divider+p {
   flex-direction: row;
   justify-content: space-between;
+
   span {
     color: rgb(28, 197, 28);
   }
@@ -52,7 +52,6 @@
 .data-entry {
   display: flex;
   flex-direction: column;
-  // width: 100%;
   padding-top: 25px;
 
   .collapse {
@@ -77,6 +76,7 @@
 }
 
 @media (min-width: 576px) {
+
   .reserve-entry,
   .reserve-info {
     display: flex;
@@ -91,6 +91,7 @@
 
   .data-entry {
     min-width: 448px;
+    min-height: 330px;
   }
 }
 
@@ -122,7 +123,6 @@
   }
 
   .title {
-    margin-top: 1rem;
     font-size: 1.5rem;
   }
 

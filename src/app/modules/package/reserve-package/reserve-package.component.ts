@@ -31,7 +31,7 @@ interface PackageFull {
   };
   car: Car;
   medicalAssistance: MedicalAssistance;
-  nameImage: string;
+  image: string;
   id: string;
 }
 
@@ -74,6 +74,7 @@ export class ReservePackageComponent implements OnInit {
   };
   totalPrice = 0;
   error = false;
+  hasReserves = false;
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -90,23 +91,6 @@ export class ReservePackageComponent implements OnInit {
     const { data } = this.route.snapshot.data['pack'];
     this.package = data;
     this.skeletonService.showReserveLoading();
-
-    this.locationService.getLocation(this.package.property.location).subscribe({
-      next: (res) => {
-        this.package.property.location = res.data.name;
-      },
-      complete: () => {
-        this.skeletonService.hideReserveLoading();
-      },
-      error: (err) => {
-        this.toastService.setup({
-          message: err.message,
-          status: false,
-        });
-        this.toastService.show();
-      },
-    });
-
     this.reserveForm = new FormGroup(
       {
         checkIn: this.checkIn,
@@ -125,18 +109,37 @@ export class ReservePackageComponent implements OnInit {
         this.package.car.price +
         (this.package.medicalAssistance.price || 0);
     });
+
+    this.skeletonService.hideReserveLoading();
   }
 
   onSubmit() {
-    if (this.reserveForm.valid) {
-      this.openModal();
-    } else {
-      this.toastService.setup({
-        message: 'Por favor, ingrese correctamente los campos.',
-        status: false,
-      });
-      this.toastService.show();
-    }
+    this.reserveService.getReservesByUser().subscribe(({ data }) => {
+      if (data.length > 0) {
+        const reserves = data.filter(
+          (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
+        );
+        this.hasReserves = reserves.length > 0;
+      }
+
+      if (this.hasReserves) {
+        this.toastService.setup({
+          message:
+            'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
+          status: false,
+        });
+        this.toastService.show();
+      } else if (this.reserveForm.valid) {
+        this.openModal();
+      } else {
+        this.reserveForm.markAllAsTouched();
+        this.toastService.setup({
+          message: 'Por favor, ingrese correctamente los campos.',
+          status: false,
+        });
+        this.toastService.show();
+      }
+    });
   }
 
   openModal(): void {
