@@ -30,7 +30,7 @@
       <section class="reserve-entry">
         <h2 class="title">
           Se ha seleccionado para reserva la propiedad perteneciente a
-          <span>{{ property.location.name }}</span>
+          <span>{{ property.location }}</span>
         </h2>
         <div class="data-entry min-h-2">
           <div class="selects">
@@ -115,7 +115,7 @@
             class="mt-6 grid grid-cols-1 justify-items-center gap-4 text-sm leading-6 text-gray-300 sm:grid-cols-3 sm:gap-6"
           >
             <li>Dirección : {{ property.address }}</li>
-            <li>Ubicación: {{ property.location.name }}</li>
+            <li>Ubicación: {{ property.location }}</li>
             <li>Capacidad: {{ property.capacity }} personas</li>
           </ul>
           <div class="divider text-base leading-6">Preguntas frecuentes</div>
@@ -313,7 +313,7 @@
       <ng-container modal-title>Confirmar reserva</ng-container>
       <ng-container modal-message
         >Usted esta a punto de reservar la propiedad
-        {{ reserveSummary.property?.location?.name }}</ng-container
+        {{ reserveSummary.property?.location }}</ng-container
       >
     </confirmation-modal>
   </div>

@@ -23,8 +23,10 @@ export class CarService {
     return this.http.get<ApiResponse>(this.API);
   }
 
-  getCarsFromLocation(locationId : string) {
-    return this.http.get<ApiResponse>(`${this.API}?locality=${locationId}`)
+  getCarsFromLocation(location : string) {
+    console.log('hola manolo');
+    console.log(location);
+    return this.http.get<ApiResponse>(`${this.API}?location=${location}`)
   }
   deleteCar(id : string) : Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${this.API}${id}`)

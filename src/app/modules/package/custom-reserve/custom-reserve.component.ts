@@ -239,7 +239,7 @@ export class CustomReserveComponent
       medicalAssistance: this.form.value.medicalAssistance,
       property: this.form.value.property,
       type: 'custom',
-      nameImage: '',
+      image: '',
     };
 
     this.packageService.createPackage(newPackage).subscribe((res) => {
