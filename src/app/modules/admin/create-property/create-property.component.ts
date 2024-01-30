@@ -22,7 +22,7 @@ import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { Locality } from 'src/app/models/locality';
 import { ToastService } from '../../shared/toast/toast.service';
-import { LocalityServiceService } from 'src/app/services/locality-service.service';
+import { LocationService } from 'src/app/services/location/location.service';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -47,7 +47,7 @@ export class CreatePropertyComponent implements OnInit {
 
   constructor(
     private service: PropertyServiceService,
-    private locaServ: LocalityServiceService,
+    private locaServ: LocationService,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService
   ) {}
@@ -59,10 +59,13 @@ export class CreatePropertyComponent implements OnInit {
     this.service.getProperties().subscribe((response) => {
       this.properties = response.data;
     });
-    this.locaServ.getLocalities().subscribe((Response) => {
-      this.localities = Response.data;
+    this.locaServ.getLocationsArg().subscribe((Response) => {
+      console.log(Response);
+      this.localities.push(Response.data[1]);  
+      this.localities.push(Response.data[2]);  
+      this.localities.push(Response.data[5]);  
+      this.localities.push(Response.data[7]);  
     });
-
     this.propertyForm = this.initForm();
   }
 

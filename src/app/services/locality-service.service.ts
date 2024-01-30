@@ -16,7 +16,6 @@ export class LocalityServiceService {
 
   getLocalities():Observable<ApiResponse>{
     return this.http.get<ApiResponse>(this.baseUrl);
-
   }
   getLocality(id: string):Observable<ApiResponse>{
     return this.http.get<ApiResponse>(`${this.baseUrl}${id}`);

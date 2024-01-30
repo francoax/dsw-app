@@ -45,6 +45,9 @@ export class LocationService {
 
   private readonly citiesUrl: string =
     'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/{countryId}/regions/{regionCode}/places?types=CITY&languageCode=es&minPopulation=30000&limit=10';
+  
+  private readonly locationsUrl: string = 
+  'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/AR/places?limit=10&offset=0&types=CITY&minPopulation=500000'
 
   getCountries(): Observable<RestCountryResponse[]> {
     return this._http.get<RestCountryResponse[]>(this.countriesUrl);
@@ -55,7 +58,8 @@ export class LocationService {
       this.statesUrl.replace('{ccode}', cca2),
       {
         headers: {
-          'x-rapidapi-key': 'aca-va-la-api-key',
+          'x-rapidapi-key':
+            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
           'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
         },
       }
@@ -72,7 +76,8 @@ export class LocationService {
         .replace('{regionCode}', regionCode),
       {
         headers: {
-          'x-rapidapi-key': 'aca-va-la-api-key',
+          'x-rapidapi-key':
+            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
           'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
         },
       }
@@ -82,6 +87,19 @@ export class LocationService {
   getLocation(id: string): Observable<ApiResponse> {
     return this._http.get<ApiResponse>(
       this.countriesUrl + '/api/locations/' + id
+    );
+  }
+
+  getLocationsArg(): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(
+      this.locationsUrl,
+      {
+        headers: {
+          'x-rapidapi-key':
+            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
+          'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
+        },
+      }
     );
   }
 }
