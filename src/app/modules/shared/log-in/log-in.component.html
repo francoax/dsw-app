@@ -1,43 +1,27 @@
-<div class="flex justify-center p-4">
-  <div class="form-container">
-    <p class="title">Login</p>
-    <form class="form" [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-      <div class="login-input-group">
+<div class="flex justify-center p-6">
+  <div class="p-6 bg-base-300 lg:min-w-[500px] rounded-md">
+    <h2 class="text-lg font-bold divider leading-6">Iniciar sesion</h2>
+    <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col items-center">
         <app-input
+          class="w-[320px]"
           [label]="'Email'"
+          [required]="true"
           [placeholder]="''"
           [inputControl]="mail"
         ></app-input>
-      </div>
-      <div class="login-input-group">
         <app-input
+          class="w-[320px]"
+          [required]="true"
           [label]="'Contraseña'"
           [type]="'password'"
           [placeholder]="''"
           [inputControl]="password"
         ></app-input>
-        <div class="forgot">
-          <a rel="noopener noreferrer" [routerLink]="'/password-reset'"
-            >Olvidé mi contraseña</a
-          >
-        </div>
       </div>
-      <div class="alert alert-error" *ngIf="responseError !== ''">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="stroke-current shrink-0 h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <span>{{ responseError }}</span>
-      </div>
+      <p class="text-sm text-center">
+        Necesitas ayuda? <a class="link link-primary" [routerLink]="'/password-reset'">Olvide mi contraseña</a>
+      </p>
       <app-button
         class="block w-full p-3 text-center"
         [classType]="'primary'"
@@ -45,11 +29,11 @@
         >Log in</app-button
       >
     </form>
-    <div class="mt-4">
-      <p class="signup">
-        No tienes una cuenta?
-        <a rel="noopener noreferrer" [routerLink]="'/signup'" class="">Regístrate</a>
-      </p>
+    <div class="alert alert-error w-[400px] mx-auto my-2 text-slate-200" *ngIf="responseError !== ''">
+      {{ responseError }}
     </div>
+    <p class="text-sm text-center">
+      No tienes una cuenta? <a rel="noopener noreferrer" class="link link-primary" [routerLink]="'/signup'">Regístrate</a>
+    </p>
   </div>
 </div>

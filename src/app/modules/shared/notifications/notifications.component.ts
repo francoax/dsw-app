@@ -44,7 +44,7 @@ export class NotificationsComponent implements OnInit {
         this.title = 'Tu reserva ha sido confirmada.';
         this.message =
           'Tu reserva se ha realizado correctamente. Gracias por reservar a través de Poncho H&S.';
-        this.routerLink = '/';
+        this.routerLink = '/user/reserves';
       }
     });
   }

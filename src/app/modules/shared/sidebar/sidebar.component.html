@@ -11,12 +11,20 @@
   <div class="drawer-side z-[51]">
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content items-center">
-      <p>Menu</p>
+      <p class="mb-2">
+        Menu: <span class="font-semibold">{{userRole.toUpperCase()}}</span>
+      </p>
       <li *ngFor="let route of buttonsToShow">
         <app-button [type]="'button'" [classType]="'navbar'" [routerLink]="route.path">
           {{route.name}}
         </app-button>
       </li>
+      <p class="flex items-end justify-center gap-2 mt-auto text-slate-600">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+        </svg>
+        Administración PHS 2024.
+      </p>
     </ul>
   </div>
 </div>
