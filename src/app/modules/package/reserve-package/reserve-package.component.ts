@@ -30,6 +30,7 @@ interface PackageFull {
     image: File;
   };
   car: Car;
+  discount: number;
   medicalAssistance: MedicalAssistance;
   nameImage: string;
   id: string;
@@ -144,10 +145,12 @@ export class ReservePackageComponent implements OnInit {
   }
 
   confirmReserve() {
+    this.totalPrice = this.totalPrice - this.totalPrice * this.package.discount;
     const reserve: Reserve = {
       date_start: this.reserveForm.value.checkIn,
       date_end: this.reserveForm.value.checkOut,
       packageReserved: this.package.id,
+      totalPrice: this.totalPrice,
     };
     this.reserveService.createReserve(reserve).subscribe({
       next: () => {

@@ -57,12 +57,13 @@ img {
   width: 100%;
   bottom: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: rgba(0,0,0,.8);
   font-size: 0.7rem;
+  padding: 4px;
   ul {
-    padding: 4px;
     width: 100%;
 
     span {
