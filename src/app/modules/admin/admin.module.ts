@@ -14,6 +14,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastInterceptor } from '../shared/toast/toast.interceptor';
 import { PropertyTypeManagementComponent } from './property-type-management/property-type-management.component';
 import { PropTypesListComponent } from './prop-types-list/prop-types-list.component';
+import { PackagesFormComponent } from './packages/packages-form/packages-form.component';
+import { PackagesListComponent } from './packages/packages-list/packages-list.component';
 
 
 
@@ -27,7 +29,9 @@ import { PropTypesListComponent } from './prop-types-list/prop-types-list.compon
     PropertyListComponent,
     MedicalAssistanceComponent,
     PropertyTypeManagementComponent,
-    PropTypesListComponent
+    PropTypesListComponent,
+    PackagesFormComponent,
+    PackagesListComponent
     ],
   imports: [
     CommonModule,
@@ -38,6 +42,7 @@ import { PropTypesListComponent } from './prop-types-list/prop-types-list.compon
     FormsModule
   ],
   providers: [{ provide:HTTP_INTERCEPTORS, useClass: ToastInterceptor, multi:true }],
-  exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent,CarsFormComponent,CarsListComponent]
+  exports:[CreatePropertyComponent,AdminComponent,PropertyListComponent,CarsFormComponent,CarsListComponent,PackagesFormComponent,
+    PackagesListComponent]
 })
 export class AdminModule {}

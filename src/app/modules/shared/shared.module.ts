@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LoaderComponent } from './loader/loader.component';
 import { HomeSkeletonComponent } from './skeletons/home-skeleton/home-skeleton.component';
 import { ReserveSkeletonComponent } from './skeletons/reserve-skeleton/reserve-skeleton.component';
+import { UserReservesSkeletonComponent } from './skeletons/user-reserves-skeleton/user-reserves-skeleton.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { ReserveSkeletonComponent } from './skeletons/reserve-skeleton/reserve-s
     ForgotPasswordComponent,
     LoaderComponent,
     HomeSkeletonComponent,
-    ReserveSkeletonComponent
+    ReserveSkeletonComponent,
+    UserReservesSkeletonComponent,
   ],
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   exports: [
@@ -59,7 +61,8 @@ import { ReserveSkeletonComponent } from './skeletons/reserve-skeleton/reserve-s
     CardsListComponent,
     LoaderComponent,
     HomeSkeletonComponent,
-    ReserveSkeletonComponent
+    ReserveSkeletonComponent,
+    UserReservesSkeletonComponent,
   ],
 })
 export class SharedModule {}

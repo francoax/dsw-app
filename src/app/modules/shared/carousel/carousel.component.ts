@@ -20,7 +20,7 @@ interface PackageFull {
   car: Car;
   medicalAssist: MedicalAssistance;
   property: PropertyV2;
-  nameImage: string;
+  image: string;
 }
 
 @Component({
@@ -48,7 +48,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
           car: p.car as unknown as Car,
           medicalAssist: p.medicalAssistance as unknown as MedicalAssistance,
           property: p.property as unknown as PropertyV2,
-          nameImage: p.nameImage,
+          image: p.image,
         });
       });
     }

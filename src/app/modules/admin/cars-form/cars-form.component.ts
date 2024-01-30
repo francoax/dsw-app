@@ -40,8 +40,7 @@ export class CarsFormComponent implements OnInit {
     Validators.required,
   ]);
   plate = new FormControl('', [Validators.maxLength(30), Validators.required]);
-  date = new FormControl('', [Validators.maxLength(30), Validators.required]);
-  value = new FormControl('', [Validators.maxLength(10), Validators.required]);
+  value = new FormControl('', [Validators.required]);
   country = new FormControl('', [Validators.required]);
   state = new FormControl('', [Validators.required]);
   city = new FormControl('', [Validators.required]);
@@ -53,10 +52,7 @@ export class CarsFormComponent implements OnInit {
       model: this.model,
       year: this.year,
       plate: this.plate,
-      price: new FormGroup({
-        date: this.date,
-        value: this.value,
-      }),
+      price: this.value,
       country: this.country,
       state: this.state,
       city: this.city,
@@ -68,7 +64,7 @@ export class CarsFormComponent implements OnInit {
     });
 
     this.locationService.getCountries().subscribe((res) => {
-      res.forEach((country) => {
+      res.data.forEach((country: { name: { common: string }; cca2: any }) => {
         if (country.name.common !== 'Falkland Islands')
           this.countries.push({
             name: country.name.common,
@@ -128,7 +124,7 @@ export class CarsFormComponent implements OnInit {
       year: car.year,
       plate: car.plate,
       price: car.price,
-      locality: car.locality,
+      locality: car.location,
     });
     this.formScope = 'editar';
     this.idCarToEdit = car.id;
@@ -137,8 +133,9 @@ export class CarsFormComponent implements OnInit {
   onCountryChange(event: any) {
     this.ccode = event.target.value;
     this.locationService.getStates(this.ccode).subscribe((res) => {
+      const response = res.data.data;
       this.states = [];
-      res.data.forEach((state) => {
+      response.forEach((state: { name: any; isoCode: any }) => {
         this.states.push({ name: state.name, isoCode: state.isoCode });
       });
     });
@@ -148,8 +145,9 @@ export class CarsFormComponent implements OnInit {
     this.locationService
       .getLocations(this.ccode, event.target.value)
       .subscribe((res) => {
+        const response = res.data.data;
         this.locations = [];
-        res.data.forEach((location) => {
+        response.forEach((location: { name: string }) => {
           this.locations.push(location.name);
         });
       });

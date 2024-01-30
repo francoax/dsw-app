@@ -4,34 +4,12 @@ import { Observable } from 'rxjs';
 import { AppConfigService } from '../app/app.service';
 import { ApiResponse } from 'src/app/models/common';
 
-interface RestCountryResponse {
-  name: {
-    common: string;
-  };
-  cca2: string;
-}
-
-interface StateResponse {
-  data: [
-    {
-      name: string;
-      isoCode: string;
-    }
-  ];
-}
-
-interface LocationResponse {
-  data: [
-    {
-      name: string;
-    }
-  ];
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
+  private API = this.appService.apiUrl + '/api/locations';
+
   constructor(
     private appService: AppConfigService,
     private _http: HttpClient
@@ -48,46 +26,23 @@ export class LocationService {
   
   private readonly locationsUrl: string = 
   'https://wft-geo-db.p.rapidapi.com/v1/geo/countries/AR/places?limit=10&offset=0&types=CITY&minPopulation=500000'
-
-  getCountries(): Observable<RestCountryResponse[]> {
-    return this._http.get<RestCountryResponse[]>(this.countriesUrl);
+  
+  getCountries(): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(this.API + '/countries');
   }
 
-  getStates(cca2: string): Observable<StateResponse> {
-    return this._http.get<StateResponse>(
-      this.statesUrl.replace('{ccode}', cca2),
-      {
-        headers: {
-          'x-rapidapi-key':
-            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
-          'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-        },
-      }
-    );
+  getStates(cca2: string): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(this.API + '/states/' + cca2);
   }
 
-  getLocations(
-    countryId: string,
-    regionCode: string
-  ): Observable<LocationResponse> {
-    return this._http.get<LocationResponse>(
-      this.citiesUrl
-        .replace('{countryId}', countryId)
-        .replace('{regionCode}', regionCode),
-      {
-        headers: {
-          'x-rapidapi-key':
-            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
-          'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-        },
-      }
+  getLocations(countryId: string, regionCode: string): Observable<ApiResponse> {
+    return this._http.get<ApiResponse>(
+      `${this.API}/cities/${countryId}&${regionCode}`
     );
   }
 
   getLocation(id: string): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(
-      this.countriesUrl + '/api/locations/' + id
-    );
+    return this._http.get<ApiResponse>(this.API + '/api/locations/' + id);
   }
 
   getLocationsArg(): Observable<ApiResponse> {
