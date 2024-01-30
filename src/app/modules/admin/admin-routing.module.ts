@@ -5,6 +5,7 @@ import { CreatePropertyComponent } from './create-property/create-property.compo
 import { MedicalAssistanceComponent } from './medical-assistance/medical-assistance.component';
 import { CarsFormComponent } from './cars-form/cars-form.component';
 import { PropertyTypeManagementComponent } from './property-type-management/property-type-management.component';
+import { PackagesFormComponent } from './packages/packages-form/packages-form.component';
 const routes: Routes = [
   {
     path: '',
@@ -26,6 +27,10 @@ const routes: Routes = [
         path: 'property-types',
         component: PropertyTypeManagementComponent,
       },
+      {
+        path: 'packages',
+        component: PackagesFormComponent,
+      }
     ],
   },
 ];

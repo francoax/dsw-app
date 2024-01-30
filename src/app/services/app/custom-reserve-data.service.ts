@@ -23,7 +23,7 @@ export class CustomReserveDataService {
       switchMap(({ data }) => {
         this.property = data;
         const cars$ = this.carsService.getCarsFromLocation(
-          this.property.location._id || this.property.location.id
+          this.property.location
         );
         const medicalAssistances$ = this.medicalService.getAll();
         return forkJoin([cars$, medicalAssistances$]);

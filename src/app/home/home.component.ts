@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   filterByProperty(prop: string) {
     const varible = prop;
     this.requiredProps = this.propertyList.filter((prop) => {
-      return prop.location.name
+      return prop.location
         .toLocaleLowerCase()
         .includes(varible.toLocaleLowerCase());
     });
