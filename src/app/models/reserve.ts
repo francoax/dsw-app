@@ -8,6 +8,7 @@ interface Reserve {
   date_end: string;
   user?: string;
   packageReserved: string;
+  totalPrice: number;
 }
 
 export interface ReserveList {
@@ -28,6 +29,7 @@ export interface ReserveList {
     car: Car;
     medicalAssistance: MedicalAssistance;
   };
+  totalPrice: number;
   createdAt: string;
 }
 

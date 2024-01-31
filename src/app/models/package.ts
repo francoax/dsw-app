@@ -1,6 +1,6 @@
-import { Car } from "./car";
-import { MedicalAssistance } from "./medical-assistance";
-import { Property } from "./property";
+import { Car } from './car';
+import { MedicalAssistance } from './medical-assistance';
+import { Property } from './property';
 
 interface Package {
   id: string;
@@ -8,7 +8,8 @@ interface Package {
   property: Property;
   car: Car;
   medicalAssistance: MedicalAssistance;
-  image:string;
+  image: string;
+  discount: number;
 }
 
 export interface PackageAgent {
@@ -17,6 +18,7 @@ export interface PackageAgent {
   car: string;
   medicalAssistance: string;
   image: string;
+  discount?: number;
 }
 
 export default Package;

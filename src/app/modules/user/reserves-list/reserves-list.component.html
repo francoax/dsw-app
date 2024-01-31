@@ -93,7 +93,7 @@
                     </li>
                   </ul>
                   <h3 class="mt-4 text-sm lg:text-lg font-semibold leading-7 text-gray-300">
-                    Valor total por reserva: <span style="color: rgb(28, 197, 28)">{{r.packageReserved.property.pricePerNight | currency : "USD" : "code"}}</span>
+                    Valor total por reserva: <span style="color: rgb(28, 197, 28)">{{r.totalPrice | currency : "USD" : "code"}}</span>
                   </h3>
                   <div class="flex justify-center my-3 lg:justify-start">
                     <button

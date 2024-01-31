@@ -6,7 +6,7 @@
       class="keen-slider keen-slider--vertical shadow-none h-auto sm:h-[350px]  rounded-[5px]"
       #sliderRef
     >
-      <div *ngFor="let package of packageFull; let i = index">
+      <div *ngFor="let package of packageList; let i = index">
         <div class="keen-slider__slide number-slide">
           <img [src]="package.image" alt="Imágen del paquete"/>
           <button
@@ -24,10 +24,11 @@
             Reservar Paquete
           </button>
           <div class="card-carousel">
+            <p class="font-semibold">Aproveche un <span class="text-red-500">{{package.discount * 100}}%</span> menos en el valor total!</p>
             <ul>
-              <li><span>Cobertura medica:</span> {{package.medicalAssist.description}}.</li>
-              <li><span>Auto incluido:</span> {{package.car.brand}} {{package.car.model}}.</li>
               <li><span>Ubicacion:</span> {{package.property.location}}.</li>
+              <li><span>Cobertura medica:</span> {{package.medicalAssistance.description}}.</li>
+              <li><span>Auto incluido:</span> {{package.car.brand}} {{package.car.model}}.</li>
               <li><span>Para</span> {{package.property.capacity}} <span>personas</span>.</li>
             </ul>
           </div>

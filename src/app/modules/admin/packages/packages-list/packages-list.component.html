@@ -12,6 +12,7 @@
         <th>Propiedad</th>
         <th>Auto</th>
         <th>Asistencia Medica</th>
+        <th class="text-center" >Descuento aplicado</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
         <td>{{ p.property.location + " " + p.property.address }}</td>
         <td>{{ p.car.brand + " " +p.car.model }}</td>
         <td>{{ p.medicalAssistance.description + " " + p.medicalAssistance.coverageType }}</td>
+        <td class="text-center">{{ p.discount | percent }}</td>
         <th>
           <div class="flex items-center gap-5">
             <svg
