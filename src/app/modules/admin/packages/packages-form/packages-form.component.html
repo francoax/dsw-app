@@ -9,39 +9,47 @@
   <div class="collapse-content">
     <form [formGroup]="packagesForm" (ngSubmit)="onSubmit(packagesForm)">
       <div class="form-container">
-        <label [ngClass]="{
-          'text-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
-        }" class="label">propiedad</label>
-        <select [ngClass]="{
-            'border-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
-          }" class="select select-bordered w-[320px] max-w-xs" [(ngModel)]="selectedLoca" (change)="loadCars()" [formControlName]="'property'">
-          <option selected disabled value="">Seleccionar propiedad</option>
-          <option *ngFor="let prop of props" [value]="prop._id">{{ prop.location +' '+'Direc:'+' '+prop.address +' '+'Capacidad:'+prop.capacity}}</option>
-        </select>
-        <label [ngClass]="{
-          'text-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
-        }" class="label">Vehiculo</label>
-        <select [ngClass]="{
-            'border-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
-          }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'car'">
-          <option selected disabled value="">Seleccionar Vehiculo</option>
-          <option *ngFor="let c of cars" [value]="c.id">{{c.brand+' '+c.model}}</option>
-        </select>
-        <label [ngClass]="{
-          'text-red-500' : packagesForm.get('medicalAssistance')?.errors !== null && packagesForm.get('medicalAssistance')?.touched
-        }" class="label">Asistencia Medica</label>
-        <select [ngClass]="{
-            'border-red-500' : packagesForm.get('medicalAssistance')?.errors !== null && packagesForm.get('medicalAssistance')?.touched
-          }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'medicalAssistance'">
-          <option selected disabled>Seleccionar Asistencia Medica</option>
-          <option *ngFor="let am of medicalAssistances" [value]="am._id">{{am.description}}</option>
-        </select>
-        <div class="flex flex-col">
-          <label class="label">Imagen (MAX 4.5MB)</label>
-          <input [ngClass]="{
-            'border-red-500' : packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched
-          }" class="file-input file-input-bordered w-full max-w-xs" formControlName="image" id="image" type="file" (change)="onFileChange($event)">
-          <span *ngIf="packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
+        <div class="lg:grid lg:grid-cols-4">
+          <div>
+            <label [ngClass]="{
+              'text-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
+            }" class="label">Propiedad</label>
+            <select [ngClass]="{
+                'border-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
+              }" class="select select-bordered w-[320px] max-w-xs" [(ngModel)]="selectedLoca" (change)="loadCars()" [formControlName]="'property'">
+              <option selected disabled value="">Seleccionar propiedad</option>
+              <option *ngFor="let prop of props" [value]="prop._id">{{ prop.location +' '+'Direc:'+' '+prop.address +' '+'Capacidad:'+prop.capacity}}</option>
+            </select>
+          </div>
+          <div>
+            <label [ngClass]="{
+              'text-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
+            }" class="label">Vehiculo</label>
+            <select [ngClass]="{
+                'border-red-500' : packagesForm.get('car')?.errors !== null && packagesForm.get('car')?.touched
+              }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'car'">
+              <option selected disabled value="">Seleccionar Vehiculo</option>
+              <option *ngFor="let c of cars" [value]="c.id">{{c.brand+' '+c.model}}</option>
+            </select>
+          </div>
+          <div>
+            <label [ngClass]="{
+              'text-red-500' : packagesForm.get('medicalAssistance')?.errors !== null && packagesForm.get('medicalAssistance')?.touched
+            }" class="label">Asistencia Medica</label>
+            <select [ngClass]="{
+                'border-red-500' : packagesForm.get('medicalAssistance')?.errors !== null && packagesForm.get('medicalAssistance')?.touched
+              }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'medicalAssistance'">
+              <option selected disabled>Seleccionar Asistencia Medica</option>
+              <option *ngFor="let am of medicalAssistances" [value]="am._id">{{am.description}}</option>
+            </select>
+          </div>
+          <div class="flex flex-col">
+            <label class="label">Imagen (MAX 4.5MB)</label>
+            <input [ngClass]="{
+              'border-red-500' : packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched
+            }" class="file-input file-input-bordered w-full max-w-xs" formControlName="image" id="image" type="file" (change)="onFileChange($event)">
+            <span *ngIf="packagesForm.get('image')?.errors !== null && packagesForm.get('image')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
+          </div>
         </div>
         <div class="flex gap-6 mt-6">
           <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">

@@ -1,7 +1,7 @@
 <div class="collapse bg-base-200" [class.collapse-open]="collapse" [class.collapse-close]="!collapse">
   <input type="checkbox" (click)="toggleCollapse()"/>
   <div class="collapse-title text-xl font-medium"  >
-    {{mod === 'add' ? 'Agregar nueva asistencia medica' :'Editar asistencia medica'}}
+    {{mod === 'add' ? 'Registrar nueva Asistencia Medica' :'Editar asistencia medica'}}
   </div>
   <div class="collapse-content">
     <form [formGroup]="medicalAssistForm" (ngSubmit)="mod === 'add' ? add(medicalAssistForm) : modify()">
