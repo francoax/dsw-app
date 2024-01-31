@@ -14,9 +14,9 @@ import Package from 'src/app/models/package';
 @Component({
   selector: 'app-packages-form',
   templateUrl: './packages-form.component.html',
-  styleUrls: ['./packages-form.component.scss']
+  styleUrls: ['./packages-form.component.scss'],
 })
-export class PackagesFormComponent implements OnInit{
+export class PackagesFormComponent implements OnInit {
   idPackToEdit!: string;
   cars: Car[] = [];
   medicalAssistances: MedicalAssistance[] = [];
@@ -29,7 +29,6 @@ export class PackagesFormComponent implements OnInit{
   packages: Package[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
-
   constructor(
     private propServ: PropertyServiceService,
     private carServ: CarService,
@@ -37,19 +36,18 @@ export class PackagesFormComponent implements OnInit{
     private packServ: PackageService,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService
-    ){}
-  
-  
+  ) {}
+
   ngOnInit(): void {
     this.packServ.getCompletePackages().subscribe((response) => {
       this.packages = response.data;
       console.log(response.data);
-    })
+    });
 
     this.carServ.getCars().subscribe((response) => {
       this.cars = response.data;
     });
-    
+
     this.propServ.getProperties().subscribe((response) => {
       this.props = response.data;
       console.log(response.data);
@@ -59,47 +57,49 @@ export class PackagesFormComponent implements OnInit{
     });
 
     this.packagesForm = this.initForm();
-    
   }
 
-  initForm():FormGroup {
+  initForm(): FormGroup {
     return this.fb.group({
-      property: [null,[Validators.required]],
-      car: [null,[Validators.required]],
-      medicalAssistance: [null,[Validators.required]],
-      image: [Blob,[Validators.required]],
+      property: [null, [Validators.required]],
+      car: [null, [Validators.required]],
+      medicalAssistance: [null, [Validators.required]],
+      image: [Blob, [Validators.required]],
+      type: ['completo'],
     });
   }
- 
+
   onFileChange(event: any) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
-        const file = event.target.files[0];
-        if (!file.type.startsWith('image')) {
-          this.packagesForm.get('image')?.setErrors({ required: true });
-        } else {
-          reader.onload = (e) => {
-            const imgBase64 = reader.result;
-            this.packagesForm.patchValue({
-              image: imgBase64,
-            });
-          };
-          reader.readAsDataURL(file);
-        }
+      const file = event.target.files[0];
+      if (!file.type.startsWith('image')) {
+        this.packagesForm.get('image')?.setErrors({ required: true });
+      } else {
+        reader.onload = (e) => {
+          const imgBase64 = reader.result;
+          this.packagesForm.patchValue({
+            image: imgBase64,
+          });
+        };
+        reader.readAsDataURL(file);
       }
     }
-    loadCars(location?:string) {
-      const index = this.props.map((p) => p._id).indexOf(this.selectedLoca!);
-      const prop = this.props[index];
-      this.carServ.getCarsFromLocation(location ?? prop.location).subscribe((response) => {
+  }
+  loadCars(location?: string) {
+    const index = this.props.map((p) => p._id).indexOf(this.selectedLoca!);
+    const prop = this.props[index];
+    this.carServ
+      .getCarsFromLocation(location ?? prop.location)
+      .subscribe((response) => {
         this.cars = response.data;
-       if(!location){
-        this.packagesForm.patchValue({
-          car: ""
-        })
-       }
+        if (!location) {
+          this.packagesForm.patchValue({
+            car: '',
+          });
+        }
       });
-    }
+  }
   onSubmit(form: FormGroup) {
     if (!this.packagesForm.valid) {
       this.packagesForm.markAllAsTouched();
@@ -111,34 +111,35 @@ export class PackagesFormComponent implements OnInit{
       return;
     }
 
-    if(this.formScope === 'create'){
+    if (this.formScope === 'create') {
       this.packServ
-      .createPackage(form.value)
-      .subscribe(({ message, data, error}) => {
-        if (error) {
-          this.toastService.setup({
-            message: message,
-            status: false,
-          });
-          this.toastService.show();
-        } else {
-          this.toastService.setup({
-            message: message,
-            status: true,
-          });
-          this.toastService.show();
+        .createPackage(form.value)
+        .subscribe(({ message, data, error }) => {
+          if (error) {
+            this.toastService.setup({
+              message: message,
+              status: false,
+            });
+            this.toastService.show();
+          } else {
+            this.toastService.setup({
+              message: message,
+              status: true,
+            });
+            this.toastService.show();
 
-          this.closeForm();
-          this.packages.push(data);
+            this.closeForm();
+            this.packages.push(data);
           }
         });
-      }
+    }
 
-      if(this.formScope=== 'update'){
-        if(this.packagesForm.valid){
-          this.packServ.updatePackage(form.value,this.idPackToEdit)
-          .subscribe(({message,data,error}) => {
-            if(error){
+    if (this.formScope === 'update') {
+      if (this.packagesForm.valid) {
+        this.packServ
+          .updatePackage(form.value, this.idPackToEdit)
+          .subscribe(({ message, data, error }) => {
+            if (error) {
               this.toastService.setup({
                 message,
                 status: !error,
@@ -154,50 +155,42 @@ export class PackagesFormComponent implements OnInit{
             const index = this.packages.map((p) => p.id).indexOf(data.id);
             this.packages[index] = data;
             this.closeForm();
-
-          })
-        }
+          });
       }
-
     }
+  }
 
-    onUpdate(pack: Package) {
-      this.loadCars(pack.property.location);
-      this.formCollapse.nativeElement.checked = true;
-      this.formTitle = 'Editar Paquete';
-      this.packagesForm.get('image')?.clearValidators();
-      this.packagesForm.get('image')?.updateValueAndValidity();
-      this.packagesForm.patchValue({
-        property: pack.property._id,
-        car: pack.car._id,
-        medicalAssistance: pack.medicalAssistance._id,
-        image: pack.image,
-      });
-      this.formScope = 'update';
-      this.idPackToEdit = pack.id;
-    }
+  onUpdate(pack: Package) {
+    this.loadCars(pack.property.location);
+    this.formCollapse.nativeElement.checked = true;
+    this.formTitle = 'Editar Paquete';
+    this.packagesForm.get('image')?.clearValidators();
+    this.packagesForm.get('image')?.updateValueAndValidity();
+    this.packagesForm.patchValue({
+      property: pack.property._id,
+      car: pack.car._id,
+      medicalAssistance: pack.medicalAssistance._id,
+      image: pack.image,
+    });
+    this.formScope = 'update';
+    this.idPackToEdit = pack.id;
+  }
 
+  onDelete(id: string): void {
+    this.packServ.deletePackage(id).subscribe((res) => {
+      this.toastService.setup({ message: 'Paquete eliminada', status: true });
+      this.toastService.show();
+      this.packages = this.packages.filter((p) => p.id !== id);
+    });
+  }
 
-
-    onDelete(id: string): void {
-      this.packServ.deletePackage(id).subscribe((res) => {
-        this.toastService.setup({ message: 'Paquete eliminada', status: true });
-        this.toastService.show();
-        this.packages = this.packages.filter((p) => p.id !== id);
-        
-      })
-    }
-
-
-    closeForm(): void {
-      this.formCollapse.nativeElement.checked = false;
-      this.formTitle = 'Registar nueva Paquete';
-      this.buttonContent = 'Agregar';
-      this.formScope = 'create';
-      this.packagesForm.get('image')?.setValidators([Validators.required]);
-      this.packagesForm.get('image')?.updateValueAndValidity();
-      this.packagesForm.reset();
-    }
-    
-
+  closeForm(): void {
+    this.formCollapse.nativeElement.checked = false;
+    this.formTitle = 'Registar nueva Paquete';
+    this.buttonContent = 'Agregar';
+    this.formScope = 'create';
+    this.packagesForm.get('image')?.setValidators([Validators.required]);
+    this.packagesForm.get('image')?.updateValueAndValidity();
+    this.packagesForm.reset();
+  }
 }

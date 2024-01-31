@@ -32,17 +32,15 @@ export class PackageService {
   }
 
   createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
-    newPackage.type="completo"
-    console.log(newPackage);
     return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
   deletePackage(packageId: string): Observable<ApiResponse> {
-    return this._http.delete<ApiResponse>(this.url + '/api/packages/' + packageId);
+    return this._http.delete<ApiResponse>(
+      this.url + '/api/packages/' + packageId
+    );
   }
 
-  updatePackage(pack: Package,id: string): Observable<ApiResponse>{
+  updatePackage(pack: Package, id: string): Observable<ApiResponse> {
     return this._http.put<ApiResponse>(`${this.url}/api/packages/${id}`, pack);
-
   }
-
 }
