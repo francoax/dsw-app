@@ -51,70 +51,77 @@
           <app-user-reserves-skeleton></app-user-reserves-skeleton>
         </ng-container>
         <ng-template #list>
-          <div *ngIf="reservesFiltered.length !== 0; else noReserves" class="flex flex-col gap-6 sm:flex-row sm:flex-wrap lg:flex-col">
-            <div *ngFor="let r of reservesFiltered" class="collapse bg-[#eb5757] text-[white] font-medium sm:max-w-[380px] lg:max-w-none">
-              <input type="checkbox" class="peer" />
-              <div class="collapse-title peer-checked:bg-base-200 peer-checked:text-base-content">
-                <div class="lg:grid lg:grid-cols-[repeat(3,_minmax(300px,_350px))] lg:place-items-center lg:justify-items-start">
-                  <span class="flex gap-2 my-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                    </svg>
-                    {{r.date_start | date}} a {{r.date_end | date}}
-                  </span>
-                  <p class="flex items-center gap-2 my-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                    </svg>
-                    <span class="text-sm">{{r.packageReserved.property.address}}, {{r.packageReserved.property.location}}</span>
-                  </p>
-                  <div>
-                    <div *ngIf="r.packageReserved.car !== null" class="badge badge-outline mr-1">+ Auto</div>
-                    <div *ngIf="r.packageReserved.medicalAssistance !== null" class="badge badge-outline mx-1">+ Asistencia Medica</div>
+          <ng-container *ngIf="reserves.length !== 0; else noReserves">
+            <div *ngIf="reservesFiltered.length !== 0; else noFilter" class="flex flex-col gap-6 sm:flex-row sm:flex-wrap lg:flex-col">
+              <div *ngFor="let r of reservesFiltered" class="collapse bg-[#eb5757] text-[white] font-medium sm:max-w-[380px] lg:max-w-none">
+                <input type="checkbox" class="peer" />
+                <div class="collapse-title peer-checked:bg-base-200 peer-checked:text-base-content">
+                  <div class="lg:grid lg:grid-cols-[repeat(3,_minmax(300px,_350px))] lg:place-items-center lg:justify-items-start">
+                    <span class="flex gap-2 my-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                      </svg>
+                      {{r.date_start | date}} a {{r.date_end | date}}
+                    </span>
+                    <p class="flex items-center gap-2 my-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                      </svg>
+                      <span class="text-sm">{{r.packageReserved.property.address}}, {{r.packageReserved.property.location}}</span>
+                    </p>
+                    <div>
+                      <div *ngIf="r.packageReserved.car !== null" class="badge badge-outline mr-1">+ Auto</div>
+                      <div *ngIf="r.packageReserved.medicalAssistance !== null" class="badge badge-outline mx-1">+ Asistencia Medica</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="collapse-content peer-checked:bg-base-200 peer-checked:text-base-content lg:grid lg:grid-cols-2 lg:gap-5">
-                <figure>
-                  <img class="rounded" [src]="r.packageReserved.property.image" alt="Property image" />
-                </figure>
-                <div>
-                  <span class="text-sm lg:text-lg">Informacion detallada:</span>
-                  <ul class="list-disc pl-4">
-                    <li class="text-sm lg:text-lg">
-                      Dias reservados: {{r.date_start | date}} a {{r.date_end | date}}
-                    </li>
-                    <li class="text-sm lg:text-lg">
-                      Valor noche: {{r.packageReserved.property.pricePerNight | currency: "USD" : "code"}}
-                    </li>
-                    <li class="text-sm lg:text-lg" *ngIf="r.packageReserved.car !== null">
-                      Auto alquilado: {{r.packageReserved.car.brand}} {{r.packageReserved.car.model}}
-                    </li>
-                    <li class="text-sm lg:text-lg" *ngIf="r.packageReserved.medicalAssistance !== null">
-                      Asistencia medica incluida: {{r.packageReserved.medicalAssistance.description}} {{r.packageReserved.medicalAssistance.coverageType}}
-                    </li>
-                  </ul>
-                  <h3 class="mt-4 text-sm lg:text-lg font-semibold leading-7 text-gray-300">
-                    Valor total por reserva: <span style="color: rgb(28, 197, 28)">{{r.totalPrice | currency : "USD" : "code"}}</span>
-                  </h3>
-                  <div class="flex justify-center my-3 lg:justify-start">
-                    <button
-                    type="button"
-                    class="btn btn-outline btn-error"
-                    [id]="r._id"
-                    [disabled]="checkCurrentReserve(r)"
-                    (click)="openModal($event)"
-                    >
-                    Cancelar reserva
-                  </button>
+                <div class="collapse-content peer-checked:bg-base-200 peer-checked:text-base-content lg:grid lg:grid-cols-2 lg:gap-5">
+                  <figure>
+                    <img class="rounded" [src]="r.packageReserved.property.image" alt="Property image" />
+                  </figure>
+                  <div>
+                    <span class="text-sm lg:text-lg">Informacion detallada:</span>
+                    <ul class="list-disc pl-4">
+                      <li class="text-sm lg:text-lg">
+                        Dias reservados: {{r.date_start | date}} a {{r.date_end | date}}
+                      </li>
+                      <li class="text-sm lg:text-lg">
+                        Valor noche: {{r.packageReserved.property.pricePerNight | currency: "USD" : "code"}}
+                      </li>
+                      <li class="text-sm lg:text-lg" *ngIf="r.packageReserved.car !== null">
+                        Auto alquilado: {{r.packageReserved.car.brand}} {{r.packageReserved.car.model}}
+                      </li>
+                      <li class="text-sm lg:text-lg" *ngIf="r.packageReserved.medicalAssistance !== null">
+                        Asistencia medica incluida: {{r.packageReserved.medicalAssistance.description}} {{r.packageReserved.medicalAssistance.coverageType}}
+                      </li>
+                    </ul>
+                    <h3 class="mt-4 text-sm lg:text-lg font-semibold leading-7 text-gray-300">
+                      Valor total por reserva: <span style="color: rgb(28, 197, 28)">{{r.totalPrice | currency : "USD" : "code"}}</span>
+                    </h3>
+                    <div class="flex justify-center my-3 lg:justify-start">
+                      <button
+                      type="button"
+                      class="btn btn-outline btn-error"
+                      [id]="r._id"
+                      [disabled]="checkCurrentReserve(r)"
+                      (click)="openModal($event)"
+                      >
+                      Cancelar reserva
+                    </button>
+                  </div>
+                </div>
                 </div>
               </div>
-              </div>
             </div>
-          </div>
+          </ng-container>
           <ng-template #noReserves>
             <div class="flex justify-center">
               <p class="text-slate-600">Sin reservas por el momento...Hace tu primera reserva! <a class="link link-primary" [routerLink]="'/'">Reservar</a></p>
+            </div>
+          </ng-template>
+          <ng-template #noFilter>
+            <div class="flex justify-center">
+              <p class="text-slate-600">No hay reservas que apliquen a dicho filtro :(</p>
             </div>
           </ng-template>
         </ng-template>
