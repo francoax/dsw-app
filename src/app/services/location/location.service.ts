@@ -45,16 +45,4 @@ export class LocationService {
     return this._http.get<ApiResponse>(this.API + '/api/locations/' + id);
   }
 
-  getLocationsArg(): Observable<ApiResponse> {
-    return this._http.get<ApiResponse>(
-      this.locationsUrl,
-      {
-        headers: {
-          'x-rapidapi-key':
-            '0de146db11msh7df5144e179ffeap18d585jsn00f857510fc8',
-          'X-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-        },
-      }
-    );
-  }
 }
