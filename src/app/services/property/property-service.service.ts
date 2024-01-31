@@ -35,7 +35,6 @@ export class PropertyServiceService {
   }
 
   createProperty(newProperty: PropertyCreation): Observable<ApiResponse> {
-    console.log(newProperty)
     return this.http.post<ApiResponse>(this.baseUrl, newProperty);
   }
 
