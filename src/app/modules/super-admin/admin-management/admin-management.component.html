@@ -5,45 +5,29 @@
     {{formTitle}}
   </div>
   <div class="collapse-content">
-    <div class="border-b border-gray-900/10 pb-12">
+    <div class="border-b border-gray-900/10">
       <p class="mt-1 text-sm leading-6 text-gray-600">Los campos con <span class="text-red-600">*</span> son requeridos.</p>
-      <form class="pr-24" [formGroup]="form" (ngSubmit)="onSubmit(form)">
-        <div class="flex gap-24 ">
-          <div class="inputs-container">
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('name'))" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
-            </div>
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('email'))" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
-            </div>
-            <div class="mt-2">
-              <app-input
-                [inputControl]="$any(form.get('password'))"
-                [type]="'password'"
-                [label]="formScope === 'create' ? 'Contraseña *' : 'Nueva contraseña (opcional)'"
-                [placeholder]="'**********'">
-              </app-input>
-            </div>
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('repeatedPassword'))" [type]="'password'" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
-            </div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+        <div class="lg:grid lg:grid-cols-4">
+          <app-input [inputControl]="$any(form.get('name'))" [label]="'Nombre *'" [placeholder]="'Nombre'"></app-input>
+          <app-input [inputControl]="$any(form.get('lastname'))" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
+          <app-input [inputControl]="$any(form.get('tel'))" [label]="'Telefono *'" [placeholder]="''"></app-input>
+          <app-input [inputControl]="$any(form.get('address'))" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
+          <app-input [inputControl]="$any(form.get('email'))" [label]="'Email *'" [placeholder]="'example@gmail.com'"></app-input>
+          <app-input
+            [inputControl]="$any(form.get('password'))"
+            [type]="'password'"
+            [label]="formScope === 'create' ? 'Contraseña *' : 'Nueva contraseña (opcional)'"
+            [placeholder]="'**********'">
+          </app-input>
+          <div>
+            <app-input [inputControl]="$any(form.get('repeatedPassword'))" [type]="'password'" [label]="'Repetir contraseña *'" [placeholder]="'**********'"></app-input>
             <span *ngIf="form.errors?.['passwordsNotMatching'] && $any(form.get('password')?.touched) && $any(form.get('repeatedPassword')?.touched)" class="label-text-alt text-red-500">
               Las contraseñas no coinciden.
             </span>
           </div>
-          <div class="inputs-container">
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('lastname'))" [label]="'Apellido *'" [placeholder]="'Apellido'"></app-input>
-            </div>
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('address'))" [label]="'Direccion *'" [placeholder]="'Direccion'"></app-input>
-            </div>
-            <div class="mt-2">
-              <app-input [inputControl]="$any(form.get('tel'))" [label]="'Telefono *'" [placeholder]="'1111111111'"></app-input>
-            </div>
-          </div>
         </div>
-        <div class="form-buttons mt-2">
+        <div class="flex gap-5 m-2">
           <app-button (click)="closeForm()" [type]="'button'" [classType]="'cancel'">
             Cancelar
           </app-button>
