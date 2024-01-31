@@ -66,6 +66,7 @@ export class PackagesFormComponent implements OnInit {
       medicalAssistance: [null, [Validators.required]],
       image: [Blob, [Validators.required]],
       type: ['completo'],
+      discount: [null, [Validators.required]],
     });
   }
 
@@ -113,7 +114,7 @@ export class PackagesFormComponent implements OnInit {
 
     if (this.formScope === 'create') {
       this.packServ
-        .createPackage(form.value)
+        .createPackage({ ...form.value, discount: form.value.discount / 100 })
         .subscribe(({ message, data, error }) => {
           if (error) {
             this.toastService.setup({
@@ -171,6 +172,7 @@ export class PackagesFormComponent implements OnInit {
       car: pack.car._id,
       medicalAssistance: pack.medicalAssistance._id,
       image: pack.image,
+      discount: pack.discount * 100,
     });
     this.formScope = 'update';
     this.idPackToEdit = pack.id;

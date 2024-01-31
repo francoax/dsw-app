@@ -201,7 +201,9 @@ export class CustomReserveComponent
     const totalDays = prevCalculate / (1000 * 3600 * 24) || 0;
     const carPrice = this.reserveSummary.car?.price || 0;
     this.reserveSummary.totalPrice =
-      carPrice + this.property.pricePerNight * totalDays + (this.reserveSummary.medicalAssitance?.price || 0);
+      carPrice +
+      this.property.pricePerNight * totalDays +
+      (this.reserveSummary.medicalAssitance?.price || 0);
   }
 
   onSubmit(form: FormGroup) {
@@ -251,6 +253,7 @@ export class CustomReserveComponent
           date_end: this.form.value.checkOut,
           date_start: this.form.value.checkIn,
           packageReserved: res.data.id,
+          totalPrice: this.reserveSummary.totalPrice,
         };
         this.reserveService.createReserve(newReserve).subscribe({
           next: () => {

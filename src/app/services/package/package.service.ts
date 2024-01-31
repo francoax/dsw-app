@@ -41,6 +41,7 @@ export class PackageService {
   }
 
   updatePackage(pack: Package, id: string): Observable<ApiResponse> {
+    pack.discount = pack.discount / 100;
     return this._http.put<ApiResponse>(`${this.url}/api/packages/${id}`, pack);
   }
 }
