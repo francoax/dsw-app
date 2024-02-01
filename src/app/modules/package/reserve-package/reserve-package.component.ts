@@ -74,8 +74,30 @@ export class ReservePackageComponent implements OnInit {
     return `${yyyy}-${mm}-${dd}`;
   };
   totalPrice = 0;
+  subTotalPrice = 0;
+  discount = 0;
   error = false;
   hasReserves = false;
+
+  minDate: Date = new Date();
+  reserves = [
+    {
+      start: new Date('2024/02/1'),
+      end: new Date('2024/02/4'),
+    },
+    {
+      start: new Date('2024/02/6'),
+      end: new Date('2024/02/9'),
+    },
+    {
+      start: new Date('2024/02/14'),
+      end: new Date('2024/02/16'),
+    },
+    {
+      start: new Date('2024/02/20'),
+      end: new Date('2024/02/22'),
+    },
+  ];
 
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
@@ -105,16 +127,75 @@ export class ReservePackageComponent implements OnInit {
         new Date(this.reserveForm.value.checkIn),
         new Date(this.reserveForm.value.checkOut)
       );
-      this.totalPrice =
+      this.subTotalPrice =
         days * this.package.property.pricePerNight +
         this.package.car.price +
-        (this.package.medicalAssistance.price || 0);
+        this.package.medicalAssistance.price;
+
+      this.discount = this.subTotalPrice * this.package.discount;
+
+      this.totalPrice = this.subTotalPrice - this.discount;
     });
 
     this.skeletonService.hideReserveLoading();
   }
 
+  myFilter = (d: Date): boolean => {
+    let dates: Date[] = [];
+    this.reserves.forEach((date) => {
+      if (
+        d.valueOf() >= date.start.valueOf() &&
+        d.valueOf() <= date.end.valueOf()
+      ) {
+        dates = [...this.generateDatesBetween(date.start, date.end)];
+      }
+    });
+    return (
+      dates.findIndex((date) => date.toDateString() == d?.toDateString()) < 0
+    );
+  };
+
+  generateDatesBetween(startDate: Date, endDate: Date): Date[] {
+    const dates = [];
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  }
+
   onSubmit() {
+    let hasReservedDates = false;
+
+    const { checkIn, checkOut } = this.reserveForm.value;
+
+    const datesReserved = this.generateDatesBetween(checkIn, checkOut);
+
+    this.reserves.forEach((date) => {
+      const isIn = datesReserved.some(
+        (d) =>
+          d.valueOf() >= date.start.valueOf() &&
+          d.valueOf() <= date.end.valueOf()
+      );
+
+      if (isIn) {
+        hasReservedDates = true;
+      }
+    });
+
+    if (hasReservedDates) {
+      this.reserveForm.get('checkIn')?.setErrors([Validators.required]);
+      this.toastService.setup({
+        message: 'Las fechas dadas contienen fechas no disponibles.',
+        status: false,
+      });
+      this.toastService.show();
+      return;
+    }
+
     this.reserveService.getReservesByUser().subscribe(({ data }) => {
       if (data.length > 0) {
         const reserves = data.filter(

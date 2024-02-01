@@ -52,6 +52,26 @@ export class CustomReserveComponent
   form!: FormGroup;
   hasReserves = false;
 
+  minDate: Date = new Date();
+  reserves = [
+    {
+      start: new Date('2024/02/1'),
+      end: new Date('2024/02/4'),
+    },
+    {
+      start: new Date('2024/02/6'),
+      end: new Date('2024/02/9'),
+    },
+    {
+      start: new Date('2024/02/14'),
+      end: new Date('2024/02/16'),
+    },
+    {
+      start: new Date('2024/02/20'),
+      end: new Date('2024/02/22'),
+    },
+  ];
+
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
   @ViewChild('carSelect') private carSelect!: ElementRef;
@@ -157,6 +177,33 @@ export class CustomReserveComponent
     );
   }
 
+  myFilter = (d: Date): boolean => {
+    let dates: Date[] = [];
+    this.reserves.forEach((date) => {
+      if (
+        d.valueOf() >= date.start.valueOf() &&
+        d.valueOf() <= date.end.valueOf()
+      ) {
+        dates = [...this.generateDatesBetween(date.start, date.end)];
+      }
+    });
+    return (
+      dates.findIndex((date) => date.toDateString() == d?.toDateString()) < 0
+    );
+  };
+
+  generateDatesBetween(startDate: Date, endDate: Date): Date[] {
+    const dates = [];
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+  }
+
   updateSummary(prevValue: any, nextValue: any) {
     if (prevValue.car !== nextValue.car) {
       this.reserveSummary = {
@@ -207,11 +254,40 @@ export class CustomReserveComponent
   }
 
   onSubmit(form: FormGroup) {
+    let hasReservedDates = false;
+
+    const { checkIn, checkOut } = form.value;
+
+    const datesReserved = this.generateDatesBetween(checkIn, checkOut);
+
+    this.reserves.forEach((date) => {
+      const isIn = datesReserved.some(
+        (d) =>
+          d.valueOf() >= date.start.valueOf() &&
+          d.valueOf() <= date.end.valueOf()
+      );
+
+      if (isIn) {
+        hasReservedDates = true;
+      }
+    });
+
+    if (hasReservedDates) {
+      this.form.get('checkIn')?.setErrors([Validators.required]);
+      this.toastService.setup({
+        message: 'Las fechas dadas contienen fechas no disponibles.',
+        status: false,
+      });
+      this.toastService.show();
+      return;
+    }
+
     this.reserveService.getReservesByUser().subscribe(({ data }) => {
       if (data.length > 0) {
         const reserves = data.filter(
-          (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
+          (r: Reserve) => new Date(r.date_end) > new Date()
         );
+        console.log(reserves);
         this.hasReserves = reserves.length > 0;
       }
 
@@ -222,7 +298,10 @@ export class CustomReserveComponent
           status: false,
         });
         this.toastService.show();
-      } else if (form.valid) {
+        return;
+      }
+
+      if (form.valid) {
         this.open();
       } else {
         this.form.markAllAsTouched();

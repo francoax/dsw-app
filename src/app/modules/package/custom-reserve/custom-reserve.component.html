@@ -83,25 +83,21 @@
           </div>
           <div
             id="dates"
-            class="max-w-md max-h-72 bg-gray-800 rounded-lg shadow-md p-6"
+            class="max-w-sm lg:max-w-md bg-base-200 rounded-lg shadow-md flex justify-center p-4 max-h-[110px]"
           >
-            <label for="">Check in</label>
-            <app-input
-              [placeholder]="'Check in'"
-              [type]="'date'"
-              [inputControl]="$any(form.get('checkIn'))"
-            >
-            </app-input>
-            <label for="">Check out</label>
-            <app-input
-              [placeholder]="'Check in'"
-              [type]="'date'"
-              [inputControl]="$any(form.get('checkOut'))"
-            >
-            </app-input>
+            <mat-form-field class="w-[380px] max-h-[80px]">
+              <mat-label>CheckIn - CheckOut</mat-label>
+              <mat-date-range-input [rangePicker]="picker" [min]="minDate" [dateFilter]="myFilter">
+                <input matStartDate formControlName="checkIn" placeholder="Fecha desde">
+                <input matEndDate formControlName="checkOut" placeholder="Fecha hasta">
+              </mat-date-range-input>
+              <mat-hint>Las fechas no disponibles aparecen oscuras.</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
             <span
               *ngIf="
-                form.hasError('invalidDate') && form.get('checkIn')?.touched
+                form.hasError('required') && form.get('checkIn')?.touched
               "
               class="label-text-alt text-red-500"
             >
@@ -164,50 +160,20 @@
           </div>
         </div>
       </section>
-      <section class="reserve-info">
+      <section class="reserve-info w-full">
         <div class="divider">Informacion de reserva</div>
+        <!-- <img [src]="property.image" alt="property reserved" class="image-full"/> -->
         <div
-          class="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box lg:hidden"
+          class="carousel carousel-center p-4 space-x-4 bg-neutral rounded-box"
         >
-          <div class="carousel-item w-full h-full">
-            <img
-              [src]="property.image"
-              alt="property reserved"
-              class="image-full"
-            />
-          </div>
-          <div
-            *ngIf="form.get('car')?.value"
-            class="carousel-item w-full h-full"
-          >
-            <img src="../../../../assets/img/hilux.webp" alt="" />
-          </div>
-        </div>
-        <div
-          #carousel
-          class="carousel carousel-center max-w-md hidden p-4 space-x-4 bg-neutral rounded-box lg:inline-flex"
-        >
-          <div id="1" class="carousel-item relative w-full">
-            <img [src]="property.image" class="w-full" alt="" />
-            <div
-              *ngIf="form.get('car')?.value"
-              class="absolute flex justify-between transform -translate-y-1/2 left-2 right-2 top-1/2"
-            >
-              <button
-                type="button"
-                (click)="scrollOnCarousel(2)"
-                class="btn btn-ghost text-red-500"
-              >
-                ❮
-              </button>
-              <button
-                type="button"
-                (click)="scrollOnCarousel(2)"
-                class="btn btn-ghost text-red-500"
-              >
-                ❯
-              </button>
-            </div>
+          <div class="card">
+            <figure>
+              <img
+                [src]="property.image"
+                alt="property reserved"
+                class="h-[250px] lg:max-w-[448px]"
+              />
+            </figure>
           </div>
         </div>
         <div class="max-w-md bg-gray-800 rounded-lg shadow-md p-6 summary">
@@ -277,15 +243,15 @@
         </div>
       </section>
     </form>
-    <confirmation-modal
-      #confirmationModal
-      (confirmationEvent)="confirmReserve()"
-    >
-      <ng-container modal-title>Confirmar reserva</ng-container>
-      <ng-container modal-message
-        >Usted esta a punto de reservar la propiedad
-        {{ reserveSummary.property?.location }}</ng-container
-      >
-    </confirmation-modal>
   </div>
+  <confirmation-modal
+    #confirmationModal
+    (confirmationEvent)="confirmReserve()"
+  >
+    <ng-container modal-title>Confirmar reserva</ng-container>
+    <ng-container modal-message
+      >Usted esta a punto de reservar la propiedad
+      {{ reserveSummary.property?.location }}</ng-container
+    >
+  </confirmation-modal>
 </ng-template>
