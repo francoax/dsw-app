@@ -21,6 +21,7 @@ import { Property } from 'src/app/models/property';
 import { OnInit } from '@angular/core';
 import { PropertyType } from 'src/app/models/property-type';
 import { ToastService } from '../../shared/toast/toast.service';
+import { LocationService } from 'src/app/services/location/location.service';
 @Component({
   selector: 'app-create-property',
   templateUrl: './create-property.component.html',
@@ -34,6 +35,11 @@ export class CreatePropertyComponent implements OnInit {
   idPropToEdit!: string;
   formScope = 'create';
   properties: Property[] = [];
+  localities: any[] = [];
+  countries: { name: string; cca2: string }[] = [];
+  ccode = '';
+  states: { name: string; isoCode: string }[] = [];
+  locations: string[] = [];
   @ViewChild('formCollapse') formCollapse!: ElementRef;
 
   propertyForm!: FormGroup;
@@ -44,6 +50,7 @@ export class CreatePropertyComponent implements OnInit {
 
   constructor(
     private service: PropertyServiceService,
+    private locationService: LocationService,
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService
   ) {}
@@ -54,6 +61,16 @@ export class CreatePropertyComponent implements OnInit {
     });
     this.service.getProperties().subscribe((response) => {
       this.properties = response.data;
+    });
+
+    this.locationService.getCountries().subscribe((res) => {
+      res.data.forEach((country: { name: { common: string }; cca2: any }) => {
+        if (country.name.common !== 'Falkland Islands')
+          this.countries.push({
+            name: country.name.common,
+            cca2: country.cca2,
+          });
+      });
     });
 
     this.propertyForm = this.initForm();
@@ -100,6 +117,7 @@ export class CreatePropertyComponent implements OnInit {
     }
 
     if (this.formScope === 'create') {
+      form.value.location = `${form.value.location}, ${this.ccode}`;
       this.service
         .createProperty(form.value)
         .subscribe(({ message, data, error }) => {
@@ -181,5 +199,28 @@ export class CreatePropertyComponent implements OnInit {
     this.propertyForm.get('image')?.setValidators([Validators.required]);
     this.propertyForm.get('image')?.updateValueAndValidity();
     this.propertyForm.reset();
+  }
+
+  onCountryChange(event: any) {
+    this.ccode = event.target.value;
+    this.locationService.getStates(this.ccode).subscribe((res) => {
+      const response = res.data.data;
+      this.states = [];
+      response.forEach((state: { name: any; isoCode: any }) => {
+        this.states.push({ name: state.name, isoCode: state.isoCode });
+      });
+    });
+  }
+
+  onStateChange(event: any) {
+    this.locationService
+      .getLocations(this.ccode, event.target.value)
+      .subscribe((res) => {
+        const response = res.data.data;
+        this.locations = [];
+        response.forEach((location: { name: string }) => {
+          this.locations.push(location.name);
+        });
+      });
   }
 }

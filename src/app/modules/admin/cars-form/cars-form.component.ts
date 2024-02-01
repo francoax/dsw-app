@@ -143,6 +143,7 @@ export class CarsFormComponent implements OnInit {
   }
 
   onStateChange(event: any) {
+    console.log(event.target.value);
     this.locationService
       .getLocations(this.ccode, event.target.value)
       .subscribe((res) => {
