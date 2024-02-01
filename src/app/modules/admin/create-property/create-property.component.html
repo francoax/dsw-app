@@ -10,15 +10,38 @@
     <form [formGroup]="propertyForm" (ngSubmit)="onSubmit(propertyForm)">
       <div class="grid grid-cols-[repeat(2,_minmax(320px,_1fr))] gap-5 w-[50%]">
         <div class="flex flex-col">
+
           <label [ngClass]="{
               'text-red-500' : propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched
             }" class="label">Localidad</label>
-          <select [ngClass]="{
-              'border-red-500' : propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched
-            }" class="select select-bordered w-[320px] max-w-xs" [formControlName]="'location'">
-            <option selected disabled>Seleccionar localidad</option>
-            <!-- <option *ngFor="let locality of localities" [value]="locality.id">{{locality.name}}</option> -->
+
+          <select name="'País'" class="select select-bordered w-60 max-w-xs mb-3" 
+            (change)="onCountryChange($event)">
+            <option value="" disabled selected hidden>
+              Elige un país...
+            </option>
+            <option *ngFor="let country of countries" [value]="country.cca2">
+              {{ country.name }}
+            </option>
           </select>
+
+          <select name="'Provincia/Estado'" class="select select-bordered w-60 max-w-xs mb-3"
+            (change)="onStateChange($event)">
+            <option value="" disabled selected hidden>
+              Provincia/estado
+            </option>
+            <option *ngFor="let state of states" [value]="state.isoCode">
+              {{ state.name }}
+            </option>
+          </select>
+
+          <select name="'Localidad'" class="select select-bordered w-60 max-w-xs" [formControlName]="'location'">
+            <option value="" disabled selected hidden>Ciudad</option>
+            <option *ngFor="let location of locations" [value]="location">
+              {{ location }}
+            </option>
+          </select>
+          
           <span *ngIf="propertyForm.get('location')?.errors !== null && propertyForm.get('location')?.touched" class="label-text-alt text-red-500">Este campo es requerido</span>
         </div>
         <div class="flex flex-col">

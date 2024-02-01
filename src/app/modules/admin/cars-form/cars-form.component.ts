@@ -56,7 +56,7 @@ export class CarsFormComponent implements OnInit {
       country: this.country,
       state: this.state,
       city: this.city,
-      locality: this.location,
+      location: this.location,
     });
 
     this.service.getCars().subscribe((res) => {
@@ -77,7 +77,7 @@ export class CarsFormComponent implements OnInit {
   onSubmit(form: FormGroup) {
     if (this.carsForm.valid) {
       const locality = `${form.controls['city'].value}, ${form.controls['country'].value}`;
-      form.controls['locality'].setValue(locality);
+      form.controls['location'].setValue(locality);
       if (this.formScope === 'create') {
         this.service.createCar(form.value).subscribe((res) => {
           this.cars.push(res.data);
@@ -142,6 +142,7 @@ export class CarsFormComponent implements OnInit {
   }
 
   onStateChange(event: any) {
+    console.log(event.target.value);
     this.locationService
       .getLocations(this.ccode, event.target.value)
       .subscribe((res) => {
