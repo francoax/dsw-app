@@ -26,4 +26,22 @@ export class ReserveService {
   deleteReserve(id: string): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(this.API + id);
   }
+
+  getReservesBetween(
+    start: Date,
+    end: Date,
+    idCar: string
+  ): Observable<ApiResponse> {
+    start = new Date(start);
+    end = new Date(end);
+    return this.http.get<ApiResponse>(
+      `${this.API}validate-dates?start=${start}&end=${end}&idCar=${idCar}`
+    );
+  }
+
+  getReservesFromProperty(propertyId: string): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(
+      `${this.API}property-reserves/${propertyId}`
+    );
+  }
 }

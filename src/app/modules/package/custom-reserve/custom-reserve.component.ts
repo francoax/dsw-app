@@ -254,9 +254,34 @@ export class CustomReserveComponent
   }
 
   onSubmit(form: FormGroup) {
-    let hasReservedDates = false;
+    const { checkIn, checkOut, car } = form.value;
+    // eslint-disable-next-line no-var
+    let carAvailable = false;
+    if (car) {
+      console.log('hola');
+      this.reserveService.getReservesBetween(checkIn, checkOut, car).subscribe({
+        next: ({ data }) => {
+          carAvailable = data;
+        },
+        complete: () => {
+          console.log('completed');
+        },
+        error: ({ error: { message, data } }) => {
+          carAvailable = data;
+          this.toastService.setup({
+            message,
+            status: false,
+          });
+          this.toastService.show();
+        },
+      });
+    }
 
-    const { checkIn, checkOut } = form.value;
+    if (!carAvailable) {
+      return;
+    }
+
+    let hasReservedDates = false;
 
     const datesReserved = this.generateDatesBetween(checkIn, checkOut);
 
@@ -283,23 +308,23 @@ export class CustomReserveComponent
     }
 
     this.reserveService.getReservesByUser().subscribe(({ data }) => {
-      if (data.length > 0) {
-        const reserves = data.filter(
-          (r: Reserve) => new Date(r.date_end) > new Date()
-        );
-        console.log(reserves);
-        this.hasReserves = reserves.length > 0;
-      }
+      // if (data.length > 0) {
+      //   const reserves = data.filter(
+      //     (r: Reserve) => new Date(r.date_end) > new Date()
+      //   );
+      //   console.log(reserves);
+      //   this.hasReserves = reserves.length > 0;
+      // }
 
-      if (this.hasReserves) {
-        this.toastService.setup({
-          message:
-            'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
-          status: false,
-        });
-        this.toastService.show();
-        return;
-      }
+      // if (this.hasReserves) {
+      //   this.toastService.setup({
+      //     message:
+      //       'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
+      //     status: false,
+      //   });
+      //   this.toastService.show();
+      //   return;
+      // }
 
       if (form.valid) {
         this.open();
