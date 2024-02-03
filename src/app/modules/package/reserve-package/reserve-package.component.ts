@@ -142,25 +142,18 @@ export class ReservePackageComponent implements OnInit {
 
     if (this.reserveForm.valid) {
       try {
-        console.log('before user reserves');
         if (!(await this.verifyUserReserves())) {
-          console.log('in user');
           return;
         }
 
-        console.log('before dates');
         if (!this.verifyDatesSelected(checkIn, checkOut)) {
-          console.log('in dates');
           return;
         }
 
-        console.log('before car');
         if (!(await this.verifyCarSelected(checkIn, checkOut))) {
-          console.log('in car');
           return;
         }
 
-        console.log('before modal');
         this.openModal();
       } catch (error) {
         this.toastService.setup({
@@ -186,11 +179,12 @@ export class ReservePackageComponent implements OnInit {
       );
       console.log(data);
       if (data.length > 0) {
-        const reserves = data.filter(
-          (r: Reserve) =>
-            new Date(r.date_end) > new Date(this.todayDate.toString())
-        );
-        console.log(reserves);
+        const reserves = data.filter((r: Reserve) => {
+          const reserveEndDate = new Date(r.date_end).getTime();
+          const todayDate = new Date().getTime();
+          return reserveEndDate > todayDate;
+        });
+        console.log(reserves.length);
         this.hasReserves = reserves.length > 0;
       }
 
@@ -217,12 +211,15 @@ export class ReservePackageComponent implements OnInit {
       const datesReserved = this.generateDatesBetween(checkIn, checkOut);
 
       this.reservesDone.forEach((date) => {
-        const isIn = datesReserved.some(
-          (d) =>
-            d.valueOf() >= date.date_start.valueOf() &&
-            d.valueOf() <= date.date_end.valueOf()
-        );
-        console.log(isIn);
+        const isIn = datesReserved.some((d) => {
+          const dateReserved = d.getTime();
+          const reserveDoneDateStart = new Date(date.date_start).getTime();
+          const reserveDoneDateEnd = new Date(date.date_end).getTime();
+          return (
+            dateReserved > reserveDoneDateStart &&
+            dateReserved < reserveDoneDateEnd
+          );
+        });
         if (isIn) {
           hasReservedDates = true;
         }
@@ -240,7 +237,7 @@ export class ReservePackageComponent implements OnInit {
 
       return true;
     } catch (error) {
-      console.error('Error al verificar fechas seleccionadas:');
+      console.error(error);
       return false;
     }
   }
