@@ -242,61 +242,6 @@ export class ReservePackageComponent implements OnInit {
     }
   }
 
-  // private verifyDatesSelected(checkIn: Date, checkOut: Date): boolean {
-  //   let hasReservedDates = false;
-
-  //   const datesReserved = this.generateDatesBetween(checkIn, checkOut);
-
-  //   this.reservesDone.forEach((date) => {
-  //     const isIn = datesReserved.some(
-  //       (d) =>
-  //         d.valueOf() >= date.date_start.valueOf() &&
-  //         d.valueOf() <= date.date_end.valueOf()
-  //     );
-
-  //     if (isIn) {
-  //       hasReservedDates = true;
-  //     }
-  //   });
-
-  //   if (hasReservedDates) {
-  //     this.reserveForm.get('checkIn')?.setErrors([Validators.required]);
-  //     this.toastService.setup({
-  //       message: 'Las fechas dadas contienen fechas no disponibles.',
-  //       status: false,
-  //     });
-  //     this.toastService.show();
-  //     return !hasReservedDates;
-  //   }
-
-  //   return !hasReservedDates;
-  // }
-
-  // private verifyCarSelected(checkIn: Date, checkOut: Date): boolean {
-  //   let carAvailable = true;
-  //   const car = this.package.car._id;
-
-  //   this.reserveService.getReservesBetween(checkIn, checkOut, car).subscribe(
-  //     ({ data }) => {
-  //       carAvailable = data;
-  //     },
-  //     ({ error: { message, data } }) => {
-  //       carAvailable = data;
-  //       this.toastService.setup({
-  //         message: message,
-  //         status: false,
-  //       });
-  //       this.toastService.show();
-  //     }
-  //   );
-
-  //   if (!carAvailable) {
-  //     return false;
-  //   }
-
-  //   return true;
-  // }
-
   private async verifyCarSelected(
     checkIn: Date,
     checkOut: Date
