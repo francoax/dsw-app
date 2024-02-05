@@ -92,7 +92,7 @@
                         Auto alquilado: {{r.packageReserved.car.brand}} {{r.packageReserved.car.model}}
                       </li>
                       <li class="text-sm lg:text-lg" *ngIf="r.packageReserved.medicalAssistance !== null">
-                        Asistencia medica incluida: {{r.packageReserved.medicalAssistance.description}} {{r.packageReserved.medicalAssistance.coverageType}}
+                        Asistencia medica incluida: {{r.packageReserved.medicalAssistance.description}} {{r.packageReserved.medicalAssistance.coverageType}} {{ r.packageReserved.medicalAssistance.price | currency: "USD" : "code"}}
                       </li>
                     </ul>
                     <h3 class="mt-4 text-sm lg:text-lg font-semibold leading-7 text-gray-300">
