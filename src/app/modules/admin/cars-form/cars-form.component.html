@@ -8,7 +8,7 @@
   <div class="collapse-content">
     <form [formGroup]="carsForm" (ngSubmit)="onSubmit(carsForm)">
       <div class="">
-        <div class="grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))]">
+        <div class="grid grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] gap-5">
           <app-input
             [label]="'Marca'"
             [placeholder]="''"
@@ -44,7 +44,7 @@
           <div>
             <label class="label">Ubicacion para ofrecer</label>
           </div>
-          <div class="flex flex-col lg:flex-row justify-start items-center gap-10 lg:gap-14">
+          <div class="flex flex-col lg:flex-row justify-start items-center gap-10 lg:gap-14 lg:flex-wrap">
             <select
               name="'País'"
               class="select select-bordered min-w-[320px] max-w-[348px]"
