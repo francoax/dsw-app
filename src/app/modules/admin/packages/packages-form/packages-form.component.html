@@ -9,7 +9,7 @@
   <div class="collapse-content">
     <form [formGroup]="packagesForm" (ngSubmit)="onSubmit(packagesForm)">
       <div class="form-container">
-        <div class="lg:grid lg:grid-cols-4">
+        <div class="lg:grid lg:grid-cols-[repeat(auto-fit,_minmax(320px,_1fr))] gap-5">
           <div>
             <label [ngClass]="{
               'text-red-500' : packagesForm.get('property')?.errors !== null && packagesForm.get('property')?.touched
