@@ -65,7 +65,7 @@ export class ForgotPasswordComponent implements OnInit {
         if (userFound != undefined) {
           const id = userFound._id ? userFound._id : '';
           this.userService.updateUserById(id, user).subscribe({
-            next: () => this.route.navigate(['/user/login']),
+            next: () => this.route.navigate(['/login']),
             error: () =>
               (this.responseError =
                 'Ha ocurrido un error al procesar la información'),
