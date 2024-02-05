@@ -1,79 +1,85 @@
 <!-- eslint-disable max-len -->
-<div class="px-10 py-5">
-  <div class="flex flex-row items-center justify-between w-3/4">
-    <h2 class="text-lg font-bold">Modificación de datos</h2>
-    <button
-      class="btn btn-primary"
-      type="button"
-      (click)="toggleForm()"
-      *ngIf="loggedUser"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6"
+<div class="flex flex-col justify-center p-6">
+  <h2 class="text-lg font-bold divider leading-6">Modificación de datos</h2>
+  <div class="flex flex-col items-center">
+    <div class="flex items-center gap-5">
+      <p>Habilitar formulario</p>
+      <button
+        class="btn btn-primary"
+        type="button"
+        (click)="toggleForm()"
+        *ngIf="loggedUser"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-        />
-      </svg>
-    </button>
-  </div>
-  <form
-    class="grid grid-cols-2 grid-rows-4 gap-2"
-    [formGroup]="updateDataForm"
-    (ngSubmit)="onSubmit()"
-  >
-    <app-input
-      [label]="'Nombre'"
-      [placeholder]="''"
-      [required]="true"
-      [inputControl]="name"
-    ></app-input>
-    <app-input
-      [label]="'Apellido'"
-      [placeholder]="''"
-      [required]="true"
-      [inputControl]="lastname"
-    ></app-input>
-    <app-input
-      [label]="'Dirección'"
-      [placeholder]="''"
-      [required]="true"
-      [inputControl]="address"
-    ></app-input>
-    <app-input
-      [label]="'Teléfono'"
-      [placeholder]="''"
-      [required]="true"
-      [inputControl]="tel"
-    ></app-input>
-    <app-input
-      [label]="'Email'"
-      [placeholder]="''"
-      [required]="true"
-      [inputControl]="email"
-    ></app-input>
-    <app-input
-      [label]="'Nueva contraseña'"
-      [placeholder]="'Omitir para no modificar'"
-      [required]="false"
-      [type]="password.dirty ? 'password' : 'text'"
-      [inputControl]="password"
-    ></app-input>
-    <app-button
-      *ngIf="!updateDataForm.disabled"
-      class="flex justify-start items-center"
-      [classType]="'primary'"
-      [type]="'submit'"
-      >Modificar datos</app-button
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+          />
+        </svg>
+      </button>
+    </div>
+    <form
+      class="max-w-5xl"
+      [formGroup]="updateDataForm"
+      (ngSubmit)="onSubmit()"
     >
-  </form>
+      <div class="grid grid-cols-1 lg:grid-cols-2 place-items-center grid-rows-3 gap-5">
+        <app-input
+          [label]="'Nombre'"
+          [placeholder]="''"
+          [required]="true"
+          [inputControl]="name"
+        ></app-input>
+        <app-input
+          [label]="'Apellido'"
+          [placeholder]="''"
+          [required]="true"
+          [inputControl]="lastname"
+        ></app-input>
+        <app-input
+          [label]="'Dirección'"
+          [placeholder]="''"
+          [required]="true"
+          [inputControl]="address"
+        ></app-input>
+        <app-input
+          [label]="'Teléfono'"
+          [placeholder]="''"
+          [required]="true"
+          [inputControl]="tel"
+        ></app-input>
+        <app-input
+          [label]="'Email'"
+          [placeholder]="''"
+          [required]="true"
+          [inputControl]="email"
+        ></app-input>
+        <app-input
+          [label]="'Nueva contraseña'"
+          [placeholder]="'Omitir para no modificar'"
+          [required]="false"
+          [type]="password.dirty ? 'password' : 'text'"
+          [inputControl]="password"
+        ></app-input>
+      </div>
+      <div class="flex justify-center m-5">
+        <app-button
+          *ngIf="!updateDataForm.disabled"
+          [classType]="'primary'"
+          [type]="'submit'"
+          >Modificar datos</app-button
+        >
+      </div>
+    </form>
+  </div>
   <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
     <div class="card-body">
       <h2 class="card-title">Eliminar cuenta</h2>

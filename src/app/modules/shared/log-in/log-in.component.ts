@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class LogInComponent implements OnInit {
   logInForm!: FormGroup;
-  mail = new FormControl('');
-  password = new FormControl('');
+  mail = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
   responseError = '';
 
   constructor(private userService: UserService) {}
@@ -34,6 +34,7 @@ export class LogInComponent implements OnInit {
           this.responseError = 'Unable to connect to server';
         } else {
           this.responseError = err.error.message;
+          setTimeout(() => (this.responseError = ''), 2500);
         }
       },
     });

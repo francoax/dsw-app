@@ -23,19 +23,17 @@ export class CarService {
     return this.http.get<ApiResponse>(this.API);
   }
 
-  getCarsFromLocation(location : string) {
-    console.log('hola manolo');
-    console.log(location);
-    return this.http.get<ApiResponse>(`${this.API}?location=${location}`)
+  getCarsFromLocation(location: string) {
+    return this.http.get<ApiResponse>(`${this.API}?location=${location}`);
   }
-  deleteCar(id : string) : Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${this.API}${id}`)
+  deleteCar(id: string): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${this.API}${id}`);
   }
-  createCar(newCar : Car) : Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.API, newCar)
+  createCar(newCar: Car): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(this.API, newCar);
   }
 
-  updateCar(id : string, carUpdated : Car) : Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(`${this.API}${id}`, carUpdated)
+  updateCar(id: string, carUpdated: Car): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.API}${id}`, carUpdated);
   }
 }

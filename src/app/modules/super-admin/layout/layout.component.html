@@ -1,7 +1,5 @@
-<div class="layoutContainer">
-    <app-sidebar [buttonsList]="buttonsForSideBar">
-      <div class="container mx-auto p-2">
-        <router-outlet></router-outlet>
-      </div>
-    </app-sidebar>
-</div>
+<app-sidebar [buttonsList]="buttonsForSideBar">
+  <div class="p-6">
+    <router-outlet></router-outlet>
+  </div>
+</app-sidebar>

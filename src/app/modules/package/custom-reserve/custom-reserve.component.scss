@@ -6,7 +6,7 @@
 }
 
 .reserve-entry {
-  min-height: 50vh;
+  min-height: 100vh;
   padding: 0 20px;
 }
 
@@ -75,28 +75,31 @@
 }
 
 @media (min-width: 576px) {
-  .reserve-entry,
+  .reserve-entry {
+    display: flex;
+    flex-direction: column;
+  }
+
   .reserve-info {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  #dates,
   .summary {
     min-width: 448px;
   }
 
   .data-entry {
     min-width: 448px;
-    min-height: 330px;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .form-container {
     display: flex;
     justify-content: space-evenly;
+    padding: 20px;
   }
 
   .data-entry {
@@ -115,9 +118,9 @@
     padding: 0 5%;
   }
 
-  .reserve-info,
-  #dates {
+  .reserve-info {
     flex: 1;
+    padding: 20px;
   }
 
   .title {

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, pairwise, startWith } from 'rxjs';
+import { Subscription, firstValueFrom, pairwise, startWith } from 'rxjs';
 import { Car } from 'src/app/models/car';
 import { MedicalAssistance } from 'src/app/models/medical-assistance';
 import { PropertyV2 } from 'src/app/models/property';
@@ -24,6 +24,7 @@ import { validateDates } from './form-validators';
 import { AppConfigService } from 'src/app/services/app/app.service';
 import { SkeletonsService } from 'src/app/services/skeletons/skeletons.service';
 import { CustomReserveDataService } from 'src/app/services/app/custom-reserve-data.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type reserveSummary = {
   car: Car | null;
@@ -32,6 +33,11 @@ type reserveSummary = {
   checkIn: string;
   checkOut: string;
   totalPrice: number;
+};
+
+type ReservedDates = {
+  date_start: Date;
+  date_end: Date;
 };
 
 @Component({
@@ -52,6 +58,8 @@ export class CustomReserveComponent
   form!: FormGroup;
   hasReserves = false;
 
+  minDate: Date = new Date();
+
   @ViewChild('confirmationModal') private modalComponent!: ModalComponent;
 
   @ViewChild('carSelect') private carSelect!: ElementRef;
@@ -67,6 +75,8 @@ export class CustomReserveComponent
     checkOut: '',
     totalPrice: 0,
   };
+
+  reservesDone: ReservedDates[] = [];
 
   $form!: Subscription;
 
@@ -105,6 +115,147 @@ export class CustomReserveComponent
     }
   }
 
+  async onSubmit(form: FormGroup) {
+    const { checkIn, checkOut, car } = form.value;
+
+    if (form.valid) {
+      try {
+        if (!(await this.verifyUserReserves())) {
+          return;
+        }
+
+        if (!this.verifyDatesSelected(checkIn, checkOut)) {
+          return;
+        }
+
+        if (car) {
+          if (!(await this.verifyCarSelected(checkIn, checkOut, car))) {
+            return;
+          }
+        }
+
+        this.open();
+      } catch (error) {
+        this.toastService.setup({
+          message: 'Error durante carga de formulario.',
+          status: false,
+        });
+        this.toastService.show();
+      }
+    } else {
+      form.markAllAsTouched();
+      this.toastService.setup({
+        message: 'Por favor, revise el formulario',
+        status: false,
+      });
+      this.toastService.show();
+    }
+  }
+
+  private async verifyUserReserves(): Promise<boolean> {
+    try {
+      const { data } = await firstValueFrom(
+        this.reserveService.getReservesByUser()
+      );
+      if (data.length > 0) {
+        const reserves = data.filter((r: Reserve) => {
+          const reserveEndDate = new Date(r.date_end).getTime();
+          const todayDate = new Date().getTime();
+          return reserveEndDate > todayDate;
+        });
+        this.hasReserves = reserves.length > 0;
+      }
+
+      if (this.hasReserves) {
+        this.toastService.setup({
+          message:
+            'Posee una reserva vigente. Una vez finalizada, podrá volver a reservar.',
+          status: false,
+        });
+        this.toastService.show();
+        throw new Error();
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  private verifyDatesSelected(checkIn: Date, checkOut: Date): boolean {
+    try {
+      let hasReservedDates = false;
+
+      const datesReserved = this.generateDatesBetween(checkIn, checkOut);
+
+      this.reservesDone.forEach((date) => {
+        const isIn = datesReserved.some((d) => {
+          const dateReserved = d.getTime();
+          const reserveDoneDateStart = new Date(date.date_start).getTime();
+          const reserveDoneDateEnd = new Date(date.date_end).getTime();
+          return (
+            dateReserved > reserveDoneDateStart &&
+            dateReserved < reserveDoneDateEnd
+          );
+        });
+        if (isIn) {
+          hasReservedDates = true;
+        }
+      });
+
+      if (hasReservedDates) {
+        this.form.get('checkIn')?.setErrors([Validators.required]);
+        this.toastService.setup({
+          message: 'Las fechas dadas contienen fechas no disponibles.',
+          status: false,
+        });
+        this.toastService.show();
+        throw new Error('Fechas no disponibles');
+      }
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  private async verifyCarSelected(
+    checkIn: Date,
+    checkOut: Date,
+    car: string
+  ): Promise<boolean> {
+    try {
+      let carAvailable = true;
+
+      const { data } = await firstValueFrom(
+        this.reserveService.getReservesBetween(checkIn, checkOut, car)
+      );
+
+      carAvailable = data;
+
+      if (!carAvailable) {
+        throw new Error('Coche no disponible en las fechas seleccionadas.');
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error al verificar coche seleccionado:');
+
+      if (error instanceof HttpErrorResponse) {
+        const errorMessage =
+          error.error?.message || 'Error al verificar coche seleccionado';
+        this.toastService.setup({
+          message: errorMessage,
+          status: false,
+        });
+        this.toastService.show();
+      }
+
+      return false;
+    }
+  }
+
   initData(): void {
     this.skeletonService.showReserveLoading();
     let propertyId = '';
@@ -116,10 +267,11 @@ export class CustomReserveComponent
     this.customReserveDataSubscription = this.customReserveService
       .initReserveData(propertyId)
       .subscribe({
-        next: ([property, cars, medicalAssitances]) => {
+        next: ([property, cars, medicalAssitances, reserves]) => {
           this.property = property;
           this.cars = cars;
           this.medicalAssitance = medicalAssitances;
+          this.reservesDone = reserves;
         },
         complete: () => {
           this.skeletonService.hideReserveLoading();
@@ -155,6 +307,32 @@ export class CustomReserveComponent
       },
       { validator: validateDates() }
     );
+  }
+
+  myFilter = (d: Date): boolean => {
+    let dates: Date[] = [];
+    this.reservesDone.forEach((date) => {
+      const start = new Date(date.date_start);
+      const end = new Date(date.date_end);
+      if (d.valueOf() >= start.valueOf() && d.valueOf() <= end.valueOf()) {
+        dates = [...this.generateDatesBetween(start, end)];
+      }
+    });
+    return (
+      dates.findIndex((date) => date.toDateString() == d?.toDateString()) < 0
+    );
+  };
+
+  generateDatesBetween(startDate: Date, endDate: Date): Date[] {
+    const dates = [];
+    const currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      dates.push(new Date(currentDate));
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
   }
 
   updateSummary(prevValue: any, nextValue: any) {
@@ -204,35 +382,6 @@ export class CustomReserveComponent
       carPrice +
       this.property.pricePerNight * totalDays +
       (this.reserveSummary.medicalAssitance?.price || 0);
-  }
-
-  onSubmit(form: FormGroup) {
-    this.reserveService.getReservesByUser().subscribe(({ data }) => {
-      if (data.length > 0) {
-        const reserves = data.filter(
-          (r: Reserve) => new Date(r.date_end).getDate() > new Date().getDate()
-        );
-        this.hasReserves = reserves.length > 0;
-      }
-
-      if (this.hasReserves) {
-        this.toastService.setup({
-          message:
-            'Posee una reserva vigente. Una vez finalizada, podra volver a reservar.',
-          status: false,
-        });
-        this.toastService.show();
-      } else if (form.valid) {
-        this.open();
-      } else {
-        this.form.markAllAsTouched();
-        this.toastService.setup({
-          message: 'Por favor, ingrese correctamente los campos.',
-          status: false,
-        });
-        this.toastService.show();
-      }
-    });
   }
 
   confirmReserve() {

@@ -3,7 +3,24 @@
   *ngIf="isLoading$ | async; else completed"
 ></app-home-skeleton>
 <ng-template #completed>
+  <div class="p-8">
+    <h1 class="tracking-tighter text-sm text-[#EB5757] font-semibold sm:text-lg lg:text-2xl">
+    Nuestras ofertas de paquetes.
+    </h1>
+    <p class="tracking-tight text-xs sm:text-base">
+      Disfruta de la comodida de paquetes pre-armados con Propiedad + Auto + Asistencia medica. Ingresa el rango de fechas que queres reservar y listo!
+    </p>
+  </div>
   <app-carousel [packageList]="this.packageList"> </app-carousel>
+  <div class="divider divider-neutral"></div>
+  <div class="p-6 pl-8">
+    <h3 class="text-sm text-[#EB5757] font-semibold sm:text-lg lg:text-2xl">
+      Propiedades disponibles.
+    </h3>
+    <p class="tracking-tight text-xs sm:text-base">
+      Si queres armar tu propio paquete, elegi la propiedad que mas te guste. Tambien contas con la posibilidad de reservar tu auto + asistencia medica disponibles por ubicacion.
+    </p>
+  </div>
   <app-cards-list
     *ngIf="!showAlert"
     [propertiesList]="requiredProps"

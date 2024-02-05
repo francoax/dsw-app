@@ -5,6 +5,7 @@ import { CarService } from '../car/car.service';
 import { MedicalAssistanceService } from '../medical-assitance/medical-assistance.service';
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
 import { PropertyV2 } from 'src/app/models/property';
+import { ReserveService } from '../reserve/reserve.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class CustomReserveDataService {
   constructor(
     private readonly propertiesService: PropertyServiceService,
     private readonly carsService: CarService,
-    private readonly medicalService: MedicalAssistanceService
+    private readonly medicalService: MedicalAssistanceService,
+    private readonly reserveService: ReserveService
   ) {}
 
   initReserveData(propertyId: string): Observable<any[]> {
@@ -26,12 +28,16 @@ export class CustomReserveDataService {
           this.property.location
         );
         const medicalAssistances$ = this.medicalService.getAll();
-        return forkJoin([cars$, medicalAssistances$]);
+        const reserve$ = this.reserveService.getReservesFromProperty(
+          this.property._id
+        );
+        return forkJoin([cars$, medicalAssistances$, reserve$]);
       }),
-      map(([cars, medicalAssistances]) => [
+      map(([cars, medicalAssistances, reserves]) => [
         this.property,
         cars.data,
         medicalAssistances.data,
+        reserves.data,
       ])
     );
   }

@@ -14,7 +14,7 @@ import { CarService } from 'src/app/services/car/car.service';
   styleUrls: ['./cars-form.component.scss'],
 })
 export class CarsFormComponent implements OnInit {
-  formTitle = 'Registrar un Nuevo Auto';
+  formTitle = 'Registrar nuevo Vehiculo';
   buttonContent = 'Aceptar';
   idCarToEdit!: string;
   cars: Car[] = [];
@@ -76,8 +76,8 @@ export class CarsFormComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (this.carsForm.valid) {
-      const locality = `${form.controls['city'].value}, ${form.controls['country'].value}`;
-      form.controls['location'].setValue(locality);
+      const location = `${form.controls['city'].value}, ${form.controls['country'].value}`;
+      form.controls['location'].setValue(location);
       if (this.formScope === 'create') {
         this.service.createCar(form.value).subscribe((res) => {
           this.cars.push(res.data);
@@ -117,17 +117,18 @@ export class CarsFormComponent implements OnInit {
 
   onUpdate(car: Car) {
     this.formCollase.nativeElement.checked = true;
-    this.formTitle = 'Editar Auto';
+    this.formTitle = `Editar auto: ${car.brand.toUpperCase()} ${car.model.toUpperCase()}`;
     this.carsForm.patchValue({
       brand: car.brand,
       model: car.model,
       year: car.year,
       plate: car.plate,
       price: car.price,
-      locality: car.location,
+      location: car.location,
     });
     this.formScope = 'editar';
     this.idCarToEdit = car.id;
+    this.buttonContent = 'Editar';
   }
 
   onCountryChange(event: any) {

@@ -1,12 +1,10 @@
 <!-- eslint-disable max-len -->
 <div class="overflow-x-auto">
-  <div class="mt-6">
-    <h2 class="text-base font-semibold leading-7 text-white-400">
-      Lista de Autos.
-    </h2>
-    <p class="mt-1 text-sm leading-6 text-white-600">Autos vigentes de PHS.</p>
+  <div class="mt-2 mb-2">
+    <h2 class="text-base font-semibold leading-7 text-light">Lista de vehiculos.</h2>
+    <p class="mt-1 text-sm leading-6 text-light">Vehiculos vigentes de PHS.</p>
   </div>
-  <table class="table table-xs">
+  <table class="table table-xs lg:table-md">
     <thead>
       <tr>
         <th>Id</th>
@@ -16,6 +14,7 @@
         <th>Patente</th>
         <th>Valor</th>
         <th>Ubicación</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -28,8 +27,9 @@
         <td>{{ car.price }}</td>
         <td>{{ car.location }}</td>
         <th>
-          <div class="table-icons">
+          <div class="flex items-center gap-5">
             <svg
+              style="cursor: pointer;"
               (click)="onUpdate(car)"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -45,6 +45,7 @@
               />
             </svg>
             <svg
+              style="cursor: pointer;"
               (click)="onDelete(car.id)"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

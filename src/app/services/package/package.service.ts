@@ -32,8 +32,6 @@ export class PackageService {
   }
 
   createPackage(newPackage: PackageAgent): Observable<ApiResponse> {
-    newPackage.type = 'completo';
-    newPackage.discount = newPackage.discount! / 100;
     return this._http.post<ApiResponse>(`${this.url}/api/packages`, newPackage);
   }
   deletePackage(packageId: string): Observable<ApiResponse> {
