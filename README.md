@@ -11,35 +11,37 @@ Proyecto creado en la asignatura de Desarrollo de Software 2023.
   - [Desarrolladores](#desarrolladores)
 
 ## Informacion general
-PHS es una aplicacion de reservas, donde vos como usuario tenes la posibilidad de reservar propiedades como tambien paquetes
+PHS es una aplicacion de reservas, que da la posibilidad de reservar propiedades como tambien paquetes
 prearmados, que son el conjunto de una propiedad + auto + asistencia medica.
 
+Link recorrido de la aplicacion: [Video](https://youtu.be/b80YyR5HQtM)
+
 ## Tecnologias
-El proyecto fue desarrollado utilizando el stack M.E.A.N.
+El proyecto se desarrollo utilizando el stack M.E.A.N.
 
 * MongoDB
 * Express
 * Angular
 * NodeJS
 
-Por parte de estilos, utilizamos [TailwindCSS](https://tailwindcss.com/) a la par de [DaisyUI](https://daisyui.com/),
-que ofrece una serie de componentes estilados con Tailwind. Ademas, para formateo de codigo, nos decidimos por utilizar [ESLint](https://eslint.org/).
+Por parte de estilos, se utiliza [TailwindCSS](https://tailwindcss.com/) a la par de [DaisyUI](https://daisyui.com/),
+que ofrece una serie de componentes estilados con Tailwind. Ademas, para formateo de codigo, se utiliza [ESLint](https://eslint.org/).
 
 ## Metodologia
-Para las branches de nuestro proyecto, seguimos la forma:
+Para las branches del proyecto, se sigue la forma:
 
 * main: produccion
 * dev: desarrollo
 
-Para cada nueva implementacion, se utilizo la forma de:
+Para cada nueva implementacion, se utiliza la forma:
 
 * feature/new-feature
 * fix/problem
 
-Ademas para no corromper los datos, se generaron dos bases de datos distintas. Una enfocada a produccion y otra a desarrollo, las cuales estan pasadas por
+Ademas para no corromper los datos, existen dos bases de datos distintas. Una enfocada a produccion y otra a desarrollo, las cuales se pasan por
 variables de entorno en cada uno.
 
-Para la publicacion de nuestro proyecto, utilizamos [Vercel](https://vercel.com). Tanto frontend como backend estan alojados en dicha pagina.
+Para la publicacion del proyecto, ambas utilizan [Vercel](https://vercel.com).
 
 ## Documentacion
 * Proposal: [Proposal](https://github.com/tomasbottoni/tp_Poncho-Home-Stay/blob/main/proposal.md)
@@ -47,7 +49,7 @@ Para la publicacion de nuestro proyecto, utilizamos [Vercel](https://vercel.com)
 * Toda la conversacion/organizacion fue a traves de Discord
 
 ## Guia de instalacion
-El proyecto fue desarrollado utilizando las siguientes versiones:
+El proyecto se desarrollo utilizando las siguientes versiones:
 
 * **AngularCLI 16.1.8**
 * **NodeJS v18.17.0**
@@ -80,5 +82,5 @@ Y listo, de esta manera ya PHS estaria corriendo localmente.
 ## Desarrolladores
 * 47308 Franco Duarte <img src="https://avatars.githubusercontent.com/u/87949682?v=4" height="15" width="15"> [@francoax](https://github.com/francoax)
 * 46793 Octavio Pereyra <img src="https://avatars.githubusercontent.com/u/82680476?v=4" height="15" width="15"> [@octapereyra](https://github.com/octapereyra)
-* 47152 Nicolas Di Dio <img src="https://avatars.githubusercontent.com/u/81826078?v=4" height="15" width="15"> [@NicolasDiDio09](https://github.com/NicolasDiDio09)
+* 47502 Nicolas Di Dio <img src="https://avatars.githubusercontent.com/u/81826078?v=4" height="15" width="15"> [@NicolasDiDio09](https://github.com/NicolasDiDio09)
 * 45757 Tomas Bottoni <img src="https://avatars.githubusercontent.com/u/81845990?v=4" height="15" width="15"> [@tomasbottoni](https://github.com/tomasbottoni)
