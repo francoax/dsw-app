@@ -5,7 +5,7 @@
     <div class="flex items-center gap-5">
       <p>Habilitar formulario</p>
       <button
-        class="btn btn-primary"
+        class="btn btn-square btn-outline"
         type="button"
         (click)="toggleForm()"
         *ngIf="loggedUser"
@@ -31,7 +31,9 @@
       [formGroup]="updateDataForm"
       (ngSubmit)="onSubmit()"
     >
-      <div class="grid grid-cols-1 lg:grid-cols-2 place-items-center grid-rows-3 gap-5">
+      <div
+        class="grid grid-cols-1 lg:grid-cols-2 place-items-center grid-rows-3 gap-5"
+      >
         <app-input
           [label]="'Nombre'"
           [placeholder]="''"
@@ -80,20 +82,25 @@
       </div>
     </form>
   </div>
-  <div *ngIf="loggedUser" class="card w-full bg-primary text-primary-content">
-    <div class="card-body">
-      <h2 class="card-title">Eliminar cuenta</h2>
-      <p>
-        Desde aquí podrás dar de baja tu cuenta. Si tenés reservas activas no
-        será posible eliminar tu cuenta.
-      </p>
-      <div class="card-actions justify-end">
-        <app-button
-          [classType]="'primary'"
-          [type]="'submit'"
-          (click)="showModal()"
-          >Dar de baja</app-button
-        >
+  <div class="flex justify-center">
+    <div
+      *ngIf="loggedUser"
+      class="card w-1/2 bg-neutral text-neutral-content border-slate-500"
+    >
+      <div class="card-body">
+        <h2 class="card-title">Eliminar cuenta</h2>
+        <p>
+          Desde aquí podrás dar de baja tu cuenta. Si tenés reservas activas no
+          será posible eliminar tu cuenta.
+        </p>
+        <div class="card-actions justify-end">
+          <app-button
+            [classType]="'primary'"
+            [type]="'submit'"
+            (click)="showModal()"
+            >Dar de baja</app-button
+          >
+        </div>
       </div>
     </div>
   </div>
