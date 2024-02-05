@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user/user.service';
+import { ToastService } from '../toast/toast.service';
 
 export const checkPasswords: ValidatorFn = (
   control: AbstractControl
@@ -47,7 +48,11 @@ export class SignUpComponent implements OnInit {
   togglePassword = false;
   togglePasswordConf = false;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.signInForm = new FormGroup(
@@ -76,13 +81,27 @@ export class SignUpComponent implements OnInit {
         role: 'user',
       };
 
-      this.userService.saveUser(user).subscribe(() => {
-        this.router.navigate(['/confirmation'], {
-          queryParams: { action: 'signin' },
-        });
+      this.userService.saveUser(user).subscribe({
+        next: () => {
+          this.router.navigate(['/confirmation'], {
+            queryParams: { action: 'signin' },
+          });
+        },
+        error: ({ error: { message } }) => {
+          this.toastService.setup({
+            message,
+            status: false,
+          });
+          this.toastService.show();
+        },
       });
     } else {
-      alert('Verifique que los datos ingresados sean válidos');
+      this.signInForm.markAllAsTouched();
+      this.toastService.setup({
+        message: 'Verifique que los datos ingresados sean válidos',
+        status: false,
+      });
+      this.toastService.show();
     }
   }
 }
