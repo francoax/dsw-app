@@ -165,6 +165,7 @@ export class PackagesFormComponent implements OnInit {
     this.loadCars(pack.property.location);
     this.formCollapse.nativeElement.checked = true;
     this.formTitle = 'Editar Paquete';
+    this.buttonContent = 'Editar';
     this.packagesForm.get('image')?.clearValidators();
     this.packagesForm.get('image')?.updateValueAndValidity();
     this.packagesForm.patchValue({
