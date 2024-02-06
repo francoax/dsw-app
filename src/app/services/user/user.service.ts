@@ -32,6 +32,16 @@ export class UserService {
     return this.http.post<ApiResponse>(this.API + 'login', body);
   }
 
+  sendPasswordResetEmail(email: string): Observable<ApiResponse> {
+    const body = { email: email };
+    return this.http.post<ApiResponse>(this.API + 'password-reset', body);
+  }
+
+  resetPassword(id: string, user: any): Observable<ApiResponse> {
+    const body = { password: user.password };
+    return this.http.put<ApiResponse>(this.API + 'password-reset/' + id, body);
+  }
+
   saveUser(user: User): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(this.API, user);
   }

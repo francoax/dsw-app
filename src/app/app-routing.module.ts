@@ -25,6 +25,12 @@ const routes: Routes = [
   },
   {
     path: 'password-reset',
+    data: { mailAuth: false },
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: 'password-reset/:token',
+    data: { mailAuth: true },
     component: ForgotPasswordComponent,
   },
   {
