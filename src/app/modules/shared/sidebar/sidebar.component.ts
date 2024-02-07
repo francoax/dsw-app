@@ -1,5 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 
+
+type userToken = {
+  userId: string,
+  name: string,
+  email: string,
+  role: string,
+}
 type ButtonsForSideBar = {
   name: string;
   path: string;
@@ -13,9 +21,13 @@ export class SidebarComponent implements OnInit {
   @Input() buttonsList!: ButtonsForSideBar;
   buttonsToShow: ButtonsForSideBar = [];
 
-  userRole = JSON.parse(localStorage.getItem('loggedUser')!).role;
+
+  userRole = '';
 
   ngOnInit(): void {
+    const token = window.localStorage.getItem('loggedUser');
+    const decodedToken: userToken = jwtDecode(token!);
+    this.userRole = decodedToken.role;
     this.buttonsToShow = [...this.buttonsList];
   }
 }

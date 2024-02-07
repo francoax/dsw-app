@@ -4,7 +4,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 import { AppConfigService } from 'src/app/services/app/app.service';
+
+
+type userToken = {
+  userId: string,
+  name: string,
+  email: string,
+  role: string,
+}
+
 
 @Component({
   selector: 'navbar',
@@ -19,6 +29,12 @@ export class NavbarComponent implements OnInit {
   loggedUser = window.localStorage.getItem('loggedUser');
   userName = '';
   userRole = '';
+  decodedToken: userToken= {
+    userId: '',
+    name:'',
+    email:'',
+    role:''
+  };
 
   constructor(
     private router: Router,
@@ -26,9 +42,21 @@ export class NavbarComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     if (this.loggedUser) {
+      /*
       const user = JSON.parse(this.loggedUser);
       this.userName = user.name;
       this.userRole = this.getRoleOfLoggedUser();
+      */
+      const token = window.localStorage.getItem('loggedUser');
+      console.log(token);
+      this.decodedToken = jwtDecode(token!);
+      console.log(jwtDecode(token!));
+      console.log(this.decodedToken);
+      this.userName = this.decodedToken.name;
+      this.userRole = this.decodedToken.role;
+      console.log(this.userName);
+      console.log(this.userRole);
+      // const { mail, password } = this.logInForm.value;
     }
     this.appService.showSearchBar$.subscribe((show) => {
       this.showSearch = show;
